@@ -953,6 +953,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 6587642257865718184}
   offset: {x: 0, y: 30, z: -55}
+<<<<<<< refs/remotes/origin/Scene_Networking
+=======
+--- !u!1 &383956589957743492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1937096403953657527}
+  - component: {fileID: 3034420136827988221}
+  m_Layer: 0
+  m_Name: Ship_Box_Collider_
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1937096403953657527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383956589957743492}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.1, z: 0}
+  m_LocalScale: {x: 1, y: 0.31717876, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8281217948380041343}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3034420136827988221
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383956589957743492}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 23, y: 5, z: 81.417694}
+  m_Center: {x: 0, y: 0, z: 6.291151}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
 --- !u!1 &713886770327238882
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,12 +1028,21 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713886770327238882}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_LocalPosition: {x: -9.3, y: 26.1, z: -1.1}
   m_LocalScale: {x: 1, y: 50, z: 63.693752}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8281217948380041343}
   m_RootOrder: 0
+=======
+  m_LocalPosition: {x: -9.3, y: 17.1, z: 1.44}
+  m_LocalScale: {x: 1, y: 33, z: 60.509064}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8281217948380041343}
+  m_RootOrder: 1
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2361488305904221768
 MeshFilter:
@@ -1047,8 +1104,13 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+=======
+  m_Size: {x: 1, y: 0.8651027, z: 0.76978356}
+  m_Center: {x: 0, y: -0.067448646, z: -0.03408177}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
 --- !u!1 &2167763738878194252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,6 +1137,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2167763738878194252}
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.3, y: 26.1, z: -1.1}
   m_LocalScale: {x: 1, y: 50, z: 63.693752}
@@ -1082,6 +1145,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8281217948380041343}
   m_RootOrder: 1
+=======
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.3, y: 17.1, z: 1.4399999}
+  m_LocalScale: {x: 1, y: 33, z: 60.509064}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8281217948380041343}
+  m_RootOrder: 2
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5253491604175298884
 MeshFilter:
@@ -1143,8 +1215,13 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+=======
+  m_Size: {x: 1, y: 0.8592379, z: 0.7694621}
+  m_Center: {x: 0, y: -0.07038105, z: -0.034242466}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
 --- !u!1 &3011336602414110926
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,7 +1237,11 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_IsActive: 1
+=======
+  m_IsActive: 0
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
 --- !u!4 &531837855184100937
 Transform:
   m_ObjectHideFlags: 0
@@ -1204,6 +1285,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3992616577627243829}
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.1, y: 19.5, z: 30}
   m_LocalScale: {x: 17.399523, y: 35.625, z: 0.275}
@@ -1211,6 +1293,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8281217948380041343}
   m_RootOrder: 3
+=======
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.1, y: 15.9, z: 19.74}
+  m_LocalScale: {x: 20.391226, y: 33, z: 0.77}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8281217948380041343}
+  m_RootOrder: 4
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5737884151031372944
 MeshFilter:
@@ -1272,8 +1363,13 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+=======
+  m_Size: {x: 1, y: 0.90615845, z: 0.9999998}
+  m_Center: {x: 0, y: -0.046920776, z: 0}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
 --- !u!1 &4471982447261966536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,10 +1398,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+<<<<<<< refs/remotes/origin/Scene_Networking
+=======
+  - {fileID: 7614042478327537887}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
   - {fileID: 7532605854122797562}
   - {fileID: 6200057657089704124}
   - {fileID: 4370743878264957989}
   - {fileID: 1043457512399371100}
+<<<<<<< refs/remotes/origin/Scene_Networking
+=======
+  - {fileID: 1937096403953657527}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
   m_Father: {fileID: 6587885881050642016}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1324,7 +1428,11 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_IsActive: 1
+=======
+  m_IsActive: 0
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
 --- !u!4 &3581780203282141196
 Transform:
   m_ObjectHideFlags: 0
@@ -1341,6 +1449,54 @@ Transform:
   m_Father: {fileID: 6587642257865718184}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< refs/remotes/origin/Scene_Networking
+=======
+--- !u!1 &6622085304748749141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7614042478327537887}
+  - component: {fileID: 3948569237648984991}
+  m_Layer: 0
+  m_Name: Up_Wall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7614042478327537887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6622085304748749141}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 27.5, z: 8.050001}
+  m_LocalScale: {x: 0.9164063, y: 0.15, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8281217948380041343}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3948569237648984991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6622085304748749141}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 22.999996, y: 5, z: 40.934093}
+  m_Center: {x: 0, y: 0, z: -7.9372005}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
 --- !u!1 &7627481699642896073
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,8 +1540,13 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+=======
+  m_Size: {x: 0.71507835, y: 1, z: 1}
+  m_Center: {x: 0.057322472, y: 3.5531957e-12, z: -0.0000028304391}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
 --- !u!1 &8139425919581821210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,6 +1573,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8139425919581821210}
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.1, y: 19.5, z: -32.7}
   m_LocalScale: {x: 19.574463, y: 35.625, z: 0.43312502}
@@ -1419,6 +1581,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8281217948380041343}
   m_RootOrder: 2
+=======
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 15.9, z: -20.16}
+  m_LocalScale: {x: 22.265953, y: 33, z: 0.43312502}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8281217948380041343}
+  m_RootOrder: 3
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3781411700409768628
 MeshFilter:
@@ -1480,8 +1651,13 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
+<<<<<<< refs/remotes/origin/Scene_Networking
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+=======
+  m_Size: {x: 1, y: 0.9120236, z: 0.99999976}
+  m_Center: {x: 0, y: -0.0439882, z: 0}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
 --- !u!1001 &6592458159416952208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1721,7 +1897,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -245622211515426775, guid: f855683b127eede4c9d170be2672ae27, type: 3}
       propertyPath: m_Mass
-      value: 1000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -245622211515426775, guid: f855683b127eede4c9d170be2672ae27, type: 3}
       propertyPath: m_AngularDrag
@@ -2134,6 +2310,37 @@ PrefabInstance:
     - target: {fileID: 23453705192790340, guid: f855683b127eede4c9d170be2672ae27, type: 3}
       propertyPath: m_Enabled
       value: 1
+<<<<<<< refs/remotes/origin/Scene_Networking
+=======
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397773906212530677, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1922297424337100517, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2072110098950480591, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3009789856570155117, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124967005186070778, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182807103154169314, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3900092049187840480, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
       objectReference: {fileID: 0}
     - target: {fileID: 4336535968267451531, guid: f855683b127eede4c9d170be2672ae27, type: 3}
       propertyPath: m_Enabled
@@ -2163,6 +2370,10 @@ PrefabInstance:
       propertyPath: SyncRotAngleZ
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7819215550161377676, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 0}
@@ -2187,6 +2398,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1205614443198496, guid: f855683b127eede4c9d170be2672ae27, type: 3}
   m_PrefabInstance: {fileID: 6592458160294662958}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< refs/remotes/origin/Scene_Networking
 --- !u!65 &4394492133049478074
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2200,6 +2412,8 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 23, y: 5, z: 81.417694}
   m_Center: {x: 0, y: 0, z: 6.291151}
+=======
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
 --- !u!114 &1174244563922633177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2213,14 +2427,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _version: 0
-  _centerOfMass: {x: 0, y: 3, z: 0}
+  _centerOfMass: {x: 0, y: -1, z: 5}
   _forcePoints:
   - _weight: 1000
-    _offsetPosition: {x: 0, y: -6, z: 25}
+    _offsetPosition: {x: 0, y: -4, z: 30}
   - _weight: 1000
-    _offsetPosition: {x: 0, y: -6, z: -25}
+    _offsetPosition: {x: 0, y: -4, z: -25}
   - _weight: 1000
-    _offsetPosition: {x: 0, y: -6, z: 0}
+    _offsetPosition: {x: 0, y: -4, z: 5}
   _forceHeightOffset: 0
   _forceMultiplier: 10
   _minSpatialLength: 60

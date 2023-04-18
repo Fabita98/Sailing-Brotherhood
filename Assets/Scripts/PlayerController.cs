@@ -30,13 +30,17 @@ public class PlayerController: MonoBehaviour
         {
             velocity.y = -8f;
         }
-
+    } 
+    
+    private void FixedUpdate()
+    {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
-        //move += belongingShip.velocity;
-        controller.Move(move * speed * Time.deltaTime);
+        Vector3 move = transform.right * x * speed + transform.forward * z * speed;
+        move.x += belongingShip.velocity.x;
+        move.z += belongingShip.velocity.z;
+        controller.Move(move * Time.deltaTime);
 
         /*
         if(Input.GetButtonDown("Jump") && isGrounded)
@@ -49,10 +53,6 @@ public class PlayerController: MonoBehaviour
 
 
         controller.Move(velocity * Time.deltaTime);
-    } 
-    
-    private void FixedUpdate()
-    {
         an_player.SetFloat("speed", rb_player.velocity.magnitude);
     }
 }

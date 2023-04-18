@@ -215,7 +215,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 722600284}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 9.276866, y: 9.046175, z: -70.51183}
+  m_LocalPosition: {x: 19.11, y: 32.47, z: -87.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -288,9 +288,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _version: 0
-  _globalWindSpeed: 150
+  _globalWindSpeed: 100
   _viewpoint: {fileID: 0}
-  _camera: {fileID: 1605478444}
+  _camera: {fileID: 0}
   _teleportThreshold: 10
   _timeProvider: {fileID: 0}
   _primaryLight: {fileID: 722600285}
@@ -309,7 +309,7 @@ MonoBehaviour:
   _lodCount: 7
   _extentsSizeMultiplier: 100
   _simSettingsAnimatedWaves: {fileID: 0}
-  _createSeaFloorDepthData: 1
+  _createSeaFloorDepthData: 0
   _simSettingsSeaFloorDepth: {fileID: 0}
   _createFoamSim: 1
   _simSettingsFoam: {fileID: 0}
@@ -351,18 +351,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &1605478444 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 2113723755, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
-  m_PrefabInstance: {fileID: 1902338834}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1902338834
+--- !u!1001 &1036234906
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< refs/remotes/origin/Scene_Networking
     - target: {fileID: 883698389, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -384,49 +380,53 @@ PrefabInstance:
       value: 718441028
       objectReference: {fileID: 0}
     - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+=======
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 30.5
+      value: 30.9
       objectReference: {fileID: 0}
-    - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6587642257865718184, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+    - target: {fileID: 2318341324487410777, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< refs/remotes/origin/Scene_Networking
     - target: {fileID: 6591031904027782182, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -524,8 +524,63 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6591393792427977486, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+=======
+    - target: {fileID: 2321943323356174079, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
       propertyPath: m_Name
-      value: Host_Ship
+      value: Host_Ship_NoNetwork
+      objectReference: {fileID: 0}
+    - target: {fileID: 5211454027231368569, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1593113435
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677189800691119862, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: m_Drag
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677189800691119862, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: m_Mass
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677189800691119862, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713443128498502696, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: _engineBias
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713443128498502696, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: _enginePower
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713443128498502696, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: _dragInWaterUp
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713443128498502696, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: _dragInWaterRight
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713443128498502696, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: _playerControlled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713443128498502696, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: _maximumBuoyancyForce
+      value: Infinity
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713443128498502696, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: _forcePoints.Array.data[0]._weight
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713443128498502696, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: _forcePoints.Array.data[1]._weight
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713443128498502696, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+      propertyPath: _forcePoints.Array.data[2]._weight
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 6591393792427977486, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
       propertyPath: m_IsActive
@@ -672,7 +727,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+--- !u!54 &1036234907 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 6677189800691119862, guid: cf5bfd2559a9a1c4490bc9857eb2065e, type: 3}
+  m_PrefabInstance: {fileID: 1036234906}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2156503135266254359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -684,6 +744,7 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< refs/remotes/origin/Scene_Networking
     - target: {fileID: 2156503135848148001, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
       propertyPath: belongingShip
       value: 
@@ -691,11 +752,43 @@ PrefabInstance:
     - target: {fileID: 2156503135848148004, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
       propertyPath: m_Mass
       value: 10
+=======
+    - target: {fileID: 1379906723243015180, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971363238121379126, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156503135848148001, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: belongingShip
+      value: 
+      objectReference: {fileID: 1036234907}
+    - target: {fileID: 2156503135848148004, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_Mass
+      value: 1
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
       objectReference: {fileID: 0}
     - target: {fileID: 2156503135848148004, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
       propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
+<<<<<<< refs/remotes/origin/Scene_Networking
+=======
+    - target: {fileID: 2156503135848148004, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156503135848148005, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790464784464210800, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
     - target: {fileID: 4821771202592504404, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
       propertyPath: m_Name
       value: Player
@@ -706,6 +799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5305680097981473006, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< refs/remotes/origin/Scene_Networking
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5305680097981473006, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
@@ -719,6 +813,33 @@ PrefabInstance:
     - target: {fileID: 5305680097981473006, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
       propertyPath: m_LocalPosition.z
       value: 2.44
+=======
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305680097981473006, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305680097981473006, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305680097981473006, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305680097981473006, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305680097981473006, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 34.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305680097981473006, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.67
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
       objectReference: {fileID: 0}
     - target: {fileID: 5305680097981473006, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -752,5 +873,19 @@ PrefabInstance:
       propertyPath: m_UpdateMode
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< refs/remotes/origin/Scene_Networking
     m_RemovedComponents: []
+=======
+    - target: {fileID: 5754740764676161753, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -654264059363573671, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+    - {fileID: 8637920359300797427, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+    - {fileID: 8607271946815824912, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+    - {fileID: 2170113781956643363, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+    - {fileID: -1428821425109798491, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+    - {fileID: 2156503135848148004, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+>>>>>>> On board Colliders fix + Smaller ship asset import + CrestBoatProbes parameters changes
   m_SourcePrefab: {fileID: 100100000, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
