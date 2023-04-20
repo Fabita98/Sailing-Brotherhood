@@ -7480,7 +7480,7 @@ GameObject:
   - component: {fileID: 2156503135848148005}
   - component: {fileID: 2156503135848148015}
   - component: {fileID: 2156503135848148001}
-  - component: {fileID: -3337733713007722071}
+  - component: {fileID: 1490309949746580102}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -7496,7 +7496,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4821771202592504404}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.59, y: 9.28, z: -112.01}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -7625,6 +7625,7 @@ MonoBehaviour:
   speed: 8
   gravity: -9.81
   jump: 1
+  positionRange: 0
   groundCheck: {fileID: 2156503137072815311}
   groundDistance: 0.4
   groundMask:
@@ -7633,7 +7634,7 @@ MonoBehaviour:
   belongingShip: {fileID: 0}
   rb_player: {fileID: 2156503135848148004}
   an_player: {fileID: 5632655739124769175}
---- !u!114 &-3337733713007722071
+--- !u!114 &1490309949746580102
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -8,7 +8,7 @@ namespace Network
     {
         void OnGUI()
         {
-            GUILayout.BeginArea(new Rect(80, 80, 300, 300));
+            GUILayout.BeginArea(new Rect(1300, 100, 500, 1000));
             if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
             {
                 StartButtons();
