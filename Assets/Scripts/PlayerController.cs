@@ -24,19 +24,22 @@ public class PlayerController: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        
 
-        if(isGrounded && velocity.y < 0)
-        {
-            velocity.y = -8f;
-        }
+        
+    } 
+    
+    private void FixedUpdate()
+    {   
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
-        //move += belongingShip.velocity;
-        controller.Move(move * speed * Time.deltaTime);
+        Vector3 move = transform.right * x * speed + transform.forward * z * speed;
+        move.x += belongingShip.velocity.x;
+        move.z += belongingShip.velocity.z;
+        controller.Move(move * Time.deltaTime);
 
         /*
         if(Input.GetButtonDown("Jump") && isGrounded)
@@ -47,13 +50,9 @@ public class PlayerController: MonoBehaviour
         */
         velocity.y += gravity * Time.deltaTime;
 
-
         controller.Move(velocity * Time.deltaTime);
-    } 
-    
-    private void FixedUpdate()
-    {
-        an_player.SetFloat("speed", rb_player.velocity.magnitude);
+        an_player.SetFloat("speed", move.magnitude); 
+        
     }
 }
    
