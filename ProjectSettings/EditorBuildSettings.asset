@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Race/EndRace.unity
     guid: d520748ca2067ff40aa028979f26368b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Race/Race_Net_Test.unity
     guid: 78fd3f49b941e4c41a736d6c7219469e
+  - enabled: 1
+    path: Assets/Scenes/Lobby/Lobby.unity
+    guid: 16011a97311df1e4fbb82bb13ca80921
   m_configObjects: {}
