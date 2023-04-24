@@ -2321,6 +2321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pirata: {fileID: 2072099685}
   button: {fileID: 85393452}
+  ship: {fileID: 0}
 --- !u!1 &1654602111
 GameObject:
   m_ObjectHideFlags: 0

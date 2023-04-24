@@ -10,7 +10,8 @@ public class Anchor : MonoBehaviour
     private int cont = 0;
     private int child=41;
     private float movementSpeed = 0.1f;
-    
+    public GameObject ship;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +25,10 @@ public class Anchor : MonoBehaviour
         {
             float dist = Vector3.Distance(pirata.transform.position, transform.position);
 
+            //Se il pirata è vicino all'ancora allora ci esce la scritta
             if (dist <= 13) { 
                 button.gameObject.SetActive(true);
+                //Se il pirata schiaccia spazio 120 volte 
                 if (Input.GetKeyDown("space"))
                 {
                     cont++;
@@ -35,15 +38,20 @@ public class Anchor : MonoBehaviour
                         Destroy(transform.GetChild(child).gameObject);
                         child--;
                     }
+                    //Se arriviamo a 120 la nave deve iniziare a muoversi e il bottone si disattiva
+                    if (cont == 120)
+                    {
+                        button.gameObject.SetActive(false);
+                    }
 
                 }
             }
+
+            //Se non è vicino all'ancora allora non lo vede
             else {
                 button.gameObject.SetActive(false);
             }
         }
-        else { 
-            button.gameObject.SetActive(false);
-        }
+        
     }
 }
