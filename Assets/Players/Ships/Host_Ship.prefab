@@ -2216,11 +2216,13 @@ MonoBehaviour:
   _centerOfMass: {x: 0, y: 3, z: 0}
   _forcePoints:
   - _weight: 1000
-    _offsetPosition: {x: 0, y: -6, z: 25}
+    _offsetPosition: {x: -4.63, y: -2.7, z: 37.8}
   - _weight: 1000
-    _offsetPosition: {x: 0, y: -6, z: -25}
+    _offsetPosition: {x: 4.63, y: -2.7, z: -26}
   - _weight: 1000
-    _offsetPosition: {x: 0, y: -6, z: 0}
+    _offsetPosition: {x: -4.65, y: -2.7, z: -26}
+  - _weight: 1000
+    _offsetPosition: {x: 4.5, y: -2.7, z: 37.8}
   _forceHeightOffset: 0
   _forceMultiplier: 10
   _minSpatialLength: 60
