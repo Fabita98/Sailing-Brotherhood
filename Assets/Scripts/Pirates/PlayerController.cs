@@ -1,70 +1,63 @@
-using Unity.Netcode;
-using Unity.Netcode.Components;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : NetworkBehaviour
+public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
 
     public float speed = 12f;
     public float gravity = -9.81f;
     public float jump = 5f;
-    [SerializeField] private float positionRange = 3f;
-
+    public GameObject pirate;
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    public Rigidbody belongingShip;
+    public GameObject belongingShip;
+    private float x, z;
+    private Vector3 move;
 
     public Rigidbody rb_player;
     public Animator an_player;
-
+    public bool driving = false;
     Vector3 velocity;
-    private bool isGrounded;
-
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        UpdateSpawnPosition();
-    }
-
-    private void UpdateSpawnPosition()
-    {
-        transform.position = new Vector3(Random.Range(belongingShip.position.x + positionRange, belongingShip.position.x - positionRange), 7.5f, Random.Range(belongingShip.position.z + positionRange, belongingShip.position.z - positionRange));
-    }
+    private bool isGrounded = false;
 
     // Update is called once per frame
-    void Update()
+    public void Start()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        rb_player.maxDepenetrationVelocity = 0f;
+        //belongingShip.maxDepenetrationVelocity = 0f;
+    }
 
-        if (isGrounded && velocity.y < 0)
+    private void Update()
+    {
+        x = Input.GetAxis("Horizontal");
+        z = Input.GetAxis("Vertical");
+        move = transform.right * x * speed + transform.forward * z * speed;
+        if (driving)
         {
-            velocity.y = -8f;
+            move = new Vector3(0, 0, 0);
         }
-
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
-        //move += belongingShip.velocity;
-        controller.Move(speed * Time.deltaTime * move);
-
-        /*
-        if(Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jump * -2f * gravity);
-            //an_player.SetBool("jump", true);
-        } else an_player.SetBool("jump", false);
-        */
+        //move.x += belongingShip.velocity.x;
+       // move.z += belongingShip.velocity.z;
+        controller.Move(move * Time.deltaTime);
         velocity.y += gravity * Time.deltaTime;
+        if (controller.isGrounded)
+        {
+            velocity.y = -0.1f;
+        }
         controller.Move(velocity * Time.deltaTime);
+        an_player.SetFloat("speed", move.magnitude);
+
     }
 
     private void FixedUpdate()
     {
-        an_player.SetFloat("speed", rb_player.velocity.magnitude);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+
     }
+
+
 }
-
-
