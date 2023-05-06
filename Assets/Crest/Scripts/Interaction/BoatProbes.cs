@@ -59,6 +59,8 @@ namespace Crest
         [Tooltip("Used to automatically add turning input")]
         public float _turnBias = 0f;
 
+        public Rigidbody pirate;
+
         // Debug
         [Space(10)]
 
@@ -204,6 +206,7 @@ namespace Crest
 #endif
             var rotVec = transform.up + _turningHeel * transform.forward;
             _rb.AddTorque(rotVec * _turnPower * sideways, ForceMode.Acceleration);
+            //pirate.AddTorque(rotVec * _turnPower * sideways, ForceMode.Acceleration);
         }
 
         void FixedUpdateBuoyancy()

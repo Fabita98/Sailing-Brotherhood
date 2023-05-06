@@ -27,7 +27,7 @@ public class StartRace : MonoBehaviour
         }
         if (isLast)
         {
-            boatprobes._playerControlled = true;
+            boatprobes._engineBias = 3;
         }
         Destroy(Obj);
         

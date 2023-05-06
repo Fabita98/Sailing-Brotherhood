@@ -20,10 +20,12 @@ public class DistanceSystem : MonoBehaviour
     public float Second;
     private string NameFirst;
     private string NameSecond;
-
+public static int raceLenght;
     // Start is called before the first frame update
     void Start()
     {
+        Ship01Dist = Vector3.Distance(transform.position, T_Ship01.position);
+        raceLenght = (int)Ship01Dist;
         
     }
 
