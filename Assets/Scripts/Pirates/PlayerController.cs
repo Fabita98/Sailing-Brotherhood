@@ -6,7 +6,7 @@ public class PlayerController : NetworkBehaviour
 {
     public CharacterController controller;
 
-    public float speed = 12f;
+    [SerializeField] private float speed = 12f;
     public float gravity = -9.81f;
     public float jump = 5f;
     [SerializeField] private float positionRange = 3f;
@@ -46,9 +46,11 @@ public class PlayerController : NetworkBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
-        //move += belongingShip.velocity;
-        controller.Move(speed * Time.deltaTime * move);
+        Vector3 move = transform.right * x * speed + transform.forward * z * speed;
+        move.x += belongingShip.velocity.x;
+        move.z += belongingShip.velocity.z;
+        //move = belongingShip.transform.position.x + belongingShip.transform.position.z;
+        controller.Move( Time.deltaTime * move);
 
         /*
         if(Input.GetButtonDown("Jump") && isGrounded)
@@ -63,7 +65,7 @@ public class PlayerController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        an_player.SetFloat("speed", rb_player.velocity.magnitude);
+        //an_player.SetFloat("speed", rb_player.velocity.magnitude);
     }
 }
 
