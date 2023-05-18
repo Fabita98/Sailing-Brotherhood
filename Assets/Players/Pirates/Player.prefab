@@ -7479,7 +7479,6 @@ GameObject:
   - component: {fileID: 2156503135848148004}
   - component: {fileID: 2156503135848148005}
   - component: {fileID: 2156503135848148015}
-  - component: {fileID: 2156503135848148001}
   - component: {fileID: 1490309949746580102}
   m_Layer: 0
   m_Name: Player
@@ -7609,31 +7608,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &2156503135848148001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4821771202592504404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bb0ef6f41f8ae84bb5ee3868310ddef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 2156503135848148015}
-  speed: 8
-  gravity: -9.81
-  jump: 1
-  positionRange: 0
-  groundCheck: {fileID: 2156503137072815311}
-  groundDistance: 0.4
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 1
-  belongingShip: {fileID: 0}
-  rb_player: {fileID: 2156503135848148004}
-  an_player: {fileID: 5632655739124769175}
 --- !u!114 &1490309949746580102
 MonoBehaviour:
   m_ObjectHideFlags: 0
