@@ -1821,7 +1821,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &531837855184100937
 Transform:
   m_ObjectHideFlags: 0
@@ -1837,7 +1837,7 @@ Transform:
   - {fileID: 2113723756}
   - {fileID: 1373999767}
   m_Father: {fileID: 6587642257865718184}
-  m_RootOrder: 9
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3026864947058430726
 GameObject:
@@ -3107,7 +3107,7 @@ Transform:
   m_Children:
   - {fileID: 883698390}
   m_Father: {fileID: 6587642257865718184}
-  m_RootOrder: 10
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6516836091089533728
 GameObject:
@@ -3452,7 +3452,7 @@ GameObject:
   - component: {fileID: 6891936333453522379}
   - component: {fileID: 6962193107278084616}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: Deck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5007,6 +5007,22 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1397773906212530677, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2072110098950480591, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124967005186070778, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182807103154169314, guid: f855683b127eede4c9d170be2672ae27, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4336535968267451531, guid: f855683b127eede4c9d170be2672ae27, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -5088,11 +5104,13 @@ MonoBehaviour:
   _centerOfMass: {x: 0, y: 3, z: 0}
   _forcePoints:
   - _weight: 1000
-    _offsetPosition: {x: 0, y: -6, z: 25}
+    _offsetPosition: {x: -4.63, y: -2.7, z: 37.8}
   - _weight: 1000
-    _offsetPosition: {x: 0, y: -6, z: -25}
+    _offsetPosition: {x: 4.63, y: -2.7, z: -26}
   - _weight: 1000
-    _offsetPosition: {x: 0, y: -6, z: 0}
+    _offsetPosition: {x: -4.65, y: -2.7, z: -26}
+  - _weight: 1000
+    _offsetPosition: {x: 4.5, y: -2.7, z: 37.8}
   _forceHeightOffset: 0
   _forceMultiplier: 10
   _minSpatialLength: 60

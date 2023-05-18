@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
 
-    public float speed = 12f;
+    [SerializeField] private float speed = 12f;
     public float gravity = -9.81f;
     public float jump = 5f;
     public GameObject pirate;
@@ -39,9 +39,23 @@ public class PlayerController : MonoBehaviour
         {
             move = new Vector3(0, 0, 0);
         }
-        //move.x += belongingShip.velocity.x;
-       // move.z += belongingShip.velocity.z;
-        controller.Move(move * Time.deltaTime);
+
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        Vector3 move = transform.right * x * speed + transform.forward * z * speed;
+        move.x += belongingShip.velocity.x;
+        move.z += belongingShip.velocity.z;
+        //move = belongingShip.transform.position.x + belongingShip.transform.position.z;
+        controller.Move( Time.deltaTime * move);
+
+        /*
+        if(Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jump * -2f * gravity);
+            //an_player.SetBool("jump", true);
+        } else an_player.SetBool("jump", false);
+        */
         velocity.y += gravity * Time.deltaTime;
         if (controller.isGrounded)
         {
@@ -54,7 +68,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        //an_player.SetFloat("speed", rb_player.velocity.magnitude);
+    }
+}
 
 
     }

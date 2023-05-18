@@ -7,7 +7,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     // Variables
     public Transform player;
-    public float mouseSensitivity = 2f;
+    public float mouseSensitivity;
     float cameraVerticalRotation = 0f;
 
     bool lockedCursor = true;
@@ -18,7 +18,6 @@ public class FirstPersonCamera : MonoBehaviour
         // Lock and Hide the Cursor
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
     }
 
 
