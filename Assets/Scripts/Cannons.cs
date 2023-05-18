@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Cannons : MonoBehaviour
 {
     public GameObject pirata;
+    public GameObject cannonBall;
     public Button button;
     public Camera cam;
 
