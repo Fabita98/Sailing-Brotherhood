@@ -252,6 +252,16 @@ namespace Crest
                 Gizmos.DrawCube(transformedPoint, Vector3.one * 0.5f);
             }
         }
+        public void setEnginePower(float f)
+        {
+            _enginePower = f;
+        }
+
+        public float getEnginePower()
+        {
+            return _enginePower;
+        }
+
     }
 
     [Serializable]
@@ -262,4 +272,6 @@ namespace Crest
 
         public Vector3 _offsetPosition;
     }
+
+    
 }
