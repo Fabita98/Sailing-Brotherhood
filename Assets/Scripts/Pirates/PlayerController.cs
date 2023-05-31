@@ -2,7 +2,7 @@ using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
 
-public class PlayerController : NetworkBehaviour
+public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
 
@@ -22,11 +22,11 @@ public class PlayerController : NetworkBehaviour
     Vector3 velocity;
     private bool isGrounded;
 
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        UpdateSpawnPosition();
-    }
+    //public override void OnNetworkSpawn()
+    //{
+    //    base.OnNetworkSpawn();
+    //    UpdateSpawnPosition();
+    //}
 
     private void UpdateSpawnPosition()
     {
