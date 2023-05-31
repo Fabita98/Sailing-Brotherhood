@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CannonBall : MonoBehaviour
 {
-    float speed = 3;
-    Vector3 direction;
+    public float speed = 3;
+    public Vector3 direction=Vector3.forward;
 
     public void setDirection(Vector3 dir)
     {
@@ -21,6 +21,6 @@ public class CannonBall : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
     }
 }
