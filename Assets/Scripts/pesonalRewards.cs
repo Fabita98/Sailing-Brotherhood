@@ -9,8 +9,8 @@ public class pesonalRewards : MonoBehaviour
     public TextMeshProUGUI racelenght;
     void Start()
     {
-        lenght = DistanceSystem.raceLenght;
-        racelenght.text = "Race distance: " + lenght.ToString();
+        //lenght = DistanceSystem.raceLenght;
+        //racelenght.text = "Race distance: " + lenght.ToString();
     }
 
     

@@ -6,7 +6,7 @@ public class RaceRewards : MonoBehaviour
 {
     public GameObject WinTrack, LoseTrack;
     public GameObject Canva1, Canva2;
-    bool won=true;
+    bool won=false;
     // Start is called before the first frame update
     void Start()
     {

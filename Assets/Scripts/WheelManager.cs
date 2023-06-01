@@ -36,7 +36,7 @@ public class WheelManager : MonoBehaviour
             {
                 PirateMovement.driving = true;
                 float x = Input.GetAxis("Horizontal");
-                boatProbes._turnBias += x * 0.1f;
+                boatProbes._turnBias += x * 0.005f;
                 wheel.gameObject.transform.Rotate(0, 0, x);
             }
             else PirateMovement.driving = false;

@@ -7,7 +7,7 @@ public class PlayerController: MonoBehaviour
     public CharacterController controller;
 
     public float speed = 12f;
-    public float gravity = -9.81f;
+    public float gravity = -1f;
     public float jump = 5f;
     public GameObject pirate;
     public Transform groundCheck;
@@ -20,7 +20,7 @@ public class PlayerController: MonoBehaviour
     public Rigidbody rb_player;
     public Animator an_player;
     public bool driving = false;
-    Vector3 velocity;
+    private Vector3 velocity;
     private bool isGrounded=false;
 
     // Update is called once per frame
@@ -39,14 +39,17 @@ public class PlayerController: MonoBehaviour
         {
             move = new Vector3(0, 0, 0);
         }
-        //move.x += belongingShip.velocity.x;
-        //move.z += belongingShip.velocity.z;
+        move.x += belongingShip.velocity.x;
+        move.z += belongingShip.velocity.z;
         controller.Move(move * Time.deltaTime);
-        velocity.y += gravity * Time.deltaTime;
+        
+        
+        velocity.y = gravity;
         if (controller.isGrounded)
         {
             velocity.y = -0.1f;
         }
+
         controller.Move(velocity * Time.deltaTime);
         an_player.SetFloat("speed", move.magnitude);
 

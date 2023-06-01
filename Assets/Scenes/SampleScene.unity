@@ -2616,6 +2616,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2156503135848148001, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+      propertyPath: gravity
+      value: -1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156503135848148001, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
       propertyPath: belongingShip
       value: 
       objectReference: {fileID: 1592011389}
@@ -2713,6 +2717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2156503135848148004, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
+    - {fileID: 2156503135848148005, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
 --- !u!1 &897070193
 GameObject:
@@ -4948,13 +4953,13 @@ MonoBehaviour:
   _centerOfMass: {x: 0, y: -1, z: 5}
   _forcePoints:
   - _weight: 1000
-    _offsetPosition: {x: -4.62, y: -2.7, z: 42.5}
+    _offsetPosition: {x: -4, y: -2.7, z: 42}
   - _weight: 1000
-    _offsetPosition: {x: 4.63, y: -2.7, z: -38.71}
+    _offsetPosition: {x: 4, y: -2.7, z: -38}
   - _weight: 1000
-    _offsetPosition: {x: -4.65, y: -2.7, z: -38.71}
+    _offsetPosition: {x: -4, y: -2.7, z: -38}
   - _weight: 1000
-    _offsetPosition: {x: 4.5, y: -2.7, z: 42.55}
+    _offsetPosition: {x: 4, y: -2.7, z: 42}
   _forceHeightOffset: 0
   _forceMultiplier: 10
   _minSpatialLength: 60
@@ -4964,7 +4969,7 @@ MonoBehaviour:
   _dragInWaterRight: 1
   _dragInWaterForward: 0.3
   _enginePower: 0
-  _turnPower: 0.3
+  _turnPower: 0.1
   _playerControlled: 0
   _engineBias: 0
   _turnBias: 0
@@ -4998,8 +5003,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 21, y: 0.7344928, z: 76.32177}
-  m_Center: {x: 0, y: 3.0246518, z: 4.6970177}
+  m_Size: {x: 26.390137, y: 22.15624, z: 76.32177}
+  m_Center: {x: 1.0516357, y: -7.686223, z: 4.6970177}
 --- !u!1 &1599158484 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3129200342344496425, guid: 3e29573f06c0a7e4fa986fff41de17af, type: 3}
