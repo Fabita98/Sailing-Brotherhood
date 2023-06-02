@@ -1,3 +1,5 @@
+using Crest;
+using Mono.CSharp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,61 +7,123 @@ using UnityEngine.UI;
 
 public class WheelTrigger : MonoBehaviour
 {
+    private int cont;
+    private bool lockMovement;
+    private PlayerMovement playerMovement;
     public GameObject wheel;
-    public Button button;
-    private int cont = 0;
-    private int child = 41;
-    private float movementSpeed = 0.1f;
-    public GameObject ship;
-    private bool entered;
-    private bool modNavigazione;
 
+    private bool rotateRight;
+    private bool rotateLeft;
+
+    private BoatProbes boatProbes;
+    private GameObject ship;
+
+    public float rotationSpeed;
     private void Start()
     {
-        entered = false;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("other name: " + other.name);
-            // Verifico se e entrato un GameObject di tipo player
-            if (other.tag == "Player")
-            {
-                //attivo il bottone che dice "premi spazio per girare il trmone"
-                button.gameObject.SetActive(true);
-                //la variabile booleana=true indica che il giocatore e dentro il cilindro
-                entered = true;
-            }
-        
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        //Se esce disattivo il bottone e la variabile entered e falsa
-        button.gameObject.SetActive(false);
-        entered = false;
+        // Ottieni il riferimento a boatProbes partendo da wheel e prendendo i padri
+        GameObject wheelArea = wheel.transform.parent.gameObject;
+        GameObject shipComponent = wheelArea.transform.parent.gameObject;
+        ship = shipComponent.transform.parent.gameObject;
+        boatProbes= ship.GetComponent<BoatProbes>();
     }
 
     private void Update()
     {
-        if (entered == true)
+        if (cont == 1)
         {
-            //se schiaccia spazio e non e in modalita navigazione
-            if (Input.GetKeyDown("space") && modNavigazione == false)
+            if (Input.GetKeyDown(KeyCode.E) && lockMovement == false)
             {
-                modNavigazione = true;
-                //bisogna fermare il movimento del pirata
-
-                //se clicca di nuovo spazio esce dalla navigazione
-
-                //se adesso schiaccia le frecce a destra o a sinistra il timone deve ruotare e deve far ruotare la barca
-                //wheel.transform.Rotate = wheel.transform.position + new Vector3(0, movementSpeed, 0);
-
+                //Qui si ferma la visuale
+                if (playerMovement != null)
+                {
+                    playerMovement.enabled = false; // Disabilita lo script PlayerMovement
+                }
+                lockMovement = true;
             }
-            else if (Input.GetKeyDown("space") && modNavigazione == false)
+            else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
             {
-                modNavigazione = false;
+                //Qui si sblocca la visuale e puo muoversi nuovamente
+                if (playerMovement != null)
+                {
+                    playerMovement.enabled = true; // Disabilita lo script PlayerMovement
+                }
+                lockMovement = false;
+            }
 
+            if (lockMovement == true)
+            {
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    rotateLeft = true;
+                }
+                else if (Input.GetKeyUp(KeyCode.A))
+                {
+                    rotateLeft = false;
+                }
+
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    rotateRight = true;
+                }
+                else if (Input.GetKeyUp(KeyCode.D))
+                {
+                    rotateRight = false;
+                }
             }
         }
     }
+
+    private void FixedUpdate()
+    {
+        if (rotateLeft)
+        {
+            // Ruota il timone verso sinistra in ogni frame di FixedUpdate
+            wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
+            //boatProbes.setTurnBias(boatProbes.getTurnBias()+1);
+            float turnBiasIncrement = 1.0f; // Incremento desiderato
+
+            // Aggiorna gradualmente il valore di turnBias utilizzando Lerp
+            float currentTurnBias = boatProbes.getTurnBias();
+            float targetTurnBias = currentTurnBias - turnBiasIncrement;
+            float newTurnBias = Mathf.Lerp(currentTurnBias, targetTurnBias, rotationSpeed * Time.fixedDeltaTime);
+
+            // Imposta il nuovo valore di turnBias
+            boatProbes.setTurnBias(newTurnBias);
+        }
+        else if (rotateRight)
+        {
+            // Ruota il timone verso destra in ogni frame di FixedUpdate
+            wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
+            float turnBiasIncrement = 1.0f; // Incremento desiderato
+
+            // Aggiorna gradualmente il valore di turnBias utilizzando Lerp
+            float currentTurnBias = boatProbes.getTurnBias();
+            float targetTurnBias = currentTurnBias + turnBiasIncrement;
+            float newTurnBias = Mathf.Lerp(currentTurnBias, targetTurnBias, rotationSpeed * Time.fixedDeltaTime);
+
+            // Imposta il nuovo valore di turnBias
+            boatProbes.setTurnBias(newTurnBias);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            cont = 1;
+            //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
+            playerMovement = other.GetComponent<PlayerMovement>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            cont = 0;
+            playerMovement = null;
+        }
+    }
+
 }

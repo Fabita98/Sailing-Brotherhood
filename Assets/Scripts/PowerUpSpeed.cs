@@ -41,6 +41,6 @@ public class PowerUpSpeed : MonoBehaviour
 
     public void SlowDown()
     {
-        boatProbes.setEnginePower(originalEnginePower); ;
+        boatProbes.setEnginePower(originalEnginePower);
     }
 }

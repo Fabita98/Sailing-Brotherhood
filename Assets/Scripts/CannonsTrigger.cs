@@ -10,6 +10,8 @@ public class CannonsTrigger : MonoBehaviour
     private PlayerMovement playerMovement;
     public GameObject cannon1, cannon2, cannon3, cannon4, cannon5;
     public int cannonBallSpeed = 10;
+
+    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,7 @@ public class CannonsTrigger : MonoBehaviour
         if (cont == 1) { 
             if (Input.GetKeyDown(KeyCode.E) && lockMovement == false)
             {
+                player.transform.rotation = cannon1.transform.rotation * Quaternion.Euler(0, 90, 0); ;
                 //Qui si ferma la visuale
                 if (playerMovement != null)
                 {
@@ -113,7 +116,8 @@ public class CannonsTrigger : MonoBehaviour
         if (other.tag == "Player")
         {   cont = 1;        
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
-            playerMovement = other.GetComponent<PlayerMovement>();    
+            playerMovement = other.GetComponent<PlayerMovement>();
+            player = other.gameObject;
         }
     }
 
@@ -122,6 +126,7 @@ public class CannonsTrigger : MonoBehaviour
         if (other.tag == "Player")
         {   cont = 0;
             playerMovement = null;
+            player = null;
         }
     }
 

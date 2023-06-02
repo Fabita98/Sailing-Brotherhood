@@ -177,7 +177,7 @@ namespace Crest
                 }
             }
         }
-
+        //CREDO CHE QUA SIANO I MOVIMENTI CONTROLLATI DAL PLAYER
         void FixedUpdateEngine()
         {
             var forcePosition = _rb.position;
@@ -260,6 +260,16 @@ namespace Crest
         public float getEnginePower()
         {
             return _enginePower;
+        }
+
+        public void setTurnBias(float f)
+        {
+            _turnBias = f;
+        }
+
+        public float getTurnBias()
+        {
+            return _turnBias;
         }
 
     }
