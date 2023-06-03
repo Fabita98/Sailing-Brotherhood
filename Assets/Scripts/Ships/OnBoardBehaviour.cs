@@ -46,7 +46,7 @@ public class OnBoardBehaviour : MonoBehaviour
         //Adjust velocity
         if (attachedObject != null)
         {
-            attachedRb.AddForce(shipRb.velocity.x, shipRb.velocity.y, shipRb.velocity.z, ForceMode.VelocityChange);
+            attachedRb.AddForce(shipRb.velocity.x, shipRb.velocity.y-0.3f, shipRb.velocity.z, ForceMode.VelocityChange);
         }
     }
 
