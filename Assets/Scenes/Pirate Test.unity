@@ -429,7 +429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1174244563922633177, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
       propertyPath: _enginePower
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1174244563922633177, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
       propertyPath: _centerOfMass.y
@@ -826,6 +826,7 @@ MonoBehaviour:
   speed: 10
   rb: {fileID: 1984115202}
   inputMovement: {x: 0, y: 0, z: 0}
+  player_an: {fileID: 0}
 --- !u!20 &2105926615 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2156503137057362544, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
@@ -992,7 +993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5632655739124769175, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5632655739124769175, guid: c3941e0d125a34f4a9732610a20f53c1, type: 3}
       propertyPath: m_UpdateMode
