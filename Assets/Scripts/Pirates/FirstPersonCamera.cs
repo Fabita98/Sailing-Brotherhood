@@ -12,7 +12,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     bool lockedCursor = true;
 
-
+    public bool lockHorizontalRotation = false;
     void Start()
     {
         // Lock and Hide the Cursor
@@ -28,6 +28,8 @@ public class FirstPersonCamera : MonoBehaviour
         float inputX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float inputY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
+
+
         // Rotate the Camera around its local X axis
 
         cameraVerticalRotation -= inputY;
@@ -37,7 +39,10 @@ public class FirstPersonCamera : MonoBehaviour
 
         // Rotate the Player Object and the Camera around its Y axis
 
-        player.Rotate(Vector3.up * inputX);
+        if (!lockHorizontalRotation)
+        {
+            player.Rotate(Vector3.up * inputX);
+        }
 
     }
 }

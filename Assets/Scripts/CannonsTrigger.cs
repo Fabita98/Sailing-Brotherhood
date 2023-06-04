@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CannonsTrigger : MonoBehaviour
 {
@@ -10,6 +11,14 @@ public class CannonsTrigger : MonoBehaviour
     private PlayerMovement playerMovement;
     public GameObject cannon1, cannon2, cannon3, cannon4, cannon5;
     public int cannonBallSpeed = 10;
+    private bool shooted;
+
+    public Button button;
+    public Text textButton;
+
+    private bool entered;
+    public float holdTimeRequired = 10f;
+    private float holdTime = 0f;
 
     private GameObject player;
     // Start is called before the first frame update
@@ -17,107 +26,122 @@ public class CannonsTrigger : MonoBehaviour
     {
         cont = 0;
         lockMovement = false;
+        shooted = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (cont == 1) { 
+        if (entered==true) { 
             if (Input.GetKeyDown(KeyCode.E) && lockMovement == false)
             {
-                player.transform.rotation = cannon1.transform.rotation * Quaternion.Euler(0, 90, 0); ;
+                player.transform.rotation = cannon1.transform.rotation * Quaternion.Euler(0, 90, 0);
+                
+                player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = true;
+
                 //Qui si ferma la visuale
                 if (playerMovement != null)
                 {
                     playerMovement.enabled = false; // Disabilita lo script PlayerMovement
                 }
                 lockMovement = true;
+
+                if (shooted == true)
+                {
+                    textButton.text = "Click R to reload";
+                }
+
+                else
+                {
+                    //Il bottone mostrerà il testo Left click to shoot per sparare
+                    textButton.text = "Left click to shoot";
+                }
             }
             else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
             {
+
+                player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = false;
                 //Qui si sblocca la visuale e puo muoversi nuovamente
                 if (playerMovement != null)
                 {
                     playerMovement.enabled = true; // Disabilita lo script PlayerMovement
                 }
                 lockMovement = false;
+
+                if (shooted == true)
+                {
+                    textButton.text = "Click R to reload";
+                }
+                else { 
+                //Il bottone mostrerà il testo Click E to interact per sparare
+                textButton.text = "Click E to interact";
+                }
             }
 
-            if (Input.GetMouseButtonDown(0) && lockMovement == true)
+            if (Input.GetMouseButtonDown(0) && lockMovement == true&& shooted==false)
             {
-                //la distanza da cui deve spawnare la palla dal centro del cannone
-                float spawnDistance = 2f;
-                //l'altezza da cui deve partire(altrimenti parte sotto le ruote del cannone)
-                float spawnHeight = 1f;
-                //la forza verso l'alto per dare un moto parabolico
-                float upwardForce = 5f;
+               
                 //la forza orizzontale da applicare alla palla
-                float forwardForceMultiplier = 1f;
+                Camera cameraPlayer = player.GetComponentInChildren<Camera>();
+                Vector3 upwardDirection = cameraPlayer.transform.forward;
 
-                //posizione in cui spawnare la palla
-                Vector3 spawnPosition = cannon1.transform.position + cannon1.transform.right * spawnDistance +Vector3.up*spawnHeight;
-                //Instanziamento della palla
-                GameObject cannonBall1=Instantiate(cannonBall,spawnPosition,cannon1.transform.rotation);
-                //Prendo lo script associato alla palla per cambiare la direzione
-                CannonBall cannonBallScript1 = cannonBall1.GetComponent<CannonBall>();
-                //Cambio la direzione
-                cannonBallScript1.direction = cannon1.transform.right;
-                //Prendo il rigidbody della palla
-                Rigidbody rbCannonBall1 = cannonBall1.GetComponent<Rigidbody>();
-                //Aggiungo una forza orizzontale
-                rbCannonBall1.AddForce(cannonBallScript1.direction * cannonBallSpeed, ForceMode.VelocityChange);
-                //Aggiungo una forza verticale
-                rbCannonBall1.AddForce(Vector3.up * upwardForce, ForceMode.VelocityChange);
+                shooting(cannon1,upwardDirection);
+                shooting(cannon2, upwardDirection);
+                shooting(cannon3, upwardDirection);
+                shooting(cannon4, upwardDirection);
+                shooting(cannon5, upwardDirection);
 
-                //CANNONE 2
-                Vector3 spawnPosition2 = cannon2.transform.position + cannon2.transform.right * spawnDistance + Vector3.up * spawnHeight;
-                GameObject cannonBall2 = Instantiate(cannonBall, spawnPosition2, cannon2.transform.rotation);
-                CannonBall cannonBallScript2 = cannonBall2.GetComponent<CannonBall>();
-                cannonBallScript2.direction = cannon2.transform.right;
-                Rigidbody rbCannonBall2 = cannonBall2.GetComponent<Rigidbody>();
-                rbCannonBall2.AddForce(cannonBallScript2.direction * cannonBallSpeed, ForceMode.VelocityChange);            
-                rbCannonBall2.AddForce(Vector3.up * upwardForce, ForceMode.VelocityChange);
+                shooted = true;
 
-                //CANNONE3
-                Vector3 spawnPosition3 = cannon3.transform.position + cannon3.transform.right * spawnDistance + Vector3.up * spawnHeight;
-                GameObject cannonBall3 = Instantiate(cannonBall, spawnPosition3, cannon3.transform.rotation);
-                CannonBall cannonBallScript3 = cannonBall3.GetComponent<CannonBall>();
-                cannonBallScript3.direction = cannon3.transform.right;
-                Rigidbody rbCannonBall3 = cannonBall3.GetComponent<Rigidbody>();
-                rbCannonBall3.AddForce(cannonBallScript3.direction * cannonBallSpeed, ForceMode.VelocityChange);
-                rbCannonBall3.AddForce(Vector3.up * upwardForce, ForceMode.VelocityChange);
-
-                //CANNONE4
-                Vector3 spawnPosition4 = cannon4.transform.position + cannon4.transform.right * spawnDistance + Vector3.up * spawnHeight;
-                GameObject cannonBall4 = Instantiate(cannonBall, spawnPosition4, cannon4.transform.rotation);
-                CannonBall cannonBallScript4 = cannonBall4.GetComponent<CannonBall>();
-                cannonBallScript4.direction = cannon4.transform.right;
-                Rigidbody rbCannonBall4 = cannonBall4.GetComponent<Rigidbody>();
-                rbCannonBall4.AddForce(cannonBallScript4.direction * cannonBallSpeed, ForceMode.VelocityChange);
-                rbCannonBall4.AddForce(Vector3.up * upwardForce, ForceMode.VelocityChange);
-
-                //CANNONE4
-                Vector3 spawnPosition5 = cannon5.transform.position + cannon5.transform.right * spawnDistance + Vector3.up * spawnHeight;
-                GameObject cannonBall5 = Instantiate(cannonBall, spawnPosition5, cannon4.transform.rotation);
-                CannonBall cannonBallScript5 = cannonBall5.GetComponent<CannonBall>();
-                cannonBallScript5.direction = cannon5.transform.right;
-                Rigidbody rbCannonBall5 = cannonBall5.GetComponent<Rigidbody>();
-                rbCannonBall5.AddForce(cannonBallScript5.direction * cannonBallSpeed, ForceMode.VelocityChange);
-                rbCannonBall5.AddForce(Vector3.up * upwardForce, ForceMode.VelocityChange);
-
+                //Il bottone mostrerà il testo Click R to reload
+                textButton.text = "Click R to reload";
             }
 
+            if (Input.GetKey(KeyCode.R) && shooted == true)
+            {
+                holdTime += Time.deltaTime;
+                Debug.Log("Holdtime: " + holdTime);
+                float waitingTime = 10 - holdTime;
+                string formattedValue = waitingTime.ToString("F2");
+                textButton.text = ""+formattedValue;
+                if (holdTime >= holdTimeRequired)
+                {
+                    shooted = false;
+                    if(lockMovement == true)
+                    {
+                        //Il bottone mostrerà il testo Left click to shoot per sparare
+                        textButton.text = "Left click to shoot";
+                    }
+                    else
+                    {
+                        //Il bottone mostrerà il testo Left click to shoot per sparare
+                        textButton.text = "Click E to interact";
+                    }
+                }
+                
+            }
+            else
+            {
+                holdTime = 0f;
+                //Il bottone mostrerà il testo Click R to reload
+                if (shooted == true) {
+                    textButton.text = "Click R to reload";
+                }
+            }
         }
-
-        
+     
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
-        {   cont = 1;        
+        {   //la variabile booleana=true indica che il giocatore e dentro il cilindro
+            entered = true;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
             playerMovement = other.GetComponent<PlayerMovement>();
             player = other.gameObject;
+            //attivo il bottone che dice "premi E per interagire"
+            button.gameObject.SetActive(true);
+            
         }
     }
 
@@ -127,7 +151,40 @@ public class CannonsTrigger : MonoBehaviour
         {   cont = 0;
             playerMovement = null;
             player = null;
+            //Se esce disattivo il bottone e la variabile entered e falsa
+            button.gameObject.SetActive(false);
+            entered = false;
         }
+    }
+
+    private void shooting(GameObject cannon, Vector3 upwardDirection)
+    {
+        //la distanza da cui deve spawnare la palla dal centro del cannone
+        float spawnDistance = 2f;
+        //l'altezza da cui deve partire(altrimenti parte sotto le ruote del cannone)
+        float spawnHeight = 1f;
+        //la forza verso l'alto per dare un moto parabolico
+        float upwardForce = 8f;
+        //la forza orizzontale da applicare alla palla
+        float forwardForceMultiplier = 1f;
+        //Dove guarda il giocatore
+        //Vector3 upwardDirection = cameraPlayer.transform.up;
+
+        //posizione in cui spawnare la palla
+        Vector3 spawnPosition = cannon.transform.position + cannon.transform.right * spawnDistance + Vector3.up * spawnHeight;
+        //Instanziamento della palla
+        GameObject cannonBall1 = Instantiate(cannonBall, spawnPosition, cannon.transform.rotation);
+        //Prendo lo script associato alla palla per cambiare la direzione
+        CannonBall cannonBallScript1 = cannonBall1.GetComponent<CannonBall>();
+        //Cambio la direzione
+        cannonBallScript1.direction = cannon.transform.right;
+        //Prendo il rigidbody della palla
+        Rigidbody rbCannonBall1 = cannonBall1.GetComponent<Rigidbody>();
+        //Aggiungo una forza orizzontale
+        rbCannonBall1.AddForce(cannonBallScript1.direction * cannonBallSpeed, ForceMode.VelocityChange);
+        //Aggiungo una forza verticale
+        //SE VUOI MODIFICARE QUANTO DISTANTI VANNO LE PALLE DI CANNONE MOLTIPICA PER UN VALORE esempio: upwardDirection*upwardForce*5
+        rbCannonBall1.AddForce(upwardDirection * upwardForce*3, ForceMode.VelocityChange);
     }
 
 }
