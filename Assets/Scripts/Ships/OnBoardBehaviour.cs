@@ -6,21 +6,23 @@ using UnityEngine;
 public class OnBoardBehaviour : MonoBehaviour
 {
     //Attached PlayerObject components
+    [Header("Attach Player GameObj")]
     public GameObject attachedObject;
-    public Rigidbody attachedRb;
+    private Rigidbody attachedRb;
         
     //Rotation calculations
     Vector3 prevEulerAngles;
     Vector3 deltaEulerAngles;        
 
     //Ship RB
-    public Rigidbody shipRb;
+    private Rigidbody shipRb;
 
     void Start() {
         //Init
         prevEulerAngles = new Vector3(0,0,0);
-        // AttachPlayerObj
+        // AttachPlayerObj and ShipRb
         Attach(attachedObject);
+        shipRb = GetComponent<Rigidbody>();
         
         //Detach when respawning
         //GameObject.Find("UI").GetComponent<PauseMenu>().onRespawn += unAttach;
@@ -37,7 +39,6 @@ public class OnBoardBehaviour : MonoBehaviour
             attachedObject.transform.RotateAround(transform.position, Vector3.up, -1 * deltaEulerAngles.y);
             attachedObject.transform.rotation = Quaternion.Euler(0,attachedObject.transform.localEulerAngles.y, 0);
         }
-
         prevEulerAngles = transform.localEulerAngles;       
     }
 
@@ -46,7 +47,7 @@ public class OnBoardBehaviour : MonoBehaviour
         //Adjust velocity
         if (attachedObject != null)
         {
-            attachedRb.AddForce(shipRb.velocity.x, shipRb.velocity.y-0.3f, shipRb.velocity.z, ForceMode.VelocityChange);
+            attachedRb.AddForce(shipRb.velocity.x, shipRb.velocity.y, shipRb.velocity.z, ForceMode.VelocityChange);
         }
     }
 
@@ -58,9 +59,9 @@ public class OnBoardBehaviour : MonoBehaviour
     //    }
     //}
         
-    public void Attach(GameObject obj) {
+    private void Attach(GameObject obj) {
         attachedObject = obj;
-        attachedRb = attachedObject.GetComponent<Rigidbody>();
+        attachedRb = obj.GetComponent<Rigidbody>();
         //attachedObject.GetComponent(OnCollisionEnter) += checkDetach;
     }   
     
