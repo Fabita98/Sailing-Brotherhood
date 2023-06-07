@@ -252,6 +252,24 @@ namespace Crest
                 Gizmos.DrawCube(transformedPoint, Vector3.one * 0.5f);
             }
         }
+        public void setEnginePower(float f)
+        {
+            _enginePower = f;
+        }
+
+        public float getEnginePower()
+        {
+            return _enginePower;
+        }
+        public void setTurnBias(float f)
+        {
+            _turnBias = f;
+        }
+
+        public float getTurnBias()
+        {
+            return _turnBias;
+        }
     }
 
     [Serializable]

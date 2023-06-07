@@ -9,7 +9,7 @@ public class FirstPersonCamera : MonoBehaviour
     public Transform player;
     public float mouseSensitivity;
     float cameraVerticalRotation = 0f;
-
+    public bool lockHorizontalRotation = false;
     bool lockedCursor = true;
 
 
@@ -36,8 +36,10 @@ public class FirstPersonCamera : MonoBehaviour
 
 
         // Rotate the Player Object and the Camera around its Y axis
-
-        player.Rotate(Vector3.up * inputX);
+        if (!lockHorizontalRotation)
+        {
+            player.Rotate(Vector3.up * inputX);
+        }
 
     }
 }
