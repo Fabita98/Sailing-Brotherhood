@@ -29,7 +29,7 @@ public class AnchorTrigger : MonoBehaviour
             if (other.tag == "Player" )
             {
                 //attivo il bottone che dice "premi spazio per salire l'ancora"
-                //button.gameObject.SetActive(true);
+                button.gameObject.SetActive(true);
                 //la variabile booleana=true indica che il giocatore e dentro il cilindro
                 entered = true;
             }
@@ -40,7 +40,7 @@ public class AnchorTrigger : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //Se esce disattivo il bottone e la variabile entered e falsa
-        //button.gameObject.SetActive(false);
+        button.gameObject.SetActive(false);
         entered = false;
     }
 
