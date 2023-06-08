@@ -10,6 +10,8 @@ public class WheelTrigger : MonoBehaviour
     private int cont;
     private bool lockMovement;
     private PlayerMovement playerMovement;
+
+    private GameObject player;
     public GameObject wheel;
 
     private bool rotateRight;
@@ -34,10 +36,18 @@ public class WheelTrigger : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && lockMovement == false)
             {
+                player.transform.rotation = wheel.transform.rotation * Quaternion.Euler(0, 0, 0);
+
+                player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = true;
+                float distance = 2;
+                player.transform.position = wheel.transform.position - wheel.transform.forward * distance;
                 //Qui si ferma la visuale
                 if (playerMovement != null)
                 {
-                    playerMovement.enabled = false; // Disabilita lo script PlayerMovement
+                    //playerMovement.enabled = false;
+                    playerMovement.speed=0;
+
+                    // Disabilita lo script PlayerMovement
                 }
                 lockMovement = true;
             }
@@ -46,7 +56,9 @@ public class WheelTrigger : MonoBehaviour
                 //Qui si sblocca la visuale e puo muoversi nuovamente
                 if (playerMovement != null)
                 {
-                    playerMovement.enabled = true; // Disabilita lo script PlayerMovement
+                    //playerMovement.enabled = true; // Disabilita lo script PlayerMovement
+                    playerMovement.speed = 10;
+
                 }
                 lockMovement = false;
             }
@@ -113,6 +125,7 @@ public class WheelTrigger : MonoBehaviour
         {
             cont = 1;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
+            player = other.gameObject;
             playerMovement = other.GetComponent<PlayerMovement>();
         }
     }
@@ -121,6 +134,7 @@ public class WheelTrigger : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            player = null;
             cont = 0;
             playerMovement = null;
         }

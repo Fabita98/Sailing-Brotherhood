@@ -7,8 +7,6 @@ public class PowerUpSpeed : MonoBehaviour
 {
     GameObject ship;
     [SerializeField] private Vector3 _rotation;
-    BoatProbes boatProbes;
-    public float originalEnginePower;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,15 +23,24 @@ public class PowerUpSpeed : MonoBehaviour
     {
         if (other.tag == "Ship")
         {
-                boatProbes = other.GetComponent<BoatProbes>();
-                originalEnginePower=boatProbes.getEnginePower();
-                boatProbes.setEnginePower(40f);
+            //GameObject shipComponent = other.transform.Find("Ship_Components").gameObject;
+            //GameObject shipBody = other.transform.Find("Ship_Body").gameObject;
+            //GameObject shipCollider = other.transform.Find("Ship_collider").gameObject;
+            GameObject shipBody = other.transform.parent.gameObject;
+            GameObject shipComponent = shipBody.transform.parent.gameObject;
+            GameObject shipCompleted = shipComponent.transform.parent.gameObject;
+
+            ship = shipCompleted.gameObject;
+            Debug.Log("other" + other.name);
+            Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
+            manager.addMaxSpeed(40f);
+
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        boatProbes = other.GetComponent<BoatProbes>();
+        
         //yield return new WaitForSeconds(5);
         //boatProbes.setEnginePower(originalEnginePower);
        Invoke("SlowDown",5);
@@ -41,6 +48,9 @@ public class PowerUpSpeed : MonoBehaviour
 
     public void SlowDown()
     {
-        boatProbes.setEnginePower(originalEnginePower);
+        Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
+        Debug.Log("MaxSpeed: " + manager.getMaxSpeed());
+        manager.decreaseMaxSpeed(20f);
+        Debug.Log("MaxSpeed: " + manager.getMaxSpeed());
     }
 }

@@ -26,4 +26,18 @@ public class Health_and_Speed_Manager : MonoBehaviour
         actual_speed = maxspeed - maxspeed * (1-health/100);
         boatProbes._enginePower = actual_speed;
     }
+
+    public float getMaxSpeed()
+    {
+        return maxspeed;
+    }
+
+    public void addMaxSpeed(float f)
+    {
+        maxspeed += f;
+    }
+    public void decreaseMaxSpeed(float f)
+    {
+        maxspeed -= f;
+    }
 }

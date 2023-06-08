@@ -42,7 +42,8 @@ public class CannonsTrigger : MonoBehaviour
                 //Qui si ferma la visuale
                 if (playerMovement != null)
                 {
-                    playerMovement.enabled = false; // Disabilita lo script PlayerMovement
+                    //player.GetComponent<Rigidbody>().constraints= RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ; ;
+                    playerMovement.speed = 0;
                 }
                 lockMovement = true;
 
@@ -50,7 +51,6 @@ public class CannonsTrigger : MonoBehaviour
                 {
                     textButton.text = "Click R to reload";
                 }
-
                 else
                 {
                     //Il bottone mostrerà il testo Left click to shoot per sparare
@@ -59,12 +59,11 @@ public class CannonsTrigger : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
             {
-
                 player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = false;
                 //Qui si sblocca la visuale e puo muoversi nuovamente
                 if (playerMovement != null)
                 {
-                    playerMovement.enabled = true; // Disabilita lo script PlayerMovement
+                    playerMovement.speed = 10;
                 }
                 lockMovement = false;
 
@@ -117,8 +116,7 @@ public class CannonsTrigger : MonoBehaviour
                         //Il bottone mostrerà il testo Left click to shoot per sparare
                         textButton.text = "Click E to interact";
                     }
-                }
-                
+                }           
             }
             else
             {
@@ -129,7 +127,6 @@ public class CannonsTrigger : MonoBehaviour
                 }
             }
         }
-     
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -140,8 +137,7 @@ public class CannonsTrigger : MonoBehaviour
             playerMovement = other.GetComponent<PlayerMovement>();
             player = other.gameObject;
             //attivo il bottone che dice "premi E per interagire"
-            button.gameObject.SetActive(true);
-            
+            button.gameObject.SetActive(true);         
         }
     }
 
@@ -186,5 +182,4 @@ public class CannonsTrigger : MonoBehaviour
         //SE VUOI MODIFICARE QUANTO DISTANTI VANNO LE PALLE DI CANNONE MOLTIPICA PER UN VALORE esempio: upwardDirection*upwardForce*5
         rbCannonBall1.AddForce(upwardDirection * upwardForce*3, ForceMode.VelocityChange);
     }
-
 }
