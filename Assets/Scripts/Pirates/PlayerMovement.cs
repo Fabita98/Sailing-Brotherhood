@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     [Header("Ground Check")]
     public LayerMask whatIsGround;
@@ -25,6 +27,16 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsStairs;
     private RaycastHit slopeHit;    
     private bool onStairs;
+
+    [Header("OnSpawnBehaviour")]
+    OnBoardBehaviour onBoardBehaviour;
+    Transform centralShipHatchTransform;
+    private float rangePosition = 0.7f;
+    public override void OnNetworkSpawn()
+    {
+        UpdatePositionServerRpc();
+
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -143,4 +155,14 @@ public class PlayerMovement : MonoBehaviour
         if (!grounded || !onStairs)
             rb.AddForce(Vector3.down * KeepPlayerOnGroundForce, ForceMode.Force);
     }
+    [ServerRpc(RequireOwnership =false)]
+    private void UpdatePositionServerRpc()
+    {
+        base.OnNetworkSpawn();
+        float randomNumberInRange = Random.Range(rangePosition, -rangePosition);
+        GameObject attachedShip = onBoardBehaviour.shipObj;
+        centralShipHatchTransform = attachedShip.transform.Find("Hatch3");
+        transform.position = new Vector3(centralShipHatchTransform.position.x + randomNumberInRange, centralShipHatchTransform.position.y, centralShipHatchTransform.position.z + randomNumberInRange);
+    }
 }
+

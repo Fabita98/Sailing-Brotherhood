@@ -9,7 +9,6 @@ public class LobbyCreateUI : MonoBehaviour {
 
     public static LobbyCreateUI Instance { get; private set; }
 
-
     [SerializeField] private Button createButton;
     [SerializeField] private Button lobbyNameButton;
     [SerializeField] private Button publicPrivateButton;

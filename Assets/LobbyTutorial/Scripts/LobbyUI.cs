@@ -16,12 +16,12 @@ public class LobbyUI : MonoBehaviour {
     [SerializeField] private Transform container;
     [SerializeField] private TextMeshProUGUI lobbyNameText;
     [SerializeField] private TextMeshProUGUI playerCountText;
-    [SerializeField] private TextMeshProUGUI gameModeText;
-    [SerializeField] private Button changeJack_SparrowButton;
-    [SerializeField] private Button changeDavy_JonesButton;
-    [SerializeField] private Button changeBlackbeardButton;
+    //[SerializeField] private TextMeshProUGUI gameModeText;
+    //[SerializeField] private Button changeJack_SparrowButton;
+    //[SerializeField] private Button changeDavy_JonesButton;
+    //[SerializeField] private Button changeBlackbeardButton;
     [SerializeField] private Button leaveLobbyButton;
-    [SerializeField] private Button changeGameModeButton;
+    //[SerializeField] private Button changeGameModeButton;
 
 
     private void Awake() {
@@ -29,23 +29,23 @@ public class LobbyUI : MonoBehaviour {
 
         playerSingleTemplate.gameObject.SetActive(false);
 
-        changeJack_SparrowButton.onClick.AddListener(() => {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Jack_Sparrow);
-        });
-        changeDavy_JonesButton.onClick.AddListener(() => {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Davy_Jones);
-        });
-        changeBlackbeardButton.onClick.AddListener(() => {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Blackbeard);
-        });
+        //changeJack_SparrowButton.onClick.AddListener(() => {
+        //    LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Jack_Sparrow);
+        //});
+        //changeDavy_JonesButton.onClick.AddListener(() => {
+        //    LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Davy_Jones);
+        //});
+        //changeBlackbeardButton.onClick.AddListener(() => {
+        //    LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Blackbeard);
+        //});
 
         leaveLobbyButton.onClick.AddListener(() => {
             LobbyManager.Instance.LeaveLobby();
         });
 
-        changeGameModeButton.onClick.AddListener(() => {
-            LobbyManager.Instance.ChangeGameMode();
-        });
+        //changeGameModeButton.onClick.AddListener(() => {
+        //    LobbyManager.Instance.ChangeGameMode();
+        //});
     }
 
     private void Start() {
@@ -87,11 +87,11 @@ public class LobbyUI : MonoBehaviour {
             lobbyPlayerSingleUI.UpdatePlayer(player);
         }
 
-        changeGameModeButton.gameObject.SetActive(LobbyManager.Instance.IsLobbyHost());
+        //changeGameModeButton.gameObject.SetActive(LobbyManager.Instance.IsLobbyHost());
 
         lobbyNameText.text = lobby.Name;
         playerCountText.text = lobby.Players.Count + "/" + lobby.MaxPlayers;
-        gameModeText.text = lobby.Data[LobbyManager.KEY_GAME_MODE].Value;
+        //gameModeText.text = lobby.Data[LobbyManager.KEY_GAME_MODE].Value;
 
         Show();
     }

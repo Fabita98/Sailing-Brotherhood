@@ -1,18 +1,36 @@
 using QFSW.QC;
+using System;
 using System.Collections.Generic;
+using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class LobbyTest : MonoBehaviour
+
+public class LobbyTest : NetworkBehaviour
 {
+    public static LobbyTest Instance { get; private set; }
     private Lobby hostLobby;
     private Lobby joinedLobby;
     private float heartbeatTimer;
     private float lobbyUpdateTimer;
     private string playerName;
+    public const int maxPlayers = 4;
+
+    public event EventHandler OnReadyChanged;
+
+
+    private Dictionary<ulong, bool> playerReadyDictionary;
+
+    private void Awake()
+    {
+        Instance = this;
+        playerReadyDictionary = new Dictionary<ulong, bool>();
+    }
+
     private async void HandleLobbyHeartbeat()
     {
         if (hostLobby != null)
@@ -45,7 +63,7 @@ public class LobbyTest : MonoBehaviour
 
     private async void Start()
     {
-        playerName = "Jack_Sparrow" + Random.Range(1, 100);
+        playerName = "Jack_Sparrow" + UnityEngine.Random.Range(1, 100);
         await UnityServices.InitializeAsync();
         AuthenticationService.Instance.SignedIn += () =>
         {
@@ -60,13 +78,12 @@ public class LobbyTest : MonoBehaviour
         HandleLobbyPollForUpdate();
     }
 
-    
-    private async void CreateLobby()
+    [Command]
+    public async void CreateLobby()
     {
         try
         {
             string LobbyName = "MyLobby";
-            int maxPlayers = 4;
             CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions()
             {
                 // if true -> not visible with ListLobbies
@@ -78,7 +95,7 @@ public class LobbyTest : MonoBehaviour
                 }
             };
 
-
+            // this for customized lobby creation options
             Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(LobbyName, maxPlayers, createLobbyOptions);
 
             hostLobby = lobby;
@@ -88,40 +105,48 @@ public class LobbyTest : MonoBehaviour
         }
         catch (LobbyServiceException e) { Debug.Log(e); }
     }
-    
+    [Command]
+    public bool IsLobbyHost()
+    {
+        return hostLobby != null && hostLobby.HostId == AuthenticationService.Instance.PlayerId;
+    }
+
+    [Command]
     private async void ListLobbies()
     {
         try
         {
-            QueryLobbiesOptions queryLobbiesOptions = new()
-            {
-                Count = 25,
-                Filters = new List<QueryFilter>
-                {
-                    new QueryFilter(QueryFilter.FieldOptions.AvailableSlots, "0", QueryFilter.OpOptions.GT),
-                    //new QueryFilter(QueryFilter.FieldOptions.S1, "CasualRace",QueryFilter.OpOptions.EQ)
-                    
-                },
-                Order = new List<QueryOrder>
-                {
-                    new QueryOrder(false, QueryOrder.FieldOptions.Created)
-                }
-            };
+            //QueryLobbiesOptions queryLobbiesOptions = new()
+            //{
+            //    Count = 25,
+            //    Filters = new List<QueryFilter>
+            //    {
+            //        new QueryFilter(QueryFilter.FieldOptions.AvailableSlots, "0", QueryFilter.OpOptions.GT),
+            //        //new QueryFilter(QueryFilter.FieldOptions.S1, "CasualRace",QueryFilter.OpOptions.EQ)
 
-            QueryResponse queryResponse = await Lobbies.Instance.QueryLobbiesAsync(queryLobbiesOptions);
+            //    },
+            //    Order = new List<QueryOrder>
+            //    {
+            //        new QueryOrder(false, QueryOrder.FieldOptions.Created)
+            //    }
+            //};
+            // below to filter the lobby
+            //QueryResponse queryResponse = await Lobbies.Instance.QueryLobbiesAsync(queryLobbiesOptions);
 
-            Debug.Log("Lobbies found:" + " " + queryResponse.Results.Count);
+
+            QueryResponse queryResponse = await Lobbies.Instance.QueryLobbiesAsync();
+
+            Debug.Log("Lobbies found: " + queryResponse.Results.Count);
             foreach (Lobby lobby in queryResponse.Results)
             {
-                Debug.Log(lobby.Name + " " + lobby.MaxPlayers + " " + lobby.Data["GameMode"].Value);
+                Debug.Log("Lobby name: " + lobby.Name + " " + "Max players: " +  lobby.MaxPlayers /*+ " " + lobby.Data["GameMode"].Value*/);
             }
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
         }
-    }
-    
+    }    
     private async void JoinLobbyByCode(string lobbyCode)
     {
         try
@@ -138,19 +163,19 @@ public class LobbyTest : MonoBehaviour
             Debug.Log(e);
         }
     }
-    
-    private async void QuickJoinLobby()
+    [Command]
+    public async void QuickJoinLobby()
     {
         try
         {
-            await LobbyService.Instance.QuickJoinLobbyAsync();
+            Lobby joinedLobby = await LobbyService.Instance.QuickJoinLobbyAsync();
+            Debug.Log("Joined lobby: " + joinedLobby.Name);
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
         }
     }
-
     private Player GetPlayer()
     {
         return new Player
@@ -164,13 +189,12 @@ public class LobbyTest : MonoBehaviour
     }
     private void PrintPlayers(Lobby lobby)
     {
-        Debug.Log("Players in lobby named: " + lobby.Name + " " + lobby.Data["GameMode"].Value);
+        Debug.Log("Players in lobby named: " + lobby.Name /*+ " " + lobby.Data["GameMode"].Value*/);
         foreach (Player player in lobby.Players)
         {
             Debug.Log("Player ID: " + player.Id + " " + player.Data["PlayerName"].Value);
         }
     }
-
     
     private async void UpdateLobbyGameMode(string gameMode)
     {
@@ -186,7 +210,7 @@ public class LobbyTest : MonoBehaviour
         }
         catch (LobbyServiceException e) { Debug.Log(e); }
     }
-    
+    [Command]
     private async void UpdatePlayerName(string newPlayerName)
     {
         try
@@ -202,7 +226,7 @@ public class LobbyTest : MonoBehaviour
         }
         catch (LobbyServiceException e) { Debug.Log(e); }
     }
-    
+    [Command]
     private async void LeaveLobby()
     {
         try
@@ -232,12 +256,53 @@ public class LobbyTest : MonoBehaviour
         }
         catch (LobbyServiceException e) { Debug.Log(e); }
     }
-    
-    private async void OnDestroy()
+    [Command]
+    public async void DeleteLobby()
     {
         try 
-        {
-            await LobbyService.Instance.DeleteLobbyAsync(joinedLobby.Id);
+        {      
+          await LobbyService.Instance.DeleteLobbyAsync(hostLobby.Id);
         } catch (LobbyServiceException e) { Debug.Log(e); }
+    }
+    public void SetPlayerReady()
+    {
+        SetPlayerReadyServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetPlayerReadyServerRpc(ServerRpcParams serverRpcParams = default)
+    {
+        SetPlayerReadyClientRpc(serverRpcParams.Receive.SenderClientId);
+
+        playerReadyDictionary[serverRpcParams.Receive.SenderClientId] = true;
+
+        bool allClientsReady = true;
+        foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
+        {
+            if (!playerReadyDictionary.ContainsKey(clientId) || !playerReadyDictionary[clientId])
+            {
+                // This player is NOT ready
+                allClientsReady = false;
+                break;
+            }
+        }
+
+        if (allClientsReady)
+        {
+            LobbyTest.Instance.DeleteLobby();
+            // Race_Net_Test andrà sostituito con la scena finale networkata
+            Loader.LoadNetwork(Loader.Scene.Race_Net_Test);
+        }
+    }
+
+    [ClientRpc]
+    private void SetPlayerReadyClientRpc(ulong clientId)
+    {
+        playerReadyDictionary[clientId] = true;
+        OnReadyChanged?.Invoke(this, EventArgs.Empty);
+    }
+    public bool IsPlayerReady(ulong clientId)
+    {
+        return playerReadyDictionary.ContainsKey(clientId) && playerReadyDictionary[clientId];
     }
 }

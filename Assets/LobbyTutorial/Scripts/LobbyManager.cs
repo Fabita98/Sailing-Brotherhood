@@ -47,15 +47,12 @@ public class LobbyManager : MonoBehaviour {
         Blackbeard
     }
 
-
-
     private float heartbeatTimer;
     private float lobbyPollTimer;
     private float refreshLobbyListTimer = 5f;
     private Lobby joinedLobby;
     private string playerName;
 
-    [Command]
     private void Awake() {
         Instance = this;
     }
@@ -66,7 +63,6 @@ public class LobbyManager : MonoBehaviour {
         HandleLobbyPolling();
     }
 
-    [Command]
     public async void Authenticate(string playerName) {
         this.playerName = playerName;
         InitializationOptions initializationOptions = new InitializationOptions();
@@ -132,17 +128,14 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
-    [Command]
     public Lobby GetJoinedLobby() {
         return joinedLobby;
     }
 
-    [Command]
     public bool IsLobbyHost() {
         return joinedLobby != null && joinedLobby.HostId == AuthenticationService.Instance.PlayerId;
     }
 
-    [Command]
     private bool IsPlayerInLobby() {
         if (joinedLobby != null && joinedLobby.Players != null) {
             foreach (Player player in joinedLobby.Players) {
@@ -155,7 +148,6 @@ public class LobbyManager : MonoBehaviour {
         return false;
     }
 
-    [Command]
     private Player GetPlayer() {
         return new Player(AuthenticationService.Instance.PlayerId, null, new Dictionary<string, PlayerDataObject> {
             { KEY_PLAYER_NAME, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName) },
@@ -163,7 +155,6 @@ public class LobbyManager : MonoBehaviour {
         });
     }
 
-    [Command]
     public void ChangeGameMode() {
         if (IsLobbyHost()) {
             GameMode gameMode =
@@ -183,7 +174,6 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
-    [Command]
     public async void CreateLobby(string lobbyName, int maxPlayers, bool isPrivate, GameMode gameMode) {
         try
         {
@@ -208,7 +198,6 @@ public class LobbyManager : MonoBehaviour {
         } catch (Exception) { };
     }
 
-    [Command]
     public async void RefreshLobbyList() {
         try {
             QueryLobbiesOptions options = new QueryLobbiesOptions();
@@ -237,7 +226,6 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
-    [Command]
     public async void JoinLobbyByCode(string lobbyCode) {
         Player player = GetPlayer();
 
@@ -260,7 +248,6 @@ public class LobbyManager : MonoBehaviour {
         OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
     }
 
-    [Command]
     public async void UpdatePlayerName(string playerName) {
         this.playerName = playerName;
 
@@ -288,7 +275,6 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
-    [Command]
     public async void UpdatePlayerCharacter(PlayerCharacter playerCharacter) {
         if (joinedLobby != null) {
             try {
@@ -314,7 +300,6 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
-    [Command]
     public async void QuickJoinLobby() {
         try {
             QuickJoinLobbyOptions options = new QuickJoinLobbyOptions();
@@ -328,7 +313,6 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
-    [Command]
     public async void LeaveLobby() {
         if (joinedLobby != null) {
             try {
@@ -343,7 +327,6 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
-    [Command]
     public async void KickPlayer(string playerId) {
         if (IsLobbyHost()) {
             try {
@@ -354,7 +337,6 @@ public class LobbyManager : MonoBehaviour {
         }
     }
 
-    [Command]
     public async void UpdateLobbyGameMode(GameMode gameMode) {
         try {
             Debug.Log("UpdateLobbyGameMode " + gameMode);
@@ -372,5 +354,4 @@ public class LobbyManager : MonoBehaviour {
             Debug.Log(e);
         }
     }
-
 }
