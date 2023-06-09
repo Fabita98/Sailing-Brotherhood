@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class OnBoardBehaviour : MonoBehaviour
+public class OnBoardBehaviour : NetworkBehaviour
 {
     //Attached PlayerObject components
     [Header("Attach Player GameObj")]
@@ -14,22 +15,29 @@ public class OnBoardBehaviour : MonoBehaviour
     Vector3 prevEulerAngles;
     Vector3 deltaEulerAngles;        
 
-    //Ship RB
+    //Ship
     private Rigidbody shipRb;
+    [HideInInspector]
+    public GameObject shipObj;
 
+    private void Awake()
+    {
+        
+    }
     void Start() {
         //Init
         prevEulerAngles = new Vector3(0,0,0);
-        // AttachPlayerObj and ShipRb
-        Attach(attachedObject);
+        
         shipRb = GetComponent<Rigidbody>();
+        shipObj = GetComponent<GameObject>();
         
         //Detach when respawning
         //GameObject.Find("UI").GetComponent<PauseMenu>().onRespawn += unAttach;
     }
 
     void Update() {
-        
+        // AttachPlayerObj and ShipRb
+        Attach(attachedObject);
         //Using euler angles
         deltaEulerAngles = (prevEulerAngles - transform.localEulerAngles);
 
@@ -43,7 +51,6 @@ public class OnBoardBehaviour : MonoBehaviour
     }
 
     private void FixedUpdate() {
-
         //Adjust velocity
         if (attachedObject != null)
         {

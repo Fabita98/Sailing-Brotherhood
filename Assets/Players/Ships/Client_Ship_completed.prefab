@@ -1997,7 +1997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6591393792427977486, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
       propertyPath: m_Name
-      value: Ship_completed
+      value: Client_Ship_completed
       objectReference: {fileID: 0}
     - target: {fileID: 6591393792427977486, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
       propertyPath: m_IsActive
@@ -2490,7 +2490,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6591393792427977486, guid: fe4f8fee18ebe4a4eb82f7ca554ea916, type: 3}
   m_PrefabInstance: {fileID: 790651091599788476}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-2094009934020233474
+--- !u!114 &-7328008747950733291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2499,7 +2499,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5873152693177344690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
@@ -2545,7 +2545,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &-6274977282430104609
+--- !u!114 &-5689337785455037198
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

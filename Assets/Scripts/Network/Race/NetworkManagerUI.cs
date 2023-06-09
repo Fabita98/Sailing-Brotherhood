@@ -1,61 +1,22 @@
 
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace Network
+public class NetworkManagerUI : MonoBehaviour
 {
-    public class NetworkManagerUI : MonoBehaviour
+    [SerializeField] private Button clientBtn;
+    [SerializeField] private Button hostBtn;
+
+    private void Awake()
     {
-        void OnGUI()
+        hostBtn.onClick.AddListener(() =>
         {
-            GUILayout.BeginArea(new Rect(1300, 100, 500, 1000));
-            if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer)
-            {
-                StartButtons();
-            }
-            else
-            {
-                StatusLabels();
-
-                SubmitNewPosition();
-            }
-
-            GUILayout.EndArea();
-        }
-
-        static void StartButtons()
+            NetworkManager.Singleton.StartHost();
+        });
+        clientBtn.onClick.AddListener(() =>
         {
-            if (GUILayout.Button("Host")) NetworkManager.Singleton.StartHost();
-            if (GUILayout.Button("Client")) NetworkManager.Singleton.StartClient();
-            if (GUILayout.Button("Server")) NetworkManager.Singleton.StartServer();
-        }
-
-        static void StatusLabels()
-        {
-            var mode = NetworkManager.Singleton.IsHost ?
-                "Host" : NetworkManager.Singleton.IsServer ? "Server" : "Client";
-
-            GUILayout.Label("Transport: " +
-                NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetType().Name);
-            GUILayout.Label("Mode: " + mode);
-        }
-
-        static void SubmitNewPosition()
-        {
-            if (GUILayout.Button(NetworkManager.Singleton.IsServer ? "Move" : "Request Position Change"))
-            {
-                if (NetworkManager.Singleton.IsServer && !NetworkManager.Singleton.IsClient )
-                {
-                    foreach (ulong uid in NetworkManager.Singleton.ConnectedClientsIds)
-                        NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(uid).GetComponent<NetworkManagerPlayer>().Move();
-                }
-                else
-                {
-                    var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
-                    var player = playerObject.GetComponent<NetworkManagerPlayer>();
-                    player.Move();
-                }
-            }
-        }
+            NetworkManager.Singleton.StartClient();
+        });
     }
 }
