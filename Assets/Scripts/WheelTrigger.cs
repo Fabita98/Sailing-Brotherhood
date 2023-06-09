@@ -127,6 +127,7 @@ public class WheelTrigger : MonoBehaviour
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
             player = other.gameObject;
             playerMovement = other.GetComponent<PlayerMovement>();
+            enableOutline();
         }
     }
 
@@ -137,7 +138,21 @@ public class WheelTrigger : MonoBehaviour
             player = null;
             cont = 0;
             playerMovement = null;
+
+            disableOutline();
         }
+    }
+
+    public void enableOutline()
+    {
+        Outline outline = wheel.GetComponent<Outline>();
+        outline.enabled = true;
+    }
+
+    public void disableOutline()
+    {
+        Outline outline = wheel.GetComponent<Outline>();
+        outline.enabled = false;
     }
 
 }

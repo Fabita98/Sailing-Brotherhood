@@ -9,7 +9,7 @@ public class CannonsTrigger : MonoBehaviour
     private int cont;
     private bool lockMovement;
     private PlayerMovement playerMovement;
-    public GameObject cannon1, cannon2, cannon3, cannon4, cannon5;
+    public GameObject cannon1, cannon2, cannon3, cannon4, cannon5,cannon6;
     public int cannonBallSpeed = 10;
     private bool shooted;
 
@@ -89,6 +89,7 @@ public class CannonsTrigger : MonoBehaviour
                 shooting(cannon3, upwardDirection);
                 shooting(cannon4, upwardDirection);
                 shooting(cannon5, upwardDirection);
+                shooting(cannon6, upwardDirection);
 
                 shooted = true;
 
@@ -137,7 +138,14 @@ public class CannonsTrigger : MonoBehaviour
             playerMovement = other.GetComponent<PlayerMovement>();
             player = other.gameObject;
             //attivo il bottone che dice "premi E per interagire"
-            button.gameObject.SetActive(true);         
+            button.gameObject.SetActive(true);
+
+            enableOutline(cannon1);
+            enableOutline(cannon2);
+            enableOutline(cannon3);
+            enableOutline(cannon4);
+            enableOutline(cannon5);
+            enableOutline(cannon6);
         }
     }
 
@@ -150,6 +158,13 @@ public class CannonsTrigger : MonoBehaviour
             //Se esce disattivo il bottone e la variabile entered e falsa
             button.gameObject.SetActive(false);
             entered = false;
+
+            disableOutline(cannon1);
+            disableOutline(cannon2);
+            disableOutline(cannon3);
+            disableOutline(cannon4);
+            disableOutline(cannon5);
+            disableOutline(cannon6);
         }
     }
 
@@ -181,5 +196,16 @@ public class CannonsTrigger : MonoBehaviour
         //Aggiungo una forza verticale
         //SE VUOI MODIFICARE QUANTO DISTANTI VANNO LE PALLE DI CANNONE MOLTIPICA PER UN VALORE esempio: upwardDirection*upwardForce*5
         rbCannonBall1.AddForce(upwardDirection * upwardForce*3, ForceMode.VelocityChange);
+    }
+    public void enableOutline(GameObject cannon)
+    {
+        Outline outline = cannon.GetComponent<Outline>();
+        outline.enabled = true;
+    }
+
+    public void disableOutline(GameObject cannon)
+    {
+        Outline outline = cannon.GetComponent<Outline>();
+        outline.enabled = false;
     }
 }
