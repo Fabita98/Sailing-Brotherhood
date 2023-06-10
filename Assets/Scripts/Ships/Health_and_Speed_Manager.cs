@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Health_and_Speed_Manager : MonoBehaviour
 {
     public float health, maxspeed, actual_speed;
     public GameObject my_ship;
     Crest.BoatProbes boatProbes;
+    public Image HealthBar, SpeedBar;
+    public Text SpeedValue;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,10 @@ public class Health_and_Speed_Manager : MonoBehaviour
         if (maxspeed > 50) maxspeed = 50;
         actual_speed = maxspeed - maxspeed * (1-health/100);
         boatProbes._enginePower = actual_speed;
+        HealthBar.fillAmount = health / 100;
+        SpeedBar.fillAmount = actual_speed / 50;
+
+        SpeedValue.text = actual_speed.ToString();
     }
 
     public float getMaxSpeed()
