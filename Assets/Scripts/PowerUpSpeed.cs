@@ -33,24 +33,22 @@ public class PowerUpSpeed : MonoBehaviour
             ship = shipCompleted.gameObject;
             Debug.Log("other" + other.name);
             Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
-            manager.addMaxSpeed(40f);
+            manager.addMaxSpeed(20f);
 
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        
-        //yield return new WaitForSeconds(5);
-        //boatProbes.setEnginePower(originalEnginePower);
-       Invoke("SlowDown",5);
+        if (other.tag == "Ship")
+        {
+            Invoke("SlowDown", 5);
+        }
     }
 
     public void SlowDown()
     {
         Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
-        Debug.Log("MaxSpeed: " + manager.getMaxSpeed());
         manager.decreaseMaxSpeed(20f);
-        Debug.Log("MaxSpeed: " + manager.getMaxSpeed());
     }
 }

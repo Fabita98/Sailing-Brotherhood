@@ -9,6 +9,7 @@ public class Sail_Manager : MonoBehaviour
     Health_and_Speed_Manager hs;
     bool entered = false;
     int count = 0;
+    public GameObject mast;
     // need to be liked to 
     void Start()
     {
@@ -36,7 +37,9 @@ public class Sail_Manager : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player") { count++; entered = true; }
+        if (other.tag == "Player") { count++; entered = true;
+            enableOutline();
+        }
    
     }
 
@@ -46,8 +49,20 @@ public class Sail_Manager : MonoBehaviour
         if (other.tag == "Player") { count--; if (count == 0)
             {
                 entered = false;
+                disableOutline();
             }
         }
+        
+    }
+    public void enableOutline()
+    {
+        Outline outline = mast.GetComponent<Outline>();
+        outline.enabled = true;
+    }
 
+    public void disableOutline()
+    {
+        Outline outline = mast.GetComponent<Outline>();
+        outline.enabled = false;
     }
 }

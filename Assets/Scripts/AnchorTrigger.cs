@@ -18,7 +18,7 @@ public class AnchorTrigger : MonoBehaviour
     private bool entered;
     private PlayerMovement playerMovement;
     private bool lockMovement;
-    private bool start;
+    public bool start;
 
     private void Start()
     {
@@ -29,7 +29,7 @@ public class AnchorTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-        //Verifico se ha schiacciato spazio 120 volte per vedere se l'ancora e sollevata
+        //Verifico se ha schiacciato spazio 10 volte per vedere se l'ancora e sollevata
         if (cont < 10)
         {
             // Verifico se e entrato un GameObject di tipo player
@@ -92,6 +92,7 @@ public class AnchorTrigger : MonoBehaviour
                 anchor.transform.position = anchor.transform.position + new Vector3(0, movementSpeed, 0);
                 if (cont % 3 == 0)
                 {
+                    
                     Destroy(anchor.transform.GetChild(child).gameObject);
                     child--;
                 }
@@ -99,7 +100,7 @@ public class AnchorTrigger : MonoBehaviour
                 if (cont == 10 && start==false)
                 {
                     Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
-                    manager.addMaxSpeed(10f);
+                    manager.addMaxSpeed(8f);
 
                     button.gameObject.SetActive(false);
                     entered = false;
@@ -118,13 +119,18 @@ public class AnchorTrigger : MonoBehaviour
 
     public void enableOutline()
     {
-        Outline outline = anchor.GetComponent<Outline>();
-        outline.enabled = true;
+     
+            Outline outline = anchor.GetComponent<Outline>();
+            outline.enabled = true;
+       
     }
 
     public void disableOutline()
     {
-        Outline outline = anchor.GetComponent<Outline>();
-        outline.enabled = false;
+     
+        
+            Outline outline = anchor.GetComponent<Outline>();
+            outline.enabled = false;
+        
     }
 }
