@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Terrain
   - Ship
+  - CannonBall
   layers:
   - Default
   - TransparentFX

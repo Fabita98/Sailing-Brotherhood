@@ -185,6 +185,7 @@ public class CannonsTrigger : MonoBehaviour
         Vector3 spawnPosition = cannon.transform.position + cannon.transform.right * spawnDistance + Vector3.up * spawnHeight;
         //Instanziamento della palla
         GameObject cannonBall1 = Instantiate(cannonBall, spawnPosition, cannon.transform.rotation);
+        cannonBall1.tag = "CannonBall";
         //Prendo lo script associato alla palla per cambiare la direzione
         CannonBall cannonBallScript1 = cannonBall1.GetComponent<CannonBall>();
         //Cambio la direzione

@@ -298,9 +298,61 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1318536651644745062, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 1775548401029854570, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939785840400640159, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 3473141218017029701, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     - target: {fileID: 4174557834266586447, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_Name
       value: Map
+      objectReference: {fileID: 0}
+    - target: {fileID: 4819785925575539840, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 4836808545398318018, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5672832587707325409, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5905369507218484381, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5947047640115432142, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954283830183030592, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 6132929744360217282, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554838318073428745, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 7986381109467756814, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
       objectReference: {fileID: 0}
     - target: {fileID: 8320004797422531154, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_RootOrder
