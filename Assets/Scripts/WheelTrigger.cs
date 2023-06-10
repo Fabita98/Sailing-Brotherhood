@@ -38,7 +38,7 @@ public class WheelTrigger : MonoBehaviour
             {
                 player.transform.rotation = wheel.transform.rotation * Quaternion.Euler(0, 0, 0);
 
-                player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = true;
+               
                 float distance = 2;
                 player.transform.position = wheel.transform.position - wheel.transform.forward * distance;
                 //Qui si ferma la visuale

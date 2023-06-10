@@ -119,12 +119,17 @@ public class AnchorTrigger : MonoBehaviour
     public void enableOutline()
     {
         Outline outline = anchor.GetComponent<Outline>();
-        outline.enabled = true;
-    }
+        if (outline != null)
+        {
+            outline.enabled = true;
 
+        }
+    }
     public void disableOutline()
     {
         Outline outline = anchor.GetComponent<Outline>();
+        if (outline != null) { 
         outline.enabled = false;
+        }
     }
 }

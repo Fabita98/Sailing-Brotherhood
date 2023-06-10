@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PowerUpSpeed : MonoBehaviour
 {
-    GameObject ship;
+    private GameObject ship;
     [SerializeField] private Vector3 _rotation;
     // Start is called before the first frame update
     void Start()
