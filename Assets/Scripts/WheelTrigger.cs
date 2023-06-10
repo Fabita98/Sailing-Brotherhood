@@ -45,7 +45,7 @@ public class WheelTrigger : MonoBehaviour
                 if (playerMovement != null)
                 {
                     //playerMovement.enabled = false;
-                    playerMovement.speed=0;
+                    playerMovement.LockMovement();
 
                     // Disabilita lo script PlayerMovement
                 }
@@ -57,7 +57,7 @@ public class WheelTrigger : MonoBehaviour
                 if (playerMovement != null)
                 {
                     //playerMovement.enabled = true; // Disabilita lo script PlayerMovement
-                    playerMovement.speed = 10;
+                    playerMovement.UnlockMovement();
 
                 }
                 lockMovement = false;

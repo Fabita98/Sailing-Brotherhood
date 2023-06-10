@@ -28,46 +28,20 @@ public class BarrelTrigger : MonoBehaviour
     {
         if (entered == true)
         {
-            if (Input.GetKeyDown(KeyCode.E) && lockMovement == false)
-            {
-                player.transform.rotation = transform.rotation * Quaternion.Euler(0, 90, 0);
-                if (playerMovement != null)
-                {
-                    //player.GetComponent<Rigidbody>().constraints= RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ; ;
-                    playerMovement.speed = 0;
-                }
-                lockMovement = true;
-                if (cont > 0) { 
-                textButton.text = "Number of barrels: "+cont+"\n"+"Press R to release one barrel";
-                }
-                else
-                {
-                    textButton.text = "Number of barrels: " + cont;
-                }
+            if (Input.GetKeyDown(KeyCode.E) && cont==0)
+            {   
+                    textButton.text = "Number of barrels: " + cont;                
             }
-            else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
-            {
-               
-                if (playerMovement != null)
-                {
-                    playerMovement.speed = 10;
-                }
-                lockMovement = false;
-                //Il bottone mostrerà il testo Click E to interact per sparare
-                textButton.text = "Number of barrels: " + cont + "\n" + "Click E to interact";             
-            }
-            else if(Input.GetKeyDown(KeyCode.R)&&cont>0 && lockMovement == true)
+            
+            else if(Input.GetKeyDown(KeyCode.E)&&cont>0)
             {
                 //qua rilascia il barile
                 cont--;
-                textButton.text = "Number of barrels: " + cont;
+                textButton.text = "Number of barrels: "+cont+"\n"+"Press E to release one barrel";
                 //la distanza da cui deve spawnare il barile dietro la nave
                 float spawnDistance = 10f;
                 //l'altezza da cui deve partire(altrimenti parte sotto la barca)
-                float spawnHeight = 1f;
-               
-                //Dove guarda il giocatore
-                //Vector3 upwardDirection = cameraPlayer.transform.up;
+                float spawnHeight = 1f;       
 
                 //posizione in cui spawnare la palla
                 Vector3 spawnPosition = transform.position + -barrel.transform.forward * spawnDistance + Vector3.up * spawnHeight;
@@ -75,19 +49,7 @@ public class BarrelTrigger : MonoBehaviour
                 GameObject barrel1 = Instantiate(barrel, spawnPosition, transform.rotation);
                 barrel1.AddComponent<Rigidbody>();
                 barrel1.AddComponent<BoatAlignNormal>();
-                barrel1.tag = "Barrel";
-                /*Prendo lo script associato alla palla per cambiare la direzione
-                CannonBall cannonBallScript1 = cannonBall1.GetComponent<CannonBall>();
-                //Cambio la direzione
-                cannonBallScript1.direction = cannon.transform.right;
-                //Prendo il rigidbody della palla
-                Rigidbody rbCannonBall1 = cannonBall1.GetComponent<Rigidbody>();
-                //Aggiungo una forza orizzontale
-                rbCannonBall1.AddForce(cannonBallScript1.direction * cannonBallSpeed, ForceMode.VelocityChange);
-                //Aggiungo una forza verticale
-                //SE VUOI MODIFICARE QUANTO DISTANTI VANNO LE PALLE DI CANNONE MOLTIPICA PER UN VALORE esempio: upwardDirection*upwardForce*5
-                rbCannonBall1.AddForce(upwardDirection * upwardForce * 3, ForceMode.VelocityChange);
-                */
+                barrel1.tag = "Barrel";               
             }
         }
     }

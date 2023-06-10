@@ -32,10 +32,12 @@ public class PlayerMovement : NetworkBehaviour
     OnBoardBehaviour onBoardBehaviour;
     Transform centralShipHatchTransform;
     private float rangePosition = 0.7f;
+
+    private bool lockMovement = false;
     public override void OnNetworkSpawn()
     {
         UpdatePositionServerRpc();
-
+        //lockMovement = false;
     }
 
     // Start is called before the first frame update
@@ -104,6 +106,12 @@ public class PlayerMovement : NetworkBehaviour
     // Rb.velocity movement according to the pressed keys and their relative axes
     void MovePlayerRelativeToCamera()
     {
+        if (lockMovement)
+        {
+            rb.velocity = Vector3.zero;
+            return;
+        }
+
         float playerHorizontalInput = Input.GetAxis("Horizontal");
         float playerVerticalInput = Input.GetAxis("Vertical");
         Vector3 forward = PlayerCamera.transform.forward;
@@ -164,5 +172,16 @@ public class PlayerMovement : NetworkBehaviour
         centralShipHatchTransform = attachedShip.transform.Find("Hatch3");
         transform.position = new Vector3(centralShipHatchTransform.position.x + randomNumberInRange, centralShipHatchTransform.position.y, centralShipHatchTransform.position.z + randomNumberInRange);
     }
+
+    public void LockMovement()
+    {
+        lockMovement = true;
+    }
+
+    public void UnlockMovement()
+    {
+        lockMovement = false;
+    }
+
 }
 
