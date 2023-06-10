@@ -41,6 +41,7 @@ public class AnchorTrigger : MonoBehaviour
                 button.gameObject.SetActive(true);
                 //la variabile booleana=true indica che il giocatore e dentro il cilindro
                 entered = true;
+                enableOutline();
             }
             //Se non è vicino all'ancora allora non lo vede
         }
@@ -54,6 +55,8 @@ public class AnchorTrigger : MonoBehaviour
             button.gameObject.SetActive(false);
             entered = false;
             playerMovement = null;
+
+            disableOutline();
         }
         
     }
@@ -111,5 +114,17 @@ public class AnchorTrigger : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void enableOutline()
+    {
+        Outline outline = anchor.GetComponent<Outline>();
+        outline.enabled = true;
+    }
+
+    public void disableOutline()
+    {
+        Outline outline = anchor.GetComponent<Outline>();
+        outline.enabled = false;
     }
 }
