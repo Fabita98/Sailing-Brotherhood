@@ -43,7 +43,7 @@ public class AnchorTrigger : MonoBehaviour
                 entered = true;
                 enableOutline();
             }
-            //Se non è vicino all'ancora allora non lo vede
+            //Se non ï¿½ vicino all'ancora allora non lo vede
         }
     }
 
@@ -124,7 +124,6 @@ public class AnchorTrigger : MonoBehaviour
             outline.enabled = true;
        
     }
-
     public void disableOutline()
     {
      

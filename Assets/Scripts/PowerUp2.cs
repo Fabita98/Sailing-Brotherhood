@@ -6,7 +6,7 @@ using UnityEngine;
 public class PowerUp2 : MonoBehaviour
 {
     [SerializeField] private Vector3 _rotation;
-    public GameObject barrel;
+    private GameObject ship;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,8 +23,13 @@ public class PowerUp2 : MonoBehaviour
     {
         if (other.tag == "Ship")
         {
-            GameObject newObject = Instantiate(barrel,other.transform.position,Quaternion.identity);
-            newObject.transform.parent = other.transform;
+            GameObject shipBody = other.transform.parent.gameObject;
+            GameObject shipComponent = shipBody.transform.parent.gameObject;
+            GameObject shipCompleted = shipComponent.transform.parent.gameObject;
+            ship = shipCompleted.gameObject;
+            GameObject barrelTrigger = shipCompleted.transform.Find("Power-upBarrelDetection").gameObject;
+            BarrelTrigger barrel = barrelTrigger.GetComponent<BarrelTrigger>();
+            barrel.addBarrel(3);
         }
     }
 
