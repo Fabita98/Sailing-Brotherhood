@@ -3,10 +3,7 @@ guid: 1cd64edcae3f782449f3ea1e84adcda5
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - marineSprite: {fileID: 21300000, guid: ec1c53200d7e385428ee41fb94009d87, type: 3}
-  - ninjaSprite: {instanceID: 0}
-  - zombieSprite: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

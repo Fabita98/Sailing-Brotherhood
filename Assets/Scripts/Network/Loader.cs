@@ -6,22 +6,19 @@ using UnityEngine.SceneManagement;
 
 public static class Loader {
 
-
     public enum Scene {
-        //MainMenuScene,
-        Race_Net_Test,
-        EndRace,
-        LoadingScene,
+        MainTitle,
         Lobby,
+        Race_Net_Test,               
+        Race,
+        EndRace,
     }
-
 
     private static Scene targetScene;
 
     public static void Load(Scene targetScene) {
         Loader.targetScene = targetScene;
-
-        SceneManager.LoadScene(Scene.LoadingScene.ToString());
+        SceneManager.LoadScene(Scene.MainTitle.ToString());
     }
 
     public static void LoadNetwork(Scene targetScene) {

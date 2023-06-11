@@ -1,4 +1,3 @@
-using QFSW.QC;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,21 +36,24 @@ public class LobbyManager : MonoBehaviour {
 
 
     public enum GameMode {
-        CasualRace,
-        GuildRace
+        CaptureTheFlag,
+        Conquest
     }
 
     public enum PlayerCharacter {
-        Jack_Sparrow,
-        Davy_Jones,
-        Blackbeard
+        Marine,
+        Ninja,
+        Zombie
     }
+
+
 
     private float heartbeatTimer;
     private float lobbyPollTimer;
     private float refreshLobbyListTimer = 5f;
     private Lobby joinedLobby;
     private string playerName;
+
 
     private void Awake() {
         Instance = this;
@@ -72,7 +74,7 @@ public class LobbyManager : MonoBehaviour {
 
         AuthenticationService.Instance.SignedIn += () => {
             // do nothing
-            Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId + " as: " + playerName);
+            Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId);
 
             RefreshLobbyList();
         };
@@ -151,7 +153,7 @@ public class LobbyManager : MonoBehaviour {
     private Player GetPlayer() {
         return new Player(AuthenticationService.Instance.PlayerId, null, new Dictionary<string, PlayerDataObject> {
             { KEY_PLAYER_NAME, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName) },
-            { KEY_PLAYER_CHARACTER, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, PlayerCharacter.Jack_Sparrow.ToString()) }
+            { KEY_PLAYER_CHARACTER, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, PlayerCharacter.Marine.ToString()) }
         });
     }
 
@@ -162,11 +164,11 @@ public class LobbyManager : MonoBehaviour {
 
             switch (gameMode) {
                 default:
-                case GameMode.CasualRace:
-                    gameMode = GameMode.CasualRace;
+                case GameMode.CaptureTheFlag:
+                    gameMode = GameMode.Conquest;
                     break;
-                case GameMode.GuildRace:
-                    gameMode = GameMode.GuildRace;
+                case GameMode.Conquest:
+                    gameMode = GameMode.CaptureTheFlag;
                     break;
             }
 
@@ -175,27 +177,23 @@ public class LobbyManager : MonoBehaviour {
     }
 
     public async void CreateLobby(string lobbyName, int maxPlayers, bool isPrivate, GameMode gameMode) {
-        try
-        {
-            Player player = GetPlayer();
+        Player player = GetPlayer();
 
-            CreateLobbyOptions options = new CreateLobbyOptions
-            {
-                Player = player,
-                IsPrivate = isPrivate,
-                Data = new Dictionary<string, DataObject> {
+        CreateLobbyOptions options = new CreateLobbyOptions {
+            Player = player,
+            IsPrivate = isPrivate,
+            Data = new Dictionary<string, DataObject> {
                 { KEY_GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, gameMode.ToString()) }
             }
-            };
+        };
 
-            Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
+        Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
 
-            joinedLobby = lobby;
+        joinedLobby = lobby;
 
-            OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+        OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
 
-            Debug.Log("Created Lobby " + lobby.Name);
-        } catch (Exception) { };
+        Debug.Log("Created Lobby " + lobby.Name);
     }
 
     public async void RefreshLobbyList() {
@@ -237,7 +235,7 @@ public class LobbyManager : MonoBehaviour {
 
         OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
     }
-        
+
     public async void JoinLobby(Lobby lobby) {
         Player player = GetPlayer();
 
@@ -354,4 +352,5 @@ public class LobbyManager : MonoBehaviour {
             Debug.Log(e);
         }
     }
+
 }
