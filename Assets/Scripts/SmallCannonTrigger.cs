@@ -67,6 +67,7 @@ public class SmallCannonTrigger : MonoBehaviour
                 ball = cannonBall1;
                 Invoke("disableEffects", 3);
 
+                //Qua bisogna prendere il riferimento alla Healt dell'altra barca e togliere il danno.
             }
         }
     }

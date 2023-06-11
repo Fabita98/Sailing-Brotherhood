@@ -92,7 +92,7 @@ public class CannonsTrigger : MonoBehaviour
                 Camera cameraPlayer = player.GetComponentInChildren<Camera>();
                 Vector3 upwardDirection = cameraPlayer.transform.forward;
 
-                shooting(cannon1,upwardDirection);
+                shooting(cannon1, upwardDirection);
                 shooting(cannon2, upwardDirection);
                 shooting(cannon3, upwardDirection);
                 shooting(cannon4, upwardDirection);
