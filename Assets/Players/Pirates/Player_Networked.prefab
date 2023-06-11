@@ -894,7 +894,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1310790324952283952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e67661d327cfce449a7aae69e62ab9d, type: 3}
+  m_Script: {fileID: 11500000, guid: e8b5040f15040cc4db9b314809c9cf50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatIsGround:
@@ -905,11 +905,12 @@ MonoBehaviour:
   PlayerCamera: {fileID: 5564183779765600337}
   cameraRelativeMovement: {x: 0, y: 0, z: 0}
   maxSlopeAngle: 45
-  onSlopeForceMultiplier: 20
+  onSlopeForceMultiplier: 30
   pushDownForceOnSlope: 80
   whatIsStairs:
     serializedVersion: 2
     m_Bits: 64
+  spawnPositionList: []
 --- !u!114 &755282214545352517
 MonoBehaviour:
   m_ObjectHideFlags: 0

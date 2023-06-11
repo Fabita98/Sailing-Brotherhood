@@ -24,7 +24,7 @@ public class SailingBrotherhoodManager : NetworkBehaviour {
         GameOver,
     }
 
-
+    // prefabs to spawn once entered in game
     [SerializeField] private Transform playerPrefab;
 
 
@@ -61,7 +61,7 @@ public class SailingBrotherhoodManager : NetworkBehaviour {
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;
         }
     }
-
+    //Spawns prefab only if game scene is correctly loaded
     private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut) {
         foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds) {
             Transform playerTransform = Instantiate(playerPrefab);

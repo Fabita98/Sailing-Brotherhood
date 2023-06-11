@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
-
+//This script works like the KitchenChaosMultiplayer but we have only lobby and then Race_scene
 public class LobbyTest : NetworkBehaviour
 {
     public static LobbyTest Instance { get; private set; }
@@ -26,16 +26,23 @@ public class LobbyTest : NetworkBehaviour
     private float refreshLobbyListTimer = 5f;
     private string playerName;
     public const int maxPlayers = 4;
+    private NetworkList<PlayerData> playerDataNetworkList;
 
-    public event EventHandler OnLeftLobby;
+
+    public event EventHandler OnJoinStarted;    
+    public event EventHandler OnTryingToJoinGame;
+
+    public event EventHandler OnFailedToJoinGame;
     public event EventHandler<LobbyEventArgs> OnJoinedLobby;
     public event EventHandler<LobbyEventArgs> OnJoinedLobbyUpdate;
+    public event EventHandler OnLeftLobby;
+
     public event EventHandler OnCreateLobbyStarted;
     public event EventHandler OnCreateLobbyFailed;
-    public event EventHandler OnJoinStarted;
-    public event EventHandler OnQuickJoinFailed;
-    public event EventHandler OnJoinFailed;
+    
     public event EventHandler OnReadyChanged;
+
+    public event EventHandler OnPlayerDataNetworkListChanged;
     public class LobbyEventArgs : EventArgs
     {
         public Lobby lobby;
@@ -52,7 +59,12 @@ public class LobbyTest : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(gameObject);  // Do not destroy LobbyTest when changing scene
+
+
         playerReadyDictionary = new Dictionary<ulong, bool>();
+        playerDataNetworkList = new NetworkList<PlayerData>();
+        playerDataNetworkList.OnListChanged += PlayerDataNetworkList_OnListChanged;
     }
     private void Update()
     {
@@ -154,6 +166,9 @@ public class LobbyTest : NetworkBehaviour
             hostLobby = lobby;
             joinedLobby = hostLobby;
             OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+            NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
+            NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
+            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
             NetworkManager.Singleton.StartHost();
 
             Debug.Log("You are the Host of the Lobby: " + lobby.Name + " Max Players: " + lobby.MaxPlayers + " Lobby ID: " + lobby.Id + " Lobby Code: " + lobby.LobbyCode);
@@ -161,7 +176,34 @@ public class LobbyTest : NetworkBehaviour
         }
         catch (LobbyServiceException e) { Debug.Log(e); }
     }
-    
+
+    [Command]
+    public async void QuickJoinLobby()
+    {
+        OnJoinStarted?.Invoke(this, EventArgs.Empty);
+        try
+        {
+            QuickJoinLobbyOptions options = new QuickJoinLobbyOptions();
+
+            Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync(options);
+            joinedLobby = lobby;
+            OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+            Debug.Log(" You have just joined the lobby " + joinedLobby.Name + " as a client");
+
+            OnTryingToJoinGame?.Invoke(this, EventArgs.Empty);
+            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
+            NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
+            NetworkManager.Singleton.StartClient();
+
+            //PrintPlayers(joinedLobby); not working because polling is every 1s
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+            OnFailedToJoinGame?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
     [Command]
     public bool IsLobbyHost()
     {
@@ -247,30 +289,7 @@ public class LobbyTest : NetworkBehaviour
         {
             Debug.Log(e);
         }
-    }
-
-    [Command]
-    public async void QuickJoinLobby()
-    {
-        OnJoinStarted?.Invoke(this, EventArgs.Empty);
-        try
-        {
-            QuickJoinLobbyOptions options = new QuickJoinLobbyOptions();
-
-            Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync(options);          
-            joinedLobby = lobby;
-            OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
-            Debug.Log(" You have just joined the lobby " + joinedLobby.Name + " as a client");
-            NetworkManager.Singleton.StartClient();
-
-            //PrintPlayers(joinedLobby); not working because polling is every 1s
-        }
-        catch (LobbyServiceException e)
-        {
-            Debug.Log(e);
-            OnQuickJoinFailed?.Invoke(this, EventArgs.Empty);
-        }
-    }
+    }   
 
     private Player GetPlayer()
     {
@@ -282,6 +301,10 @@ public class LobbyTest : NetworkBehaviour
                         { "PlayerName",new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, playerName ) }
                     }
         };
+    }
+    public string GetPlayerName()
+    {
+        return playerName;
     }
 
     [Command]
@@ -395,13 +418,15 @@ public class LobbyTest : NetworkBehaviour
         return playerReadyDictionary.ContainsKey(clientId) && playerReadyDictionary[clientId];
     }
 
-    //Method taken from SailingBrotherhoodMultiplayer but corrected
+
+    //Method taken from SailingBrotherhoodMultiplayer but corrected: Max 4 pLayers can join only when in lobby scene 
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
     {
         if (SceneManager.GetActiveScene().name != Loader.Scene.Lobby.ToString())
         {
             connectionApprovalResponse.Approved = false;
             connectionApprovalResponse.Reason = "Game has already started";
+            Debug.Log("The game has already started");
             return;
         }
 
@@ -409,12 +434,83 @@ public class LobbyTest : NetworkBehaviour
         {
             connectionApprovalResponse.Approved = false;
             connectionApprovalResponse.Reason = "Game is full";
+            Debug.Log("The game lobby is full");
             return;
         }
+        connectionApprovalResponse.Approved = true;
+
+    }
+    private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
+    {
+        OnFailedToJoinGame?.Invoke(this, EventArgs.Empty);
+    }
+    private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)
+    {
+        SetPlayerNameServerRpc(GetPlayerName());
+        SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
+    }
+
+    //Destroy the objects related to the disconnected player
+    private void PlayerDataNetworkList_OnListChanged(NetworkListEvent<PlayerData> changeEvent)
+    {
+        OnPlayerDataNetworkListChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void NetworkManager_OnClientConnectedCallback(ulong clientId)
+    {
+        playerDataNetworkList.Add(new PlayerData
+        {
+            clientId = clientId,
+        });
+    }
+    private void NetworkManager_Server_OnClientDisconnectCallback(ulong clientId)
+    {
+        for (int i = 0; i < playerDataNetworkList.Count; i++)
+        {
+            PlayerData playerData = playerDataNetworkList[i];
+            if (playerData.clientId == clientId)
+            {
+                // Disconnected!
+                playerDataNetworkList.RemoveAt(i);
+            }
+        }
+    }
+    public int GetPlayerDataIndexFromClientId(ulong clientId)
+    {
+        for (int i = 0; i < playerDataNetworkList.Count; i++)
+        {
+            if (playerDataNetworkList[i].clientId == clientId)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void SetPlayerNameServerRpc(string playerName, ServerRpcParams serverRpcParams = default)
+    {
+        int playerDataIndex = GetPlayerDataIndexFromClientId(serverRpcParams.Receive.SenderClientId);
+
+        PlayerData playerData = playerDataNetworkList[playerDataIndex];
+
+        playerData.playerName = playerName;
+
+        playerDataNetworkList[playerDataIndex] = playerData;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetPlayerIdServerRpc(string playerId, ServerRpcParams serverRpcParams = default)
+    {
+        int playerDataIndex = GetPlayerDataIndexFromClientId(serverRpcParams.Receive.SenderClientId);
+
+        PlayerData playerData = playerDataNetworkList[playerDataIndex];
+
+        playerData.playerId = playerId;
+
+        playerDataNetworkList[playerDataIndex] = playerData;
     }
 
 
-    [Command]
     private async void MigrateLobbyHost()
     {
         // Customized host selection after host has left

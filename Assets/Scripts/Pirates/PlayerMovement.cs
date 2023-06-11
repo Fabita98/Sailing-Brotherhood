@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -32,10 +33,28 @@ public class PlayerMovement : NetworkBehaviour
     OnBoardBehaviour onBoardBehaviour;
     Transform centralShipHatchTransform;
     private float rangePosition = 0.7f;
+
+    public static event EventHandler OnAnyPlayerSpawned;
+
+    public static PlayerMovement LocalInstance { get; private set; }
+    [SerializeField] private List<Vector3> spawnPositionList;
+
+
     public override void OnNetworkSpawn()
     {
-        UpdatePositionServerRpc();
+        if (IsOwner)
+        {
+            LocalInstance = this;
+        }
 
+        transform.position = spawnPositionList[LobbyTest.Instance.GetPlayerDataIndexFromClientId(OwnerClientId)];
+
+        OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
+
+        if (IsServer)
+        {
+            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
+        }
     }
 
     // Start is called before the first frame update
@@ -45,7 +64,7 @@ public class PlayerMovement : NetworkBehaviour
         player_an = GetComponent<Animator>();
         playerHeight = GetComponent<CapsuleCollider>().height;
     }
-
+     
     private void Update()
     {
         float playerHorizontalInput = Input.GetAxis("Horizontal");
@@ -159,10 +178,20 @@ public class PlayerMovement : NetworkBehaviour
     private void UpdatePositionServerRpc()
     {
         base.OnNetworkSpawn();
-        float randomNumberInRange = Random.Range(rangePosition, -rangePosition);
+        float randomNumberInRange = UnityEngine.Random.Range(rangePosition, -rangePosition);
         GameObject attachedShip = onBoardBehaviour.shipObj;
         centralShipHatchTransform = attachedShip.transform.Find("Hatch3");
         transform.position = new Vector3(centralShipHatchTransform.position.x + randomNumberInRange, centralShipHatchTransform.position.y, centralShipHatchTransform.position.z + randomNumberInRange);
+    }
+    private void NetworkManager_OnClientDisconnectCallback(ulong clientId)
+    {
+        //if (clientId == OwnerClientId && HasKitchenObject())
+        //{
+        //    KitchenObject.DestroyKitchenObject(GetKitchenObject());
+        //}
+        //
+        //Now only debugs a player disconnected
+        Debug.Log("Player disconnected!");
     }
 }
 
