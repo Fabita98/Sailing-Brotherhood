@@ -88,7 +88,8 @@ public class AnchorTrigger : MonoBehaviour
                 if (cont % 3 == 0)
                 {
                     //anchor.transform.GetChild(child).gameObject.GetComponent<Outline>().enabled = false;
-                    Destroy(anchor.transform.GetChild(child).gameObject);
+                    //Destroy(anchor.transform.GetChild(child).gameObject);
+                    anchor.transform.GetChild(child).gameObject.SetActive(false);
                     child--;
                 }
                 //Se arriviamo a 120 la nave deve iniziare a muoversi e il bottone si disattiva
@@ -97,7 +98,8 @@ public class AnchorTrigger : MonoBehaviour
                     Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
                     manager.addMaxSpeed(8f);
 
-                    Destroy(anchor);
+                    //Destroy(anchor);
+                    anchor.SetActive(false);
                     anchorUp.SetActive(true);
                     button.gameObject.SetActive(false);
                     entered = false;
