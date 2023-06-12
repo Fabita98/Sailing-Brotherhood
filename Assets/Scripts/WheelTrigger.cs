@@ -21,6 +21,12 @@ public class WheelTrigger : MonoBehaviour
     private GameObject ship;
 
     public float rotationSpeed;
+
+    public float maxTurnBias;
+
+    public Button button;
+    public Text textButton;
+
     private void Start()
     {
         // Ottieni il riferimento a boatProbes partendo da wheel e prendendo i padri
@@ -38,7 +44,7 @@ public class WheelTrigger : MonoBehaviour
             {
                 player.transform.rotation = wheel.transform.rotation * Quaternion.Euler(0, 0, 0);
 
-               
+                textButton.text = "Press A or D\nto rotate the wheel";
                 float distance = 2;
                 player.transform.position = wheel.transform.position - wheel.transform.forward * distance;
                 //Qui si ferma la visuale
@@ -54,6 +60,7 @@ public class WheelTrigger : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
             {
                 //Qui si sblocca la visuale e puo muoversi nuovamente
+                textButton.text = "Press E to interact";
                 if (playerMovement != null)
                 {
                     //playerMovement.enabled = true; // Disabilita lo script PlayerMovement
@@ -65,30 +72,30 @@ public class WheelTrigger : MonoBehaviour
 
             if (lockMovement == true)
             {
-                if (Input.GetKeyDown(KeyCode.A))
+                if (Input.GetKey(KeyCode.A))
                 {
                     rotateLeft = true;
-                }
-                else if (Input.GetKeyUp(KeyCode.A))
+                    rotateRight = false;
+                }             
+
+                else if (Input.GetKey(KeyCode.D))
                 {
                     rotateLeft = false;
-                }
-
-                if (Input.GetKeyDown(KeyCode.D))
-                {
                     rotateRight = true;
                 }
-                else if (Input.GetKeyUp(KeyCode.D))
+                else 
                 {
+                    rotateLeft = false;
                     rotateRight = false;
                 }
             }
         }
+
     }
 
     private void FixedUpdate()
     {
-        if (rotateLeft)
+        if (rotateLeft&&boatProbes.getTurnBias()>-maxTurnBias )
         {
             // Ruota il timone verso sinistra in ogni frame di FixedUpdate
             wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
@@ -103,7 +110,7 @@ public class WheelTrigger : MonoBehaviour
             // Imposta il nuovo valore di turnBias
             boatProbes.setTurnBias(newTurnBias);
         }
-        else if (rotateRight)
+        else if (rotateRight && boatProbes.getTurnBias() < maxTurnBias)
         {
             // Ruota il timone verso destra in ogni frame di FixedUpdate
             wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
@@ -123,6 +130,7 @@ public class WheelTrigger : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            button.gameObject.SetActive(true);
             cont = 1;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
             player = other.gameObject;
@@ -135,6 +143,15 @@ public class WheelTrigger : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            textButton.text = "Press E to interact";
+            if (playerMovement != null)
+            {
+                //playerMovement.enabled = true; // Disabilita lo script PlayerMovement
+                playerMovement.UnlockMovement();
+
+            }
+            button.gameObject.SetActive(false);
+            lockMovement = false;
             player = null;
             cont = 0;
             playerMovement = null;
