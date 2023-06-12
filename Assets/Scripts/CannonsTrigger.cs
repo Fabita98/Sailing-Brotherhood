@@ -192,7 +192,7 @@ public class CannonsTrigger : MonoBehaviour
         //l'altezza da cui deve partire(altrimenti parte sotto le ruote del cannone)
         float spawnHeight = 1f;
         //la forza verso l'alto per dare un moto parabolico
-        float upwardForce = 8f;
+        float upwardForce = 24f;
         //la forza orizzontale da applicare alla palla
         float forwardForceMultiplier = 1f;
         //Dove guarda il giocatore
@@ -213,7 +213,7 @@ public class CannonsTrigger : MonoBehaviour
         rbCannonBall1.AddForce(cannonBallScript1.direction * cannonBallSpeed, ForceMode.VelocityChange);
         //Aggiungo una forza verticale
         //SE VUOI MODIFICARE QUANTO DISTANTI VANNO LE PALLE DI CANNONE MOLTIPICA PER UN VALORE esempio: upwardDirection*upwardForce*5
-        rbCannonBall1.AddForce(upwardDirection * upwardForce*3, ForceMode.VelocityChange);
+        rbCannonBall1.AddForce(upwardDirection * upwardForce, ForceMode.VelocityChange);
     }
     public void enableOutline(GameObject cannon)
     {
