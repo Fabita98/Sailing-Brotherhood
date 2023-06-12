@@ -11,7 +11,8 @@ public class AnchorTrigger : MonoBehaviour
     public GameObject anchor;
     public Button button;
     public Text textButton;
-    private int cont = 0;
+    public int cont = 0;
+    public int necessaryPress;
     private int child = 41;
     private float movementSpeed = 0.1f;
     public GameObject ship;
@@ -19,18 +20,21 @@ public class AnchorTrigger : MonoBehaviour
     private PlayerMovement playerMovement;
     private bool lockMovement;
     public bool start;
+    private bool interact;
+    public GameObject anchorUp;
 
     private void Start()
     {
         entered = false;
         lockMovement = false;
         start = false;
+        interact = false;
     }
     private void OnTriggerEnter(Collider other)
     {
         
         //Verifico se ha schiacciato spazio 10 volte per vedere se l'ancora e sollevata
-        if (cont < 10)
+        if (cont < necessaryPress)
         {
             // Verifico se e entrato un GameObject di tipo player
             if (other.tag == "Player" )
@@ -56,7 +60,10 @@ public class AnchorTrigger : MonoBehaviour
             entered = false;
             playerMovement = null;
 
-            disableOutline();
+            if (anchor != null)
+            {
+                disableOutline();
+            }
         }
         
     }
@@ -64,72 +71,52 @@ public class AnchorTrigger : MonoBehaviour
     private void Update()
     {
         if (entered == true) {
-            if (Input.GetKeyDown(KeyCode.E) && lockMovement == false)
+
+            if (interact == false)
             {
                 textButton.text = "Press space to pull anchor";
-                lockMovement = true;
-                //Qui si ferma il giocatore
-                if (playerMovement != null)
-                {
-                    playerMovement.speed = 0;
-                }      
-            }
-            else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
-            {
-                textButton.text = "Press E to interact";
-                lockMovement = false;
-                if (playerMovement != null)
-                {
-                    playerMovement.speed = 10;
-                }
             }
 
-            if (Input.GetKeyDown("space")&& lockMovement==true)
+            if (Input.GetKeyDown("space"))
             {
+                interact = true;
                 //cont tiene conto del numero di volte che e stato premuto spazio
                 cont++;
-                print("space key pressed " + cont + " times");
+                textButton.text = "Space key pressed " + cont + " times";
+                print("Space key pressed " + cont + " times");
                 anchor.transform.position = anchor.transform.position + new Vector3(0, movementSpeed, 0);
                 if (cont % 3 == 0)
                 {
-                    
-                    Destroy(anchor.transform.GetChild(child).gameObject);
+                    //anchor.transform.GetChild(child).gameObject.GetComponent<Outline>().enabled = false;
+                    //Destroy(anchor.transform.GetChild(child).gameObject);
+                    anchor.transform.GetChild(child).gameObject.SetActive(false);
                     child--;
                 }
                 //Se arriviamo a 120 la nave deve iniziare a muoversi e il bottone si disattiva
-                if (cont == 10 && start==false)
+                if (cont == necessaryPress && start==false)
                 {
                     Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
                     manager.addMaxSpeed(8f);
 
+                    //Destroy(anchor);
+                    anchor.SetActive(false);
+                    anchorUp.SetActive(true);
                     button.gameObject.SetActive(false);
                     entered = false;
-                    start = true;
-
-                    //sblocchi il giocatore
-                    lockMovement = false;
-                    if (playerMovement != null)
-                    {
-                        playerMovement.speed = 10;
-                    }
+                    start = true;                  
                 }
             }
         }
     }
 
     public void enableOutline()
-    {
-     
+    {    
             Outline outline = anchor.GetComponent<Outline>();
-            outline.enabled = true;
-       
+            outline.enabled = true;      
     }
     public void disableOutline()
-    {
-     
-        
+    {   
             Outline outline = anchor.GetComponent<Outline>();
-            outline.enabled = false;
-        
+            outline.enabled = false;        
     }
 }

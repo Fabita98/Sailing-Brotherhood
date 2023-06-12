@@ -9,7 +9,9 @@ public class CannonsTrigger : MonoBehaviour
     private int cont;
     private bool lockMovement;
     private PlayerMovement playerMovement;
-    public GameObject cannon1, cannon2, cannon3, cannon4, cannon5,cannon6;
+    public GameObject cannon1, cannon2, cannon3, cannon4, cannon5, cannon6;
+    public GameObject effectCannon1, effectCannon2, effectCannon3, effectCannon4, effectCannon5, effectCannon6;
+
     public int cannonBallSpeed = 10;
     private bool shooted;
 
@@ -17,7 +19,7 @@ public class CannonsTrigger : MonoBehaviour
     public Text textButton;
 
     private bool entered;
-    public float holdTimeRequired = 10f;
+    public float holdTimeRequired = 8f;
     private float holdTime = 0f;
 
     private GameObject player;
@@ -42,8 +44,14 @@ public class CannonsTrigger : MonoBehaviour
                 //Qui si ferma la visuale
                 if (playerMovement != null)
                 {
-                    //player.GetComponent<Rigidbody>().constraints= RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ; ;
-                    playerMovement.speed = 0;
+                    //player.GetComponent<Rigidbody>().constraints= RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ; ;                  
+                    //playerMovement.speed = 0;
+                    //PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+
+                    // Blocca il movimento del giocatore chiamando il metodo LockMovement
+                    playerMovement.LockMovement();
+                    //playerMovement.lockMovement = true;
+
                 }
                 lockMovement = true;
 
@@ -63,7 +71,7 @@ public class CannonsTrigger : MonoBehaviour
                 //Qui si sblocca la visuale e puo muoversi nuovamente
                 if (playerMovement != null)
                 {
-                    playerMovement.speed = 10;
+                    playerMovement.UnlockMovement();
                 }
                 lockMovement = false;
 
@@ -84,24 +92,33 @@ public class CannonsTrigger : MonoBehaviour
                 Camera cameraPlayer = player.GetComponentInChildren<Camera>();
                 Vector3 upwardDirection = cameraPlayer.transform.forward;
 
-                shooting(cannon1,upwardDirection);
+                shooting(cannon1, upwardDirection);
                 shooting(cannon2, upwardDirection);
                 shooting(cannon3, upwardDirection);
                 shooting(cannon4, upwardDirection);
                 shooting(cannon5, upwardDirection);
                 shooting(cannon6, upwardDirection);
 
+                effectCannon1.SetActive(true);
+                effectCannon2.SetActive(true);
+                effectCannon3.SetActive(true);
+                effectCannon4.SetActive(true);
+                effectCannon5.SetActive(true);
+                effectCannon6.SetActive(true);
+
                 shooted = true;
 
                 //Il bottone mostrerà il testo Click R to reload
                 textButton.text = "Click R to reload";
+
+                Invoke("disableEffects", 3);
             }
 
             if (Input.GetKey(KeyCode.R) && shooted == true)
             {
                 holdTime += Time.deltaTime;
                 Debug.Log("Holdtime: " + holdTime);
-                float waitingTime = 10 - holdTime;
+                float waitingTime = holdTimeRequired - holdTime;
                 string formattedValue = waitingTime.ToString("F2");
                 textButton.text = ""+formattedValue;
                 if (holdTime >= holdTimeRequired)
@@ -208,5 +225,15 @@ public class CannonsTrigger : MonoBehaviour
     {
         Outline outline = cannon.GetComponent<Outline>();
         outline.enabled = false;
+    }
+
+    public void disableEffects()
+    {
+        effectCannon1.SetActive(false);
+        effectCannon2.SetActive(false);
+        effectCannon3.SetActive(false);
+        effectCannon4.SetActive(false);
+        effectCannon5.SetActive(false);
+        effectCannon6.SetActive(false);
     }
 }
