@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2357456}
   - component: {fileID: 5437864}
   - component: {fileID: 6459000}
+  - component: {fileID: 5107556945044221988}
   m_Layer: 0
   m_Name: Barrel Wet Mobile
   m_TagString: Untagged
@@ -29,7 +30,8 @@ Transform:
   m_GameObject: {fileID: 122882}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -53,6 +55,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -97,7 +100,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!64 &6459000
 MeshCollider:
@@ -113,3 +116,34 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: deb8a4d5f3ea54f43a84576a93d357f4, type: 3}
+--- !u!114 &5107556945044221988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed9066fe88d1d640889621f4d7684e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _version: 0
+  _bottomH: 0
+  _buoyancyCoeff: 1
+  _boyancyTorque: 0
+  _accelerateDownhill: 0
+  _maximumBuoyancyForce: Infinity
+  _forceHeightOffset: 0
+  _enginePower: 0
+  _turnPower: 0
+  _boatWidth: 1
+  _useBoatLength: 0
+  _boatLength: 3
+  _dragInWaterUp: 1
+  _dragInWaterRight: 1
+  _dragInWaterForward: 1
+  _playerControlled: 0
+  _throttleBias: 0
+  _steerBias: 0
+  _debugDraw: 0

@@ -27,6 +27,8 @@ public class WheelTrigger : MonoBehaviour
     public Button button;
     public Text textButton;
 
+    private bool wheelOccupied;
+    private int contPlayers;
     private void Start()
     {
         // Ottieni il riferimento a boatProbes partendo da wheel e prendendo i padri
@@ -34,14 +36,17 @@ public class WheelTrigger : MonoBehaviour
         GameObject shipComponent = wheelArea.transform.parent.gameObject;
         ship = shipComponent.transform.parent.gameObject;
         boatProbes= ship.GetComponent<BoatProbes>();
+        wheelOccupied = false;
+        contPlayers = 0;
     }
 
     private void Update()
     {
         if (cont == 1)
         {
-            if (Input.GetKeyDown(KeyCode.E) && lockMovement == false)
+            if (Input.GetKeyDown(KeyCode.E) && lockMovement == false&&wheelOccupied==false)
             {
+                wheelOccupied = true;
                 player.transform.rotation = wheel.transform.rotation * Quaternion.Euler(0, 0, 0);
 
                 textButton.text = "Press A or D\nto rotate the wheel";
@@ -59,6 +64,7 @@ public class WheelTrigger : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
             {
+                wheelOccupied = false;
                 //Qui si sblocca la visuale e puo muoversi nuovamente
                 textButton.text = "Press E to interact";
                 if (playerMovement != null)
@@ -130,6 +136,7 @@ public class WheelTrigger : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            contPlayers += 1;
             button.gameObject.SetActive(true);
             cont = 1;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
@@ -143,6 +150,11 @@ public class WheelTrigger : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            contPlayers -= 1;
+            if (contPlayers == 0)
+            {
+                wheelOccupied = false;
+            }
             textButton.text = "Press E to interact";
             if (playerMovement != null)
             {
