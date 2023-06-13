@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.VisualScripting;
@@ -6,70 +7,133 @@ using UnityEngine;
 
 public class OnBoardBehaviour : NetworkBehaviour
 {
+    public static event EventHandler OnPlayerAssigned;
+
+    public static OnBoardBehaviour LocalInstance { get; private set; }
+    public bool StartDespawned;
+    private bool m_HasStartedDespawned;
+
+    // How can you start an in-scene placed NetworkObject as de-spawned when the scene is first loaded (that is, its first spawn)?:
+    // https://docs-multiplayer.unity3d.com/netcode/current/basics/scenemanagement/inscene-placed-networkobjects/#spawning-and-de-spawning
+    //public override void OnNetworkDespawn()
+    //{
+    //    gameObject.SetActive(false);
+    //    base.OnNetworkDespawn();
+    //}
+
+    //public void Spawn(bool destroyWithScene)
+    //{
+    //    if (IsServer && !IsSpawned)
+    //    {
+    //        gameObject.SetActive(true);
+    //        NetworkObject.Spawn(destroyWithScene);
+    //    }
+    //}
+
     //Attached PlayerObject components
-    [Header("Attach Player GameObj")]
-    public GameObject attachedObject;
-    private Rigidbody attachedRb;
-        
+    [Header("Attached PlayerMovementInstance")]
+    public List<PlayerMovement> attachedPlayersList = new List<PlayerMovement>(new PlayerMovement[2]);
+
     //Rotation calculations
     Vector3 prevEulerAngles;
-    Vector3 deltaEulerAngles;        
+    Vector3 deltaEulerAngles;
 
     //Ship
-    private Rigidbody shipRb;
-    [HideInInspector]
-    public GameObject shipObj;
+    [Header("Ship components")]
+    Rigidbody shipRb;
+
+    //Here for operations order for in-scene NetObjects: https://docs-multiplayer.unity3d.com/netcode/current/basics/scenemanagement/inscene-placed-networkobjects/
 
     private void Awake()
     {
-        
-    }
-    void Start() {
-        //Init
-        prevEulerAngles = new Vector3(0,0,0);
-        
-        shipRb = GetComponent<Rigidbody>();
-        shipObj = GetComponent<GameObject>();
-        
-        //Detach when respawning
-        //GameObject.Find("UI").GetComponent<PauseMenu>().onRespawn += unAttach;
+        if (IsOwner)
+        {
+            LocalInstance = this;
+        }        
     }
 
-    void Update() {
-        // AttachPlayerObj and ShipRb
-        Attach(attachedObject);
+    void Start()
+    {
+        //Init
+        shipRb = GetComponent<Rigidbody>();
+        prevEulerAngles = new Vector3(0, 0, 0);
+    }
+
+    //public override void OnNetworkSpawn()
+    //{
+    //    if (IsServer && StartDespawned && !m_HasStartedDespawned)
+    //    {
+    //        m_HasStartedDespawned = true;
+    //        NetworkObject.Despawn(false);
+    //        LocalInstance.AddPlayerInShipCrewList(PlayerMovement.LocalInstance);
+    //        foreach (PlayerMovement player in attachedPlayersList) { Debug.Log("Player instance OwnerClientID: " + player.OwnerClientId + " NetID: " + player.NetworkObjectId); }
+    //    }
+    //    base.OnNetworkSpawn();
+    //}
+
+    void Update()
+    {
+        if (!IsOwner)
+        {
+            return;
+        }
+
         //Using euler angles
         deltaEulerAngles = (prevEulerAngles - transform.localEulerAngles);
-
-        if (attachedObject != null) {
-
-            //Adjust rotation
-            attachedObject.transform.RotateAround(transform.position, Vector3.up, -1 * deltaEulerAngles.y);
-            attachedObject.transform.rotation = Quaternion.Euler(0,attachedObject.transform.localEulerAngles.y, 0);
-        }
-        prevEulerAngles = transform.localEulerAngles;       
-    }
-
-    private void FixedUpdate() {
-        //Adjust velocity
-        if (attachedObject != null)
-        {
-            attachedRb.AddForce(shipRb.velocity.x, shipRb.velocity.y, shipRb.velocity.z, ForceMode.VelocityChange);
-        }
-    }
-
-    //void OnCollisionEnter(Collision other)
-    //{
-    //    if (other.gameObject.tag == "Player" && attachedObject == null)
-    //    {
-    //        Attach(other.gameObject);
-    //    }
-    //}
         
-    private void Attach(GameObject obj) {
-        attachedObject = obj;
-        attachedRb = obj.GetComponent<Rigidbody>();
-        //attachedObject.GetComponent(OnCollisionEnter) += checkDetach;
-    }   
-    
+        //Adjust players' rotation relative to their ships
+        try
+        {            
+            if (attachedPlayersList.Count > 0)
+            {
+                foreach (PlayerMovement player in attachedPlayersList)
+                {
+                    if (player != null)
+                    {
+                        player.transform.RotateAround(transform.position, Vector3.up, -1 * deltaEulerAngles.y);
+                        player.transform.rotation = Quaternion.Euler(0, player.transform.localEulerAngles.y, 0);
+                    }
+                }
+            }
+        } catch (Exception e) {Debug.Log(e + " Failed to assign Players to  ship"); }
+
+        prevEulerAngles = transform.localEulerAngles;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!IsOwner)
+        {
+            return;
+        }
+
+        try
+        {
+            //Adjust velocity
+            if (attachedPlayersList.Count > 0)
+                foreach (PlayerMovement player in attachedPlayersList)
+                {
+                    {
+                        player.GetComponent<Rigidbody>().AddForce(shipRb.velocity.x, shipRb.velocity.y, shipRb.velocity.z, ForceMode.VelocityChange);
+                    }
+                }
+        } catch (Exception e) { Debug.Log(e) ; }
+    }    
+
+    public void AddPlayerInShipCrewList(PlayerMovement playerToAdd)
+    {        
+            if (playerToAdd.IsSpawned && attachedPlayersList.Count < 2)
+            {
+                attachedPlayersList.Add(playerToAdd);
+                OnPlayerAssigned?.Invoke(this, EventArgs.Empty);
+                Debug.Log("Player instance: " + playerToAdd.name + " assigned to the ship " + LocalInstance.name);
+            }
+            else { Debug.Log("NO SPAWNED Player instance: " + playerToAdd.name + " and not assigned to any ship"); }
+    }
+
+    public static void ResetStaticData()
+    {
+        if ( LocalInstance.attachedPlayersList.Count == 2)
+        OnPlayerAssigned = null;
+    }
 }

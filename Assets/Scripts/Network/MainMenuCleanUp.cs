@@ -15,8 +15,8 @@ public class MainMenuCleanUp : MonoBehaviour {
         //    Destroy(SailingBrotherhoodMultiplayer.Instance.gameObject);
         //}
 
-        if (LobbyTest.Instance != null) {
-            Destroy(LobbyTest.Instance.gameObject);
+        if (SailingBrotheroodLobby.Instance != null) {
+            Destroy(SailingBrotheroodLobby.Instance.gameObject);
         }
     }
 

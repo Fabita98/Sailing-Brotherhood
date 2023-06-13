@@ -10,71 +10,55 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
-//This script works like the KitchenChaosMultiplayer but we have only lobby and then Race_scene
-public class LobbyTest : NetworkBehaviour
+public class SailingBrotheroodLobby : NetworkBehaviour
 {
-    public static LobbyTest Instance { get; private set; }
+    public static SailingBrotheroodLobby Instance { get; private set; }
 
     public const string KEY_PLAYER_NAME = "PlayerName";
-    //public const string KEY_PLAYER_CHARACTER = "Character";
-    public const string KEY_GAME_MODE = "GameMode";
+    public const string KEY_GAME_MODE = "GameMode";    
 
-    private Lobby hostLobby;
-    private Lobby joinedLobby;
     private float heartbeatTimer;
-    private float lobbyUpdateTimer;
     private float refreshLobbyListTimer = 5f;
     private string playerName;
     public const int maxPlayers = 4;
     private NetworkList<PlayerData> playerDataNetworkList;
 
-
-    public event EventHandler OnJoinStarted;    
-    public event EventHandler OnTryingToJoinGame;
-
-    public event EventHandler OnFailedToJoinGame;
-    public event EventHandler<LobbyEventArgs> OnJoinedLobby;
-    public event EventHandler<LobbyEventArgs> OnJoinedLobbyUpdate;
-    public event EventHandler OnLeftLobby;
-
     public event EventHandler OnCreateLobbyStarted;
     public event EventHandler OnCreateLobbyFailed;
+    public event EventHandler OnJoinStarted;
+    public event EventHandler OnQuickJoinFailed;
+    public event EventHandler<OnLobbyListChangedEventArgs> OnLobbyListChanged;
+
+   public class OnLobbyListChangedEventArgs : EventArgs
+   {
+        public List<Lobby> lobbyList;
+   }
     
+    private Lobby hostLobby;
+    private Lobby joinedLobby;
+    private float listLobbiesTimer;
+    //Lobby fino qua
+
+    //SailingBrotherhoodReady
     public event EventHandler OnReadyChanged;
 
-    public event EventHandler OnPlayerDataNetworkListChanged;
+    private Dictionary<ulong, bool> playerReadyDictionary;
+    //end SailingBrotherhoodReady
     public class LobbyEventArgs : EventArgs
     {
         public Lobby lobby;
     }
 
-    public event EventHandler<OnLobbyListChangedEventArgs> OnLobbyListChanged;
-    public class OnLobbyListChangedEventArgs : EventArgs
-    {
-        public List<Lobby> lobbyList;
-    }
+    public event EventHandler OnTryingToJoinGame;
+    public event EventHandler<LobbyEventArgs> OnJoinedLobby;    
 
-    private Dictionary<ulong, bool> playerReadyDictionary;
+    public event EventHandler OnPlayerDataNetworkListChanged;
 
     private void Awake()
     {
         Instance = this;
         DontDestroyOnLoad(gameObject);  // Do not destroy LobbyTest when changing scene
 
-
-        playerReadyDictionary = new Dictionary<ulong, bool>();
-        playerDataNetworkList = new NetworkList<PlayerData>();
-        playerDataNetworkList.OnListChanged += PlayerDataNetworkList_OnListChanged;
-    }
-    private void Update()
-    {
-        //HandleRefreshLobbyList(); // Disabled Auto Refresh for testing with multiple builds but to use when running on more devices, each one with different ip
-        HandleLobbyHeartbeat();
-        HandleLobbyPollForUpdate();
-    }
-    private void Start()
-    {
-        playerName = "Jack_Sparrow" + UnityEngine.Random.Range(1, 100);
         Authenticate(playerName);
         //await UnityServices.InitializeAsync();
         //AuthenticationService.Instance.SignedIn += () =>
@@ -83,6 +67,20 @@ public class LobbyTest : NetworkBehaviour
         //    //RefreshLobbyList();
         //};
         //await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        playerReadyDictionary = new Dictionary<ulong, bool>(); //Ready
+
+        //Multiplayer
+        playerName = "Jack_Sparrow" + UnityEngine.Random.Range(1, 100);
+        playerDataNetworkList = new NetworkList<PlayerData>();
+        playerDataNetworkList.OnListChanged += PlayerDataNetworkList_OnListChanged;
+    }
+    //SailingBrotherhoodLobby
+    private void Update()
+    {
+        //HandleRefreshLobbyList(); // Disabled Auto Refresh for testing with multiple builds but to use when running on more devices, each one with different ip
+        HandleLobbyHeartbeat();
+        HandleLobbyPollForUpdate();
     }
     public async void Authenticate(string playerName)
     {
@@ -100,7 +98,7 @@ public class LobbyTest : NetworkBehaviour
 
             };
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
-            RefreshLobbyList();
+            //RefreshLobbyList();
         }
     }
 
@@ -120,26 +118,20 @@ public class LobbyTest : NetworkBehaviour
         }
     }
 
-    private async void HandleLobbyPollForUpdate()
+    private void HandleLobbyPollForUpdate()
     {
-        if (joinedLobby != null)
+        if (joinedLobby == null &&
+            UnityServices.State == ServicesInitializationState.Initialized &&
+            AuthenticationService.Instance.IsSignedIn &&
+            SceneManager.GetActiveScene().name == Loader.Scene.Lobby.ToString())
         {
-            lobbyUpdateTimer -= Time.deltaTime;
-            if (lobbyUpdateTimer < 0)
-            {
-                float lobbyUpdateTimerMax = 1.1f; // to update once per second
-                lobbyUpdateTimer = lobbyUpdateTimerMax;
 
-                joinedLobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
-                
-                OnJoinedLobbyUpdate?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-                if (!IsPlayerInLobby())
-                {
-                    // Player has left this lobby
-                    Debug.Log("You left the Lobby!");
-                    OnLeftLobby?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
-                    joinedLobby = null;
-                }
+            listLobbiesTimer -= Time.deltaTime;
+            if (listLobbiesTimer <= 0f)
+            {
+                float listLobbiesTimerMax = 3f;
+                listLobbiesTimer = listLobbiesTimerMax;
+                ListLobbies();
             }
         }
     }
@@ -147,6 +139,7 @@ public class LobbyTest : NetworkBehaviour
     [Command]
     public async void CreateLobby()
     {
+        OnCreateLobbyStarted?.Invoke(this, EventArgs.Empty);
         try
         {
             CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions()
@@ -174,7 +167,10 @@ public class LobbyTest : NetworkBehaviour
             Debug.Log("You are the Host of the Lobby: " + lobby.Name + " Max Players: " + lobby.MaxPlayers + " Lobby ID: " + lobby.Id + " Lobby Code: " + lobby.LobbyCode);
             PrintPlayers(joinedLobby);            
         }
-        catch (LobbyServiceException e) { Debug.Log(e); }
+        catch (LobbyServiceException e) { 
+            Debug.Log(e);
+            OnCreateLobbyFailed?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     [Command]
@@ -200,7 +196,7 @@ public class LobbyTest : NetworkBehaviour
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
-            OnFailedToJoinGame?.Invoke(this, EventArgs.Empty);
+            OnQuickJoinFailed?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -214,37 +210,12 @@ public class LobbyTest : NetworkBehaviour
     private async void ListLobbies()
     {
         try
-        {
-            //QueryLobbiesOptions queryLobbiesOptions = new()
-            //{
-            //    Count = 25,
-            //    Filters = new List<QueryFilter>
-            //    {
-            //        new QueryFilter(QueryFilter.FieldOptions.AvailableSlots, "0", QueryFilter.OpOptions.GT),
-            //        //new QueryFilter(QueryFilter.FieldOptions.S1, "CasualRace",QueryFilter.OpOptions.EQ)
-
-            //    },
-            //    Order = new List<QueryOrder>
-            //    {
-            //        new QueryOrder(false, QueryOrder.FieldOptions.Created)
-            //    }
-            //};
-            // below to filter the lobby
-            //QueryResponse queryResponse = await Lobbies.Instance.QueryLobbiesAsync(queryLobbiesOptions);
-
-            //QueryResponse lobbyListQueryResponse = await Lobbies.Instance.QueryLobbiesAsync();
-            //OnLobbyListChanged?.Invoke(this, new OnLobbyListChangedEventArgs { lobbyList = lobbyListQueryResponse.Results });
-
-            //Debug.Log("Lobbies found: " + lobbyListQueryResponse.Results.Count);
-            //foreach (Lobby lobby in lobbyListQueryResponse.Results)
-            //{
-            //    PrintPlayers(lobby);
-            //    //Debug.Log("Lobby name: " + lobby.Name + " " + "Max players: " + lobby.MaxPlayers /*+ " " + lobby.Data["GameMode"].Value*/);
-            //}
+        {            
             QueryResponse queryResponse = await LobbyService.Instance.QueryLobbiesAsync();
 
-            OnLobbyListChanged?.Invoke(this, new OnLobbyListChangedEventArgs
-            {lobbyList = queryResponse.Results });
+            OnLobbyListChanged?.Invoke(this, new OnLobbyListChangedEventArgs {
+                lobbyList = queryResponse.Results 
+            });
             Debug.Log("Lobbies found: " + queryResponse.Results.Count + " ");
             foreach (Lobby lobby in queryResponse.Results)
             {
@@ -263,24 +234,6 @@ public class LobbyTest : NetworkBehaviour
     {
         try
         {
-            //QueryLobbiesOptions options = new QueryLobbiesOptions();
-            //options.Count = 25;
-
-            //// Filter for open lobbies only
-            //options.Filters = new List<QueryFilter> {
-            //    new QueryFilter(
-            //        field: QueryFilter.FieldOptions.AvailableSlots,
-            //        op: QueryFilter.OpOptions.GT,
-            //        value: "0")
-            //};
-
-            //// Order by newest lobbies first
-            //options.Order = new List<QueryOrder> {
-            //    new QueryOrder(
-            //        asc: false,
-            //        field: QueryOrder.FieldOptions.Created)
-            //};
-
             QueryResponse lobbyListQueryResponse = await Lobbies.Instance.QueryLobbiesAsync();
 
             OnLobbyListChanged?.Invoke(this, new OnLobbyListChangedEventArgs { lobbyList = lobbyListQueryResponse.Results });
@@ -289,7 +242,57 @@ public class LobbyTest : NetworkBehaviour
         {
             Debug.Log(e);
         }
-    }   
+    }
+    [Command]
+    public async void LeaveLobby()
+    {
+        if (joinedLobby != null)
+        {
+            try
+            {
+                await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
+
+                joinedLobby = null;
+            }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+        }
+    }
+
+    [Command]
+    private bool ArePlayersInLobby()
+    {
+        if (joinedLobby != null && joinedLobby.Players != null)
+        {
+            try
+            {
+                foreach (Player player in joinedLobby.Players)
+                {
+                    if (player.Id == AuthenticationService.Instance.PlayerId)
+                    {
+                        // This player is in this lobby
+                        return true;
+                    }
+                }
+            }
+            catch (LobbyServiceException e) { Debug.Log(e); }
+        }
+        return false;
+
+    }
+
+    [Command]
+    public async void DeleteLobby()
+    {
+        if (/*ArePlayersInLobby() &&*/ IsLobbyHost())
+            try
+            {
+                await LobbyService.Instance.DeleteLobbyAsync(joinedLobby.Id);
+            }
+            catch (LobbyServiceException e) { Debug.Log(e); }
+    }
 
     private Player GetPlayer()
     {
@@ -322,59 +325,10 @@ public class LobbyTest : NetworkBehaviour
         {
             Debug.Log(/*"Player ID: " + player.Id + */ "Player Name: " + player.Data["PlayerName"].Value);
         }
-    }    
-    
-    [Command]
-    public async void LeaveLobby()
-    {
-        if (IsPlayerInLobby()) {
-        try {   //Don't need customized host migration
-                //if (!IsLobbyHost())
-                //{
-                    await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
-                    joinedLobby = null;
-                    OnLeftLobby?.Invoke(this, EventArgs.Empty);
-                //} else {
-                //    await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
-                //    joinedLobby = null;
-                //    OnLeftLobby?.Invoke(this, EventArgs.Empty); 
-                //    MigrateLobbyHost(); 
-                //} 
-            }
-            catch (LobbyServiceException e) { Debug.Log(e); }
-        }
     }
+    //SailingBrotherhoodLobby end
 
-    [Command]
-    private bool IsPlayerInLobby()
-    {
-        if (joinedLobby != null && joinedLobby.Players != null) 
-        {
-            try {
-                foreach (Player player in joinedLobby.Players)
-                {
-                    if (player.Id == AuthenticationService.Instance.PlayerId)
-                    {
-                        // This player is in this lobby
-                        return true;
-                    }
-                }
-            } catch (LobbyServiceException e) { Debug.Log(e); }
-        } return false;
-        
-    }
-
-    [Command]
-    public async void DeleteLobby()
-    {
-        if (IsPlayerInLobby() && IsLobbyHost())
-        try 
-        {      
-          await LobbyService.Instance.DeleteLobbyAsync(joinedLobby.Id);
-        } catch (LobbyServiceException e) { Debug.Log(e); }
-    }
-
-    [Command]
+    //Ready
     public void SetPlayerReady()
     {
         SetPlayerReadyServerRpc();
@@ -417,6 +371,7 @@ public class LobbyTest : NetworkBehaviour
     {
         return playerReadyDictionary.ContainsKey(clientId) && playerReadyDictionary[clientId];
     }
+    //Ready end
 
 
     //Method taken from SailingBrotherhoodMultiplayer but corrected: Max 4 pLayers can join only when in lobby scene 
@@ -442,7 +397,7 @@ public class LobbyTest : NetworkBehaviour
     }
     private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
     {
-        OnFailedToJoinGame?.Invoke(this, EventArgs.Empty);
+        OnQuickJoinFailed?.Invoke(this, EventArgs.Empty);
     }
     private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)
     {
@@ -486,6 +441,17 @@ public class LobbyTest : NetworkBehaviour
         }
         return -1;
     }
+    public PlayerData GetPlayerDataFromClientId(ulong clientId)
+    {
+        foreach (PlayerData playerData in playerDataNetworkList)
+        {
+            if (playerData.clientId == clientId)
+            {
+                return playerData;
+            }
+        }
+        return default;
+    }
     [ServerRpc(RequireOwnership = false)]
     private void SetPlayerNameServerRpc(string playerName, ServerRpcParams serverRpcParams = default)
     {
@@ -510,7 +476,23 @@ public class LobbyTest : NetworkBehaviour
         playerDataNetworkList[playerDataIndex] = playerData;
     }
 
+    //Not 4 local test purpose, yes for many computers
+    private void HandleRefreshLobbyList()
+    {
+        if (UnityServices.State == ServicesInitializationState.Initialized && AuthenticationService.Instance.IsSignedIn)
+        {
+            refreshLobbyListTimer -= Time.deltaTime;
+            if (refreshLobbyListTimer < 0f)
+            {
+                float refreshLobbyListTimerMax = 5f;
+                refreshLobbyListTimer = refreshLobbyListTimerMax;
 
+                RefreshLobbyList();
+            }
+        }
+    }
+
+    //Not 4 prototype
     private async void MigrateLobbyHost()
     {
         // Customized host selection after host has left
@@ -578,19 +560,5 @@ public class LobbyTest : NetworkBehaviour
             await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, joinedLobby.Players[1].Id);
         }
         catch (LobbyServiceException e) { Debug.Log(e); }
-    }
-    private void HandleRefreshLobbyList()
-    {
-        if (UnityServices.State == ServicesInitializationState.Initialized && AuthenticationService.Instance.IsSignedIn)
-        {
-            refreshLobbyListTimer -= Time.deltaTime;
-            if (refreshLobbyListTimer < 0f)
-            {
-                float refreshLobbyListTimerMax = 5f;
-                refreshLobbyListTimer = refreshLobbyListTimerMax;
-
-                RefreshLobbyList();
-            }
-        }
     }
 }
