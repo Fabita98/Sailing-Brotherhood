@@ -22,6 +22,8 @@ public class AnchorTrigger : MonoBehaviour
     public bool start;
     private bool interact;
     public GameObject anchorUp;
+    public AudioSource chainSound;
+    private bool isplaying=false;
 
     private void Start()
     {
@@ -59,6 +61,8 @@ public class AnchorTrigger : MonoBehaviour
             button.gameObject.SetActive(false);
             entered = false;
             playerMovement = null;
+            chainSound.Pause();
+            isplaying = false;
 
             if (anchor != null)
             {
@@ -74,11 +78,17 @@ public class AnchorTrigger : MonoBehaviour
 
             if (interact == false)
             {
+                chainSound.Pause();
+                isplaying = false;
                 textButton.text = "Press space to pull anchor";
             }
 
             if (Input.GetKeyDown("space"))
             {
+                if (!isplaying) {
+                    chainSound.Play();
+                    isplaying = true;
+                }
                 interact = true;
                 //cont tiene conto del numero di volte che e stato premuto spazio
                 cont++;
@@ -97,7 +107,11 @@ public class AnchorTrigger : MonoBehaviour
                 {
                     Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
                     manager.addMaxSpeed(8f);
-
+                    if (isplaying)
+                    {
+                        chainSound.Pause();
+                        isplaying = false;
+                    }
                     //Destroy(anchor);
                     anchor.SetActive(false);
                     anchorUp.SetActive(true);

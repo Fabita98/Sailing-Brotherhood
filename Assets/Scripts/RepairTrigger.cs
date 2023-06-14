@@ -4,6 +4,7 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class RepairTrigger : MonoBehaviour
 {
     public GameObject repair;
@@ -20,6 +21,8 @@ public class RepairTrigger : MonoBehaviour
     public float holdTimeRequired = 8f;
     private float holdTime = 0f;
 
+    public AudioSource repairsound;
+    private bool isplaying = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,7 @@ public class RepairTrigger : MonoBehaviour
         {
             if (health.health == 100) { 
             textButton.text = "Health: " + health.health;
+                
             }
             else
             {
@@ -47,6 +51,11 @@ public class RepairTrigger : MonoBehaviour
                 float waitingTime = holdTimeRequired - holdTime;
                 string formattedValue = waitingTime.ToString("F2");
                 textButton.text = "" + formattedValue;
+                if (!isplaying)
+                {
+                    repairsound.Play();
+                    isplaying = true;
+                }
                 if (holdTime >= holdTimeRequired)
                 {
                     health.health += 10f;
@@ -60,6 +69,8 @@ public class RepairTrigger : MonoBehaviour
                         textButton.text = "Health: " + health.health + "\n" + "Press R to repair";
                     }                                                          
                 }
+            } else { repairsound.Pause();
+                isplaying = false;
             }          
         }
     }

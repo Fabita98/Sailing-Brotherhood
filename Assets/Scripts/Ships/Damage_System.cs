@@ -8,6 +8,7 @@ public class Damage_System : MonoBehaviour
     Health_and_Speed_Manager hs;
     float cooldown;
     bool canbedamaged;
+    public AudioSource cannonhit, terrainSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,12 +23,14 @@ public class Damage_System : MonoBehaviour
             {
                 hs.health -= 10;
                 CooldownStart();
+                terrainSound.Play();
 
             }
             if (other.tag == "Cannonball")
             {
                 hs.maxspeed -= 20;
                 CooldownStart();
+                cannonhit.Play();
 
             }
             if (other.tag == "Barrel")

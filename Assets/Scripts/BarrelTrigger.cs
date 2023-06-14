@@ -14,6 +14,7 @@ public class BarrelTrigger : MonoBehaviour
     private GameObject player;
     public Button button;
     public Text textButton;
+    public AudioSource barrelSplash;
 
     public int cont;
     // Start is called before the first frame update
@@ -49,7 +50,8 @@ public class BarrelTrigger : MonoBehaviour
                 GameObject barrel1 = Instantiate(barrel, spawnPosition, transform.rotation);
                 barrel1.AddComponent<Rigidbody>();
                 barrel1.AddComponent<BoatAlignNormal>();
-                barrel1.tag = "Barrel";               
+                barrel1.tag = "Barrel";
+                barrelSplash.PlayDelayed(1);
             }
         }
     }

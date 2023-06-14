@@ -15,6 +15,7 @@ public class SmallCannonTrigger : MonoBehaviour
     public GameObject effectCannon;
     public int cont;
     private GameObject ball;
+    public AudioSource cannonSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +47,7 @@ public class SmallCannonTrigger : MonoBehaviour
                 float forwardForceMultiplier = 1f;
                 //Dove guarda il giocatore
                 //Vector3 upwardDirection = cameraPlayer.transform.up;
-
+                cannonSound.Play();
                 //posizione in cui spawnare la palla
                 Vector3 spawnPosition = smallCannon.transform.position + smallCannon.transform.up * spawnDistance + Vector3.up * spawnHeight;
                 //Instanziamento della palla

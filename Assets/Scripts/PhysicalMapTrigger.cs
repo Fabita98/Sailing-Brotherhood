@@ -19,6 +19,7 @@ public class PhysicalMapTrigger : MonoBehaviour
     private bool lockMovement;
 
     public GameObject arrow;
+    public AudioSource mapSound;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,7 @@ public class PhysicalMapTrigger : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E)&&lockMovement==false)
             {
+                mapSound.Play();
                 arrow.gameObject.SetActive(true);
                 player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = true;
                 player.GetComponentInChildren<FirstPersonCamera>().lockVerticalRotation = true;

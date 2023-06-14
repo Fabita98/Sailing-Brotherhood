@@ -10,6 +10,7 @@ public class Sail_Manager : MonoBehaviour
     bool entered = false;
     int count = 0;
     public GameObject mast;
+    public AudioSource ropesound;
     // need to be liked to 
     void Start()
     {
@@ -26,11 +27,13 @@ public class Sail_Manager : MonoBehaviour
             {
                 sail.SetActive(!sail.activeSelf);
                 hs.maxspeed -= 6;
+                ropesound.Play();
             }
             else if (Input.GetKeyDown("e") && sail.activeSelf == false)
             {
                 sail.SetActive(!sail.activeSelf);
                 hs.maxspeed += 6;
+                ropesound.Play();
             }
         }
     }

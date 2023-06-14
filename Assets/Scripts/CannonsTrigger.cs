@@ -22,6 +22,9 @@ public class CannonsTrigger : MonoBehaviour
     public float holdTimeRequired = 8f;
     private float holdTime = 0f;
 
+    public AudioSource cannonsound, reloadSound;
+    bool isplaying = false;
+
     private GameObject player;
     // Start is called before the first frame update
 
@@ -127,6 +130,8 @@ public class CannonsTrigger : MonoBehaviour
                 shooting(cannon5, upwardDirection);
                 shooting(cannon6, upwardDirection);
 
+                cannonsound.Play();
+
                 effectCannon1.SetActive(true);
                 effectCannon2.SetActive(true);
                 effectCannon3.SetActive(true);
@@ -144,6 +149,10 @@ public class CannonsTrigger : MonoBehaviour
 
             if (Input.GetKey(KeyCode.R) && shooted == true)
             {
+                if (!isplaying) { 
+                    reloadSound.Play(); 
+                    isplaying = true; 
+                }
                 holdTime += Time.deltaTime;
                 Debug.Log("Holdtime: " + holdTime);
                 float waitingTime = holdTimeRequired - holdTime;
@@ -151,6 +160,8 @@ public class CannonsTrigger : MonoBehaviour
                 textButton.text = ""+formattedValue;
                 if (holdTime >= holdTimeRequired)
                 {
+                    isplaying = false;
+                    reloadSound.Stop();
                     shooted = false;
                     if(lockMovement == true)
                     {
@@ -167,6 +178,8 @@ public class CannonsTrigger : MonoBehaviour
             else
             {
                 holdTime = 0f;
+                isplaying = false;
+                reloadSound.Stop();
                 //Il bottone mostrerà il testo Click R to reload
                 if (shooted == true) {
                     textButton.text = "Click R to reload";
