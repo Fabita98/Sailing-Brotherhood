@@ -39,9 +39,9 @@ public class BarrelTrigger : MonoBehaviour
                 cont--;
                 textButton.text = "Number of barrels: "+cont+"\n"+"Press E to release one barrel";
                 //la distanza da cui deve spawnare il barile dietro la nave
-                float spawnDistance = 10f;
+                float spawnDistance = 20f;
                 //l'altezza da cui deve partire(altrimenti parte sotto la barca)
-                float spawnHeight = 1f;       
+                float spawnHeight = 0f;       
 
                 //posizione in cui spawnare la palla
                 Vector3 spawnPosition = transform.position + -barrel.transform.forward * spawnDistance + Vector3.up * spawnHeight;

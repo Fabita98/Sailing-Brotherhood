@@ -24,6 +24,21 @@ public class CannonsTrigger : MonoBehaviour
 
     private GameObject player;
     // Start is called before the first frame update
+
+    //la distanza da cui deve spawnare la palla dal centro del cannone
+    float spawnDistance = 2f;
+    //l'altezza da cui deve partire(altrimenti parte sotto le ruote del cannone)
+    float spawnHeight = 1f;
+    //la forza verso l'alto per dare un moto parabolico
+    float upwardForce = 24f;
+    //la forza orizzontale da applicare alla palla
+    float forwardForceMultiplier = 1f;
+    //Dove guarda il giocatore
+    //Vector3 upwardDirection = cameraPlayer.transform.up;
+
+    public GameObject arrow1, arrow2, arrow3, arrow4, arrow5, arrow6;
+
+
     void Start()
     {
         cont = 0;
@@ -35,11 +50,23 @@ public class CannonsTrigger : MonoBehaviour
     void Update()
     {
         if (entered==true) { 
+
+            if (lockMovement == true)
+            {
+                Camera cameraPlayer = player.GetComponentInChildren<Camera>();
+                Vector3 upwardDirection = cameraPlayer.transform.forward;
+
+                trajectoryShooting(cameraPlayer.transform);
+            }
+
+
             if (Input.GetKeyDown(KeyCode.E) && lockMovement == false)
             {
                 player.transform.rotation = cannon1.transform.rotation * Quaternion.Euler(0, 90, 0);
                 
                 player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = true;
+
+                
 
                 //Qui si ferma la visuale
                 if (playerMovement != null)
@@ -74,6 +101,7 @@ public class CannonsTrigger : MonoBehaviour
                     playerMovement.UnlockMovement();
                 }
                 lockMovement = false;
+                disableTrajectoryShooting();
 
                 if (shooted == true)
                 {
@@ -187,17 +215,6 @@ public class CannonsTrigger : MonoBehaviour
 
     private void shooting(GameObject cannon, Vector3 upwardDirection)
     {
-        //la distanza da cui deve spawnare la palla dal centro del cannone
-        float spawnDistance = 2f;
-        //l'altezza da cui deve partire(altrimenti parte sotto le ruote del cannone)
-        float spawnHeight = 1f;
-        //la forza verso l'alto per dare un moto parabolico
-        float upwardForce = 24f;
-        //la forza orizzontale da applicare alla palla
-        float forwardForceMultiplier = 1f;
-        //Dove guarda il giocatore
-        //Vector3 upwardDirection = cameraPlayer.transform.up;
-
         //posizione in cui spawnare la palla
         Vector3 spawnPosition = cannon.transform.position + cannon.transform.right * spawnDistance + Vector3.up * spawnHeight;
         //Instanziamento della palla
@@ -215,6 +232,40 @@ public class CannonsTrigger : MonoBehaviour
         //SE VUOI MODIFICARE QUANTO DISTANTI VANNO LE PALLE DI CANNONE MOLTIPICA PER UN VALORE esempio: upwardDirection*upwardForce*5
         rbCannonBall1.AddForce(upwardDirection * upwardForce, ForceMode.VelocityChange);
     }
+
+    private void trajectoryShooting( Transform camera)
+    {
+        //posizione in cui spawnare la palla
+        //Vector3 spawnPosition = cannon.transform.position + cannon.transform.right * spawnDistance + Vector3.up * spawnHeight;
+        //Instanziamento della palla
+        //GameObject arrow1 = Instantiate(arrow, spawnPosition, camera.rotation);
+
+        arrow1.SetActive(true);
+        arrow2.SetActive(true);
+        arrow3.SetActive(true);
+        arrow4.SetActive(true);
+        arrow5.SetActive(true);
+        arrow6.SetActive(true);
+
+        arrow1.transform.rotation = camera.rotation;
+        arrow2.transform.rotation = camera.rotation;
+        arrow3.transform.rotation = camera.rotation;
+        arrow4.transform.rotation = camera.rotation;
+        arrow5.transform.rotation = camera.rotation;
+        arrow6.transform.rotation = camera.rotation;
+    }
+
+    private void disableTrajectoryShooting()
+    {
+        arrow1.SetActive(false);
+        arrow2.SetActive(false);
+        arrow3.SetActive(false);
+        arrow4.SetActive(false);
+        arrow5.SetActive(false);
+        arrow6.SetActive(false);
+    }
+
+
     public void enableOutline(GameObject cannon)
     {
         Outline outline = cannon.GetComponent<Outline>();
