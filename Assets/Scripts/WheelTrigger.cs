@@ -29,6 +29,13 @@ public class WheelTrigger : MonoBehaviour
 
     private bool wheelOccupied;
     private int contPlayers;
+
+    public float _turningHeel = 0.2f;
+    public float _turnPower = 0.2f;
+
+    public Rigidbody _rb;
+    public GameObject navigationSpot;
+
     private void Start()
     {
         // Ottieni il riferimento a boatProbes partendo da wheel e prendendo i padri
@@ -52,6 +59,7 @@ public class WheelTrigger : MonoBehaviour
                 textButton.text = "Press A or D\nto rotate the wheel";
                 float distance = 2;
                 player.transform.position = wheel.transform.position - wheel.transform.forward * distance;
+                navigationSpot.SetActive(true);
                 //Qui si ferma la visuale
                 if (playerMovement != null)
                 {
@@ -65,6 +73,7 @@ public class WheelTrigger : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
             {
                 wheelOccupied = false;
+                navigationSpot.SetActive(false);
                 //Qui si sblocca la visuale e puo muoversi nuovamente
                 textButton.text = "Press E to interact";
                 if (playerMovement != null)
@@ -99,7 +108,39 @@ public class WheelTrigger : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
+    
+     private void FixedUpdate()
+        {
+
+        var sideways = boatProbes.getTurnBias();
+            /*if (rotateLeft||rotateRight) sideways +=
+
+                (Input.GetKey(KeyCode.A) ? -1f : 0f) +
+                (Input.GetKey(KeyCode.D) ? 1f : 0f);
+            */
+        if (rotateLeft || rotateRight)
+        {
+            if (Input.GetKey(KeyCode.A))
+            {
+                wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
+                sideways += -0.3f;
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
+                sideways += 0.3f;
+            }
+        }
+
+        //boatProbes.setTurnBias(sideways);
+        
+        var rotVec = transform.up + _turningHeel * transform.forward;
+            _rb.AddTorque(rotVec * _turnPower * sideways, ForceMode.Acceleration);
+        }
+     
+
+    /*private void FixedUpdate()
     {
         if (rotateLeft&&boatProbes.getTurnBias()>-maxTurnBias )
         {
@@ -130,7 +171,7 @@ public class WheelTrigger : MonoBehaviour
             // Imposta il nuovo valore di turnBias
             boatProbes.setTurnBias(newTurnBias);
         }
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
@@ -154,6 +195,7 @@ public class WheelTrigger : MonoBehaviour
             if (contPlayers == 0)
             {
                 wheelOccupied = false;
+                navigationSpot.SetActive(false);
             }
             textButton.text = "Press E to interact";
             if (playerMovement != null)
