@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : NetworkBehaviour
@@ -12,38 +10,56 @@ public class PlayerMovement : NetworkBehaviour
     public LayerMask whatIsGround;
     public float KeepPlayerOnGroundForce;
     private float playerHeight;
-    private bool grounded;    
+    private bool grounded;
 
     [Header("Movement")]
     private bool lockMovement = false;
     public float speed;
-    public Camera PlayerCamera;
+    public Camera camera;
     public Vector3 cameraRelativeMovement;
     private Rigidbody rb;
-    private Animator player_an;    
+    private Animator player_an;
 
     [Header("Slope/Stairs Handling")]
-    public float maxSlopeAngle; 
+    public float maxSlopeAngle;
     public float onSlopeForceMultiplier;
     public float pushDownForceOnSlope;
     public LayerMask whatIsStairs;
-    private RaycastHit slopeHit;    
+    private RaycastHit slopeHit;
     private bool onStairs;
-    
-    public static PlayerMovement LocalInstance { get; private set; }
+
+    [Header("Attachment")]
+    public GameObject attachedObject;
+
+    public PlayerMovement LocalInstance { get; private set; }
     public static event EventHandler OnAnyPlayerSpawned;
+    public NetworkVariable<int> spawnedPlayersCounter;
 
     [SerializeField] private List<Vector3> spawnPositionList;
-
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
         {
-            LocalInstance = this;
+          LocalInstance = this;
+        } else return;
+
+        camera = this.gameObject.GetComponentInChildren<Camera>();
+        Debug.Log("Camera: " +  this.camera);
+        rb = GetComponent<Rigidbody>();
+        player_an = GetComponent<Animator>();
+        playerHeight = GetComponent<CapsuleCollider>().height;
+
+        OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
+
+        if (this != null) {
+            Debug.Log("A new Player instance with ID " + GetInstanceID() +
+            " exists and its OwnerClientId is: " + OwnerClientId);
+        }
+        if (IsSpawned) {
+            Debug.Log("Just SPAWNED Player instance ID: " + GetInstanceID());
         }
 
         transform.position = spawnPositionList[SailingBrotheroodLobby.Instance.GetPlayerDataIndexFromClientId(OwnerClientId)];
-        OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
 
         if (IsServer)
         {
@@ -54,33 +70,33 @@ public class PlayerMovement : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spawnedPlayersCounter.Value++;
+
+        Debug.Log("THIS Player LocalInstance ID: " + LocalInstance.GetInstanceID() + " exists and is the SpawnedPlayer number: " + spawnedPlayersCounter.Value);
         PlayerData playerData = SailingBrotheroodLobby.Instance.GetPlayerDataFromClientId(OwnerClientId);
-        rb = GetComponent<Rigidbody>();
-        player_an = GetComponent<Animator>();
-        playerHeight = GetComponent<CapsuleCollider>().height;
     }
-     
+
     private void Update()
-    {
+    {   //messo qua per farlo muovere solo dal localplayer
         if (!IsOwner)
         {
             return;
         }
 
         CollisionDetection();
-        HandleAnimation();                
+        HandleAnimation();
     }
-    
+
     void FixedUpdate()
-    {
+    {   //messo qua per farlo muovere solo dal localplayer
         if (!IsOwner)
         {
             return;
         }
 
-       // PlayerRb movement here
-       MovePlayerRelativeToCamera();
-       KeepPlayerOnGround();
+        // PlayerRb movement here
+        MovePlayerRelativeToCamera();
+        KeepPlayerOnGround();
     }
 
     // Rb.velocity movement according to the pressed keys and their relative axes
@@ -91,10 +107,11 @@ public class PlayerMovement : NetworkBehaviour
             rb.velocity = Vector3.zero;
             return;
         }
+
         float playerHorizontalInput = Input.GetAxis("Horizontal");
         float playerVerticalInput = Input.GetAxis("Vertical");
-        Vector3 forward = PlayerCamera.transform.forward;
-        Vector3 right = PlayerCamera.transform.right;
+        Vector3 forward = camera.transform.forward;
+        Vector3 right = camera.transform.right;
         forward.y = 0;
         right.y = 0;
         forward = forward.normalized;
@@ -190,7 +207,7 @@ public class PlayerMovement : NetworkBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.5f, whatIsGround);
         // stairs/slope check 
         onStairs = Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f, whatIsStairs);
-    }
+    }    
 
     public void LockMovement()
     {

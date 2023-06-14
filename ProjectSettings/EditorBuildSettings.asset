@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainTitle.unity
     guid: 8be0a3d20c85e7f47a84a8c94f4a2573
   - enabled: 1
@@ -15,9 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Race/Race_Net_Test.unity
     guid: 78fd3f49b941e4c41a736d6c7219469e
   - enabled: 0
-    path: Assets/Scenes/Race/EndRace.unity
-    guid: d520748ca2067ff40aa028979f26368b
-  - enabled: 0
     path: Assets/Scenes/Race/Race.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: Assets/Scenes/Race/EndRace.unity
+    guid: d520748ca2067ff40aa028979f26368b
   m_configObjects: {}

@@ -9,7 +9,7 @@ public static class Loader {
     public enum Scene {
         MainTitle,
         Lobby,
-        Race_Net_Test,               
+        Race_Net_Test, //only for testing               
         Race,
         EndRace,
     }

@@ -993,7 +993,7 @@ GameObject:
   - component: {fileID: 5153121771023015404}
   - component: {fileID: -6302970076455709381}
   - component: {fileID: 8745579660578715024}
-  - component: {fileID: -3408005973857503992}
+  - component: {fileID: -5609760150328582860}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1116,7 +1116,7 @@ MonoBehaviour:
     m_Bits: 8
   KeepPlayerOnGroundForce: 80
   speed: 10
-  PlayerCamera: {fileID: 0}
+  camera: {fileID: 0}
   cameraRelativeMovement: {x: 0, y: 0, z: 0}
   maxSlopeAngle: 45
   onSlopeForceMultiplier: 30
@@ -1124,7 +1124,12 @@ MonoBehaviour:
   whatIsStairs:
     serializedVersion: 2
     m_Bits: 64
-  spawnPositionList: []
+  attachedObject: {fileID: 0}
+  spawnedPlayersCounter:
+    m_InternalValue: 0
+  spawnPositionList:
+  - {x: -2638.4, y: -73.64, z: -15015.6}
+  - {x: -2629, y: -73.64, z: -15015.6}
 --- !u!114 &5153121771023015404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1140,7 +1145,7 @@ MonoBehaviour:
   GlobalObjectIdHash: 951099334
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
+  ActiveSceneSynchronization: 1
   SceneMigrationSynchronization: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
@@ -1186,7 +1191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-3408005973857503992
+--- !u!114 &-5609760150328582860
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1195,11 +1200,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1750653370926488690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Script: {fileID: 11500000, guid: a221bb29a9b90ac4db0da6d06348b398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TransitionStateInfoList: []
-  m_Animator: {fileID: 0}
+  m_Animator: {fileID: 1480268272670263217}
 --- !u!1 &1825467517399719083
 GameObject:
   m_ObjectHideFlags: 0
