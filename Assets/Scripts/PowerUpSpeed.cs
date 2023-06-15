@@ -32,7 +32,7 @@ public class PowerUpSpeed : MonoBehaviour
 
             ship = shipCompleted.gameObject;
             Debug.Log("other" + other.name);
-            Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
+            Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();
             manager.addMaxSpeed(20f);
 
         }
@@ -48,7 +48,7 @@ public class PowerUpSpeed : MonoBehaviour
 
     public void SlowDown()
     {
-        Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
+        Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();
         manager.decreaseMaxSpeed(20f);
     }
 }

@@ -9,7 +9,7 @@ public class WinningCondition : MonoBehaviour
     public int TotalLaps;
     public int CurrentLaps;
     private int min, sec, thousends;
-    private StartRace startRace;
+    private StartRaceNet startRace;
     public Text LapDisplayText, victory;
     public bool isPlayer;
     private bool isRacing=true;
@@ -26,7 +26,7 @@ public class WinningCondition : MonoBehaviour
     }
     void Awake()
     {
-        startRace = coin.GetComponent<StartRace>();
+        startRace = coin.GetComponent<StartRaceNet>();
     }
         // Update is called once per frame
         void Update()

@@ -28,7 +28,7 @@ public class PowerUp2 : MonoBehaviour
             GameObject shipCompleted = shipComponent.transform.parent.gameObject;
             ship = shipCompleted.gameObject;
             GameObject barrelTrigger = shipCompleted.transform.Find("Power-upBarrelDetection").gameObject;
-            BarrelTrigger barrel = barrelTrigger.GetComponent<BarrelTrigger>();
+            BarrelTriggerNet barrel = barrelTrigger.GetComponent<BarrelTriggerNet>();
             barrel.addBarrel(3);
         }
     }

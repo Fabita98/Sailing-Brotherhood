@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class StartRace : MonoBehaviour
+public class StartRaceNet : NetworkBehaviour
 {
     [SerializeField] private Vector3 _rotation;
     public int countdownTime;

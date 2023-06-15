@@ -291,7 +291,7 @@ public class LobbyTest : NetworkBehaviour
         {
             LobbyTest.Instance.DeleteLobby();
             // Race_Net_Test andrà sostituito con la scena finale networkata
-            Loader.LoadNetwork(Loader.Scene.Race_Net_Test);
+            Loader.LoadNetwork(Loader.Scene.Pirate_Test_NETWORK);
         }
     }
 

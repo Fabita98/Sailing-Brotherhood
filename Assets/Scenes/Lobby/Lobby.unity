@@ -5928,7 +5928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224130951485110974, guid: 9ed2a051c32b4fe47a5e4fb95c20b03f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00010681152
+      value: -0.000076293945
       objectReference: {fileID: 0}
     - target: {fileID: 224166536479716514, guid: 9ed2a051c32b4fe47a5e4fb95c20b03f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -7157,8 +7157,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1078958572}
-  - component: {fileID: 1078958573}
   - component: {fileID: 1078958574}
+  - component: {fileID: 1078958575}
   m_Layer: 0
   m_Name: TestingLobbyUI
   m_TagString: Untagged
@@ -7186,22 +7186,6 @@ RectTransform:
   m_AnchoredPosition: {x: 572.18396, y: 285.135}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1078958573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1078958571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 857614bb94ef3e541b864fb798b59af5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  createGameButton: {fileID: 5820095144430157929}
-  joinGameButton: {fileID: 5820095144152369038}
-  readyButton: {fileID: 5820095144576260116}
-  quitGame: {fileID: 5820095144109237688}
 --- !u!114 &1078958574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7221,6 +7205,22 @@ MonoBehaviour:
   SceneMigrationSynchronization: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &1078958575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078958571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25bd0841d831c39418b5b8f67caa4df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  createGameButton: {fileID: 5820095144430157929}
+  joinGameButton: {fileID: 5820095144152369038}
+  readyButton: {fileID: 5820095144576260116}
+  quitGame: {fileID: 5820095144109237688}
 --- !u!1 &1124121910
 GameObject:
   m_ObjectHideFlags: 0
@@ -10885,7 +10885,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1890228155}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36a98c2c4d2ba3e42b529c45ccd7cea2, type: 3}
+  m_Script: {fileID: 11500000, guid: 68433797a7eab1447ba62864868c0000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1890228158

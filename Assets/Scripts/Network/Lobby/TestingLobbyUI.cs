@@ -1,27 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using UnityEngine.UI;
 
-public class TestingLobbyUI : MonoBehaviour {
+//public class TestingLobbyUI : MonoBehaviour {
 
-    [SerializeField] private Button createGameButton;
-    [SerializeField] private Button joinGameButton;
-    [SerializeField] private Button readyButton;
+//    [SerializeField] private Button createGameButton;
+//    [SerializeField] private Button joinGameButton;
+//    [SerializeField] private Button readyButton;
 
-    private void Awake() {
-        createGameButton.onClick.AddListener(() => {
-            LobbyTest.Instance.CreateLobby();
-            //Loader.LoadNetwork(Loader.Scene.Race_Net_Test);
-        });
+//    private void Awake() {
+//        createGameButton.onClick.AddListener(() => {
+//            LobbyTest.Instance.CreateLobby();
+//            //Loader.LoadNetwork(Loader.Scene.Race_Net_Test);
+//        });
 
-        joinGameButton.onClick.AddListener(() => {
-            LobbyTest.Instance.QuickJoinLobby();
-        });
+//        joinGameButton.onClick.AddListener(() => {
+//            LobbyTest.Instance.QuickJoinLobby();
+//        });
 
-        readyButton.onClick.AddListener(() => {
-            LobbyTest.Instance.SetPlayerReady();
-        });
-    }
+//        readyButton.onClick.AddListener(() => {
+//            LobbyTest.Instance.SetPlayerReady();
+//        });
+//    }
 
-}
+//}

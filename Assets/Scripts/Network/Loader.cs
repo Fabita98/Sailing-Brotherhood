@@ -1,35 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Netcode;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+//using System.Collections;
+//using System.Collections.Generic;
+//using Unity.Netcode;
+//using UnityEngine;
+//using UnityEngine.SceneManagement;
 
-public static class Loader {
-
-
-    public enum Scene {
-        //MainMenuScene,
-        Race_Net_Test,
-        EndRace,
-        LoadingScene,
-        Lobby,
-    }
+//public static class Loader {
 
 
-    private static Scene targetScene;
+//    public enum Scene {
+//        //MainMenuScene,
+//        Race_Net_Test,
+//        EndRace,
+//        LoadingScene,
+//        Lobby,
+//    }
 
-    public static void Load(Scene targetScene) {
-        Loader.targetScene = targetScene;
 
-        SceneManager.LoadScene(Scene.LoadingScene.ToString());
-    }
+//    private static Scene targetScene;
 
-    public static void LoadNetwork(Scene targetScene) {
-        NetworkManager.Singleton.SceneManager.LoadScene(targetScene.ToString(), LoadSceneMode.Single);
-    }
+//    public static void Load(Scene targetScene) {
+//        Loader.targetScene = targetScene;
 
-    public static void LoaderCallback() {
-        SceneManager.LoadScene(targetScene.ToString());
-    }
+//        SceneManager.LoadScene(Scene.LoadingScene.ToString());
+//    }
 
-}
+//    public static void LoadNetwork(Scene targetScene) {
+//        NetworkManager.Singleton.SceneManager.LoadScene(targetScene.ToString(), LoadSceneMode.Single);
+//    }
+
+//    public static void LoaderCallback() {
+//        SceneManager.LoadScene(targetScene.ToString());
+//    }
+
+//}

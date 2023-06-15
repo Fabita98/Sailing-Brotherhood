@@ -8,7 +8,7 @@ public class CannonsTrigger : MonoBehaviour
     public GameObject cannonBall;
     private int cont;
     private bool lockMovement;
-    private PlayerMovement playerMovement;
+    private PlayerMovementNet playerMovement;
     public GameObject cannon1, cannon2, cannon3, cannon4, cannon5, cannon6;
     public GameObject effectCannon1, effectCannon2, effectCannon3, effectCannon4, effectCannon5, effectCannon6;
 
@@ -193,7 +193,7 @@ public class CannonsTrigger : MonoBehaviour
         {   //la variabile booleana=true indica che il giocatore e dentro il cilindro
             entered = true;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
-            playerMovement = other.GetComponent<PlayerMovement>();
+            playerMovement = other.GetComponent<PlayerMovementNet>();
             player = other.gameObject;
             //attivo il bottone che dice "premi E per interagire"
             button.gameObject.SetActive(true);
