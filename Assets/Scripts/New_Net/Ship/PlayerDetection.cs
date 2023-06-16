@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerDetection : MonoBehaviour
 {
     public GameObject myShip;
+    private int count;
     
     public void OnTriggerEnter(Collider other)
     {
@@ -20,7 +21,7 @@ public class PlayerDetection : MonoBehaviour
             return;
         }
 
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && count == 0)
         {
             GameObject playerGO = other.gameObject/*FindParentObjectWithTag("Player")*/;
 
@@ -28,6 +29,7 @@ public class PlayerDetection : MonoBehaviour
             {
                 //myShip.GetComponent<OnBoardBehaviourNet>().attachedPlayer = playerGO;
                 myShip.GetComponent<OnBoardBehaviourNet>().AddToCrewList(playerGO);
+                count++;
                 //Debug.Log("Player attached via CollisionTrigger");
 
                 if (myShip.GetComponent<OnBoardBehaviourNet>().CrewmatesList.Count == 2)

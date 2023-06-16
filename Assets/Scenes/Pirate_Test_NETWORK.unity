@@ -2289,6 +2289,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2341553059193337422, guid: ca07acf4943d4524d81f695da9c29bc7, type: 3}
   m_PrefabInstance: {fileID: 571353949}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &571353952 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9063582301302366067, guid: ca07acf4943d4524d81f695da9c29bc7, type: 3}
+  m_PrefabInstance: {fileID: 571353949}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &571353953 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9063582302894625151, guid: ca07acf4943d4524d81f695da9c29bc7, type: 3}
+  m_PrefabInstance: {fileID: 571353949}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &576868779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2533,9 +2543,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428bed23313cce741a3ac865d85f99a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slow_sound: {fileID: 0}
-  fast_sound: {fileID: 0}
-  ship1: {fileID: 0}
+  slow_sound: {fileID: 1861057387}
+  fast_sound: {fileID: 1861057386}
+  ship1: {fileID: 1861057385}
 --- !u!114 &652847206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2548,9 +2558,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428bed23313cce741a3ac865d85f99a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slow_sound: {fileID: 0}
-  fast_sound: {fileID: 0}
-  ship1: {fileID: 0}
+  slow_sound: {fileID: 571353953}
+  fast_sound: {fileID: 571353952}
+  ship1: {fileID: 571353950}
 --- !u!1 &662690810
 GameObject:
   m_ObjectHideFlags: 0
@@ -6033,6 +6043,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1308807960594388218, guid: 68abdd72831e90b4bbb593de3c39d2ce, type: 3}
   m_PrefabInstance: {fileID: 1861057383}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1861057386 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4875270455360089708, guid: 68abdd72831e90b4bbb593de3c39d2ce, type: 3}
+  m_PrefabInstance: {fileID: 1861057383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1861057387 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4875270456952348768, guid: 68abdd72831e90b4bbb593de3c39d2ce, type: 3}
+  m_PrefabInstance: {fileID: 1861057383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1891891323
 Transform:
   m_ObjectHideFlags: 0
@@ -6217,7 +6237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1916086133}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2884.4, y: 40.74, z: -15091}
+  m_LocalPosition: {x: -4185.4, y: 38.92, z: -15091.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
