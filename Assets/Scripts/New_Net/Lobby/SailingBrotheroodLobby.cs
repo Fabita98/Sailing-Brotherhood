@@ -10,12 +10,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Unity.Services.Relay;
+using Unity.Services.Relay.Models;
+using Unity.Networking.Transport.Relay;
+using System.Threading.Tasks;
+using Unity.Netcode.Transports.UTP;
+
 public class SailingBrotheroodLobby : NetworkBehaviour
 {
     public static SailingBrotheroodLobby Instance { get; private set; }
 
     public const string KEY_PLAYER_NAME = "PlayerName";
-    public const string KEY_GAME_MODE = "GameMode";    
+    public const string KEY_GAME_MODE = "GameMode";
+    private const string KEY_RELAY_JOIN_CODE = "RelayJoinCode";
+
 
     private float heartbeatTimer;
     private float refreshLobbyListTimer = 5f;
@@ -27,6 +35,8 @@ public class SailingBrotheroodLobby : NetworkBehaviour
     public event EventHandler OnCreateLobbyFailed;
     public event EventHandler OnJoinStarted;
     public event EventHandler OnQuickJoinFailed;
+    public event EventHandler OnJoinFailed;
+
     public event EventHandler<OnLobbyListChangedEventArgs> OnLobbyListChanged;
 
    public class OnLobbyListChangedEventArgs : EventArgs
@@ -78,9 +88,9 @@ public class SailingBrotheroodLobby : NetworkBehaviour
     //SailingBrotherhoodLobby
     private void Update()
     {
-        //HandleRefreshLobbyList(); // Disabled Auto Refresh for testing with multiple builds but to use when running on more devices, each one with different ip
+        HandleRefreshLobbyList(); // Disabled Auto Refresh for testing with multiple builds but to use when running on more devices, each one with different ip
         HandleLobbyHeartbeat();
-        HandleLobbyPollForUpdate();
+        //HandleLobbyPollForUpdate();
     }
     public async void Authenticate(string playerName)
     {
@@ -137,61 +147,127 @@ public class SailingBrotheroodLobby : NetworkBehaviour
     }
 
     [Command]
-    public async void CreateLobby()
+    //public async void CreateLobby()
+    //{
+    //    OnCreateLobbyStarted?.Invoke(this, EventArgs.Empty);
+    //    try
+    //    {
+    //        CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions()
+    //        {
+    //            Player = GetPlayer(),
+    //            // if true -> not visible with ListLobbies
+    //            IsPrivate = false,
+    //            Data = new Dictionary<string, DataObject>
+    //            {
+    //                { KEY_GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, "CasualRace")/*, DataObject.IndexOptions.S1*/}
+    //            }
+    //        };
+
+    //        Allocation allocation = await AllocateRelay();
+
+
+    //        // this for customized lobby creation options
+    //        Lobby lobby = await LobbyService.Instance.CreateLobbyAsync("First lobby", maxPlayers, createLobbyOptions);
+
+    //        hostLobby = lobby;
+    //        joinedLobby = hostLobby;
+    //        OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+    //        NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
+    //        NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
+    //        NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
+    //        NetworkManager.Singleton.StartHost();
+
+    //        Debug.Log("You are the Host of the Lobby: " + lobby.Name + " Max Players: " + lobby.MaxPlayers + " Lobby ID: " + lobby.Id + " Lobby Code: " + lobby.LobbyCode);
+    //        PrintPlayers(joinedLobby);            
+    //    }
+    //    catch (LobbyServiceException e) { 
+    //        Debug.Log(e);
+    //        OnCreateLobbyFailed?.Invoke(this, EventArgs.Empty);
+    //    }
+    //}
+    [Command]
+    public async void CreateLobby(string lobbyName, bool isPrivate)
     {
         OnCreateLobbyStarted?.Invoke(this, EventArgs.Empty);
         try
         {
-            CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions()
+            joinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, SailingBrotheroodLobby.maxPlayers, new CreateLobbyOptions
             {
-                Player = GetPlayer(),
-                // if true -> not visible with ListLobbies
-                IsPrivate = false,
-                Data = new Dictionary<string, DataObject>
-                {
-                    { KEY_GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, "CasualRace")/*, DataObject.IndexOptions.S1*/}
-                }
-            };
+                IsPrivate = isPrivate,
+            });
 
-            // this for customized lobby creation options
-            Lobby lobby = await LobbyService.Instance.CreateLobbyAsync("First lobby", maxPlayers, createLobbyOptions);
+            Allocation allocation = await AllocateRelay();
 
-            hostLobby = lobby;
-            joinedLobby = hostLobby;
-            OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
-            NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
-            NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
-            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
-            NetworkManager.Singleton.StartHost();
+            string relayJoinCode = await GetRelayJoinCode(allocation);
 
-            Debug.Log("You are the Host of the Lobby: " + lobby.Name + " Max Players: " + lobby.MaxPlayers + " Lobby ID: " + lobby.Id + " Lobby Code: " + lobby.LobbyCode);
-            PrintPlayers(joinedLobby);            
+            await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
+            {
+                Data = new Dictionary<string, DataObject> {
+                     { KEY_RELAY_JOIN_CODE , new DataObject(DataObject.VisibilityOptions.Public, relayJoinCode) }
+                 }
+            });
+
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
+
+            SailingBrotheroodLobby.Instance.StartHost();
+            Loader.LoadNetwork(Loader.Scene.Lobby);
         }
-        catch (LobbyServiceException e) { 
+        catch (LobbyServiceException e)
+        {
             Debug.Log(e);
             OnCreateLobbyFailed?.Invoke(this, EventArgs.Empty);
         }
     }
+    [Command]
+    public void StartHost()
+    {
+        NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
+        NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
+        NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
+        NetworkManager.Singleton.StartHost();
+    }
 
     [Command]
-    public async void QuickJoinLobby()
+    //public async void QuickJoinLobby()
+    //{
+    //    OnJoinStarted?.Invoke(this, EventArgs.Empty);
+    //    try
+    //    {
+    //        //QuickJoinLobbyOptions options = new QuickJoinLobbyOptions();
+
+    //        Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync();
+    //        joinedLobby = lobby;
+    //        OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
+    //        Debug.Log(" You have just joined the lobby " + joinedLobby.Name + " as a client");
+
+    //        OnTryingToJoinGame?.Invoke(this, EventArgs.Empty);
+    //        NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
+    //        NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
+    //        NetworkManager.Singleton.StartClient();
+
+    //        //PrintPlayers(joinedLobby); not working because polling is every 1s
+    //    }
+    //    catch (LobbyServiceException e)
+    //    {
+    //        Debug.Log(e);
+    //        OnQuickJoinFailed?.Invoke(this, EventArgs.Empty);
+    //    }
+    //}
+    [Command]
+    public async void QuickJoin()
     {
         OnJoinStarted?.Invoke(this, EventArgs.Empty);
         try
         {
-            //QuickJoinLobbyOptions options = new QuickJoinLobbyOptions();
+            joinedLobby = await LobbyService.Instance.QuickJoinLobbyAsync();
 
-            Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync();
-            joinedLobby = lobby;
-            OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
-            Debug.Log(" You have just joined the lobby " + joinedLobby.Name + " as a client");
+            string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
 
-            OnTryingToJoinGame?.Invoke(this, EventArgs.Empty);
-            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
-            NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
-            NetworkManager.Singleton.StartClient();
+            JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
 
-            //PrintPlayers(joinedLobby); not working because polling is every 1s
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
+
+            SailingBrotheroodLobby.Instance.StartClient();
         }
         catch (LobbyServiceException e)
         {
@@ -199,7 +275,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
             OnQuickJoinFailed?.Invoke(this, EventArgs.Empty);
         }
     }
-
     [Command]
     public bool IsLobbyHost()
     {
@@ -226,6 +301,82 @@ public class SailingBrotheroodLobby : NetworkBehaviour
         catch (LobbyServiceException e)
         {
             Debug.Log(e);
+        }
+    }
+    [Command]
+    private async Task<Allocation> AllocateRelay()
+    {
+        try
+        {
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(SailingBrotheroodLobby.maxPlayers - 1);
+
+            return allocation;
+        }
+        catch (RelayServiceException e)
+        {
+            Debug.Log(e);
+
+            return default;
+        }
+    }
+    [Command]
+    private async Task<string> GetRelayJoinCode(Allocation allocation)
+    {
+        try
+        {
+            string relayJoinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+
+            return relayJoinCode;
+        }
+        catch (RelayServiceException e)
+        {
+            Debug.Log(e);
+            return default;
+        }
+    }
+    [Command]
+    private async Task<JoinAllocation> JoinRelay(string joinCode)
+    {
+        try
+        {
+            JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
+            return joinAllocation;
+        }
+        catch (RelayServiceException e)
+        {
+            Debug.Log(e);
+            return default;
+        }
+    }
+    [Command]
+    public void StartClient()
+    {
+        OnTryingToJoinGame?.Invoke(this, EventArgs.Empty);
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
+        NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
+        NetworkManager.Singleton.StartClient();
+    }
+    [Command]
+    public async void JoinWithCode(string lobbyCode)
+    {
+        OnJoinStarted?.Invoke(this, EventArgs.Empty);
+        try
+        {
+            joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
+
+            string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
+
+            JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
+
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
+
+            SailingBrotheroodLobby.Instance.StartClient();
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+            OnJoinFailed?.Invoke(this, EventArgs.Empty);
         }
     }
 

@@ -23,7 +23,7 @@ public class TestingLobbyUI : NetworkBehaviour {
 
         createGameButton.onClick.AddListener(() =>
         {
-            SailingBrotheroodLobby.Instance.CreateLobby();
+            SailingBrotheroodLobby.Instance.CreateLobby("Prima lobby", false);
         });
 
         //Creare da comando finchè non si è finito il bottone input LobbyName
@@ -43,7 +43,7 @@ public class TestingLobbyUI : NetworkBehaviour {
 
         joinGameButton.onClick.AddListener(() =>
         {
-            SailingBrotheroodLobby.Instance.QuickJoinLobby();
+            SailingBrotheroodLobby.Instance.QuickJoin();
         });
 
         readyButton.onClick.AddListener(() =>
