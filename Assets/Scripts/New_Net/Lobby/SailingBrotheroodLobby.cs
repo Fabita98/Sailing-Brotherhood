@@ -210,7 +210,7 @@ public class SailingBrotheroodLobby : NetworkBehaviour
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
 
             SailingBrotheroodLobby.Instance.StartHost();
-            Loader.LoadNetwork(Loader.Scene.Lobby);
+            //Loader.LoadNetwork(Loader.Scene.Lobby);
         }
         catch (LobbyServiceException e)
         {
@@ -435,14 +435,30 @@ public class SailingBrotheroodLobby : NetworkBehaviour
     }
 
     [Command]
+    //public async void DeleteLobby()
+    //{
+    //    if (/*ArePlayersInLobby() &&*/ IsLobbyHost())
+    //        try
+    //        {
+    //            await LobbyService.Instance.DeleteLobbyAsync(joinedLobby.Id);
+    //        }
+    //        catch (LobbyServiceException e) { Debug.Log(e); }
+    //}
     public async void DeleteLobby()
     {
-        if (/*ArePlayersInLobby() &&*/ IsLobbyHost())
+        if (joinedLobby != null)
+        {
             try
             {
                 await LobbyService.Instance.DeleteLobbyAsync(joinedLobby.Id);
+
+                joinedLobby = null;
             }
-            catch (LobbyServiceException e) { Debug.Log(e); }
+            catch (LobbyServiceException e)
+            {
+                Debug.Log(e);
+            }
+        }
     }
 
     private Player GetPlayer()
