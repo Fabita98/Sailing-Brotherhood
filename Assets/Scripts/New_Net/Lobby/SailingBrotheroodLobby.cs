@@ -57,7 +57,7 @@ public class SailingBrotheroodLobby : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject);  // Do not destroy LobbyTest when changing scene
+        DontDestroyOnLoad(gameObject);  // Do not destroy SailingBrLobby when changing scene
 
         Authenticate(playerName);
         //await UnityServices.InitializeAsync();
@@ -179,9 +179,9 @@ public class SailingBrotheroodLobby : NetworkBehaviour
         OnJoinStarted?.Invoke(this, EventArgs.Empty);
         try
         {
-            QuickJoinLobbyOptions options = new QuickJoinLobbyOptions();
+            //QuickJoinLobbyOptions options = new QuickJoinLobbyOptions();
 
-            Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync(options);
+            Lobby lobby = await LobbyService.Instance.QuickJoinLobbyAsync();
             joinedLobby = lobby;
             OnJoinedLobby?.Invoke(this, new LobbyEventArgs { lobby = lobby });
             Debug.Log(" You have just joined the lobby " + joinedLobby.Name + " as a client");
