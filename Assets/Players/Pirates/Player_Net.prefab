@@ -10378,6 +10378,8 @@ MonoBehaviour:
   spawnPositionList:
   - {x: -4180.43, y: 39.56, z: -15091}
   - {x: -4192.81, y: 39.56, z: -15091}
+  - {x: -2896.64, y: 40.74, z: -15091}
+  - {x: -2884.4, y: 40.74, z: -15091}
 --- !u!114 &2245604043019604103
 MonoBehaviour:
   m_ObjectHideFlags: 0
