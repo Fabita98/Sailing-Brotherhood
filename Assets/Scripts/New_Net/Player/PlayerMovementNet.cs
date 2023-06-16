@@ -15,7 +15,7 @@ public class PlayerMovementNet : NetworkBehaviour
     [Header("Movement")]
     private bool lockMovement = false;
     public float speed;
-    [SerializeField] private Camera playerCameraPrefab;
+    //[SerializeField] private Camera playerCameraPrefab;
     private Camera playerCamera;
     public Vector3 cameraRelativeMovement;
     private Rigidbody rb;
@@ -39,19 +39,17 @@ public class PlayerMovementNet : NetworkBehaviour
         {            
             LocalInstance = this;            
             
-            //playerCamera = Instantiate(camera, camera.transform.position, camera.transform.rotation);
-            //playerCamera.transform.SetParent(transform);
-            //camera.enabled = false;
+            
         }
         else return; // Disabilita la camera per gli altri giocatori
-        //playerCameraPrefab = GetComponentInChildren<Camera>();
-        //playerCameraPrefab.tag = "MainCamera";
+        playerCamera = GetComponentInChildren<Camera>();
+        playerCamera.tag = "MainCamera";
 
         rb = GetComponent<Rigidbody>();
         player_an = GetComponent<Animator>();
         playerHeight = GetComponent<CapsuleCollider>().height;
 
-        Debug.Log("Camera: " +  playerCameraPrefab);        
+        Debug.Log("Camera: " +  playerCamera);        
 
         OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
 
@@ -117,8 +115,8 @@ public class PlayerMovementNet : NetworkBehaviour
 
         float playerHorizontalInput = Input.GetAxis("Horizontal");
         float playerVerticalInput = Input.GetAxis("Vertical");
-        Vector3 forward = playerCameraPrefab.transform.forward;
-        Vector3 right = playerCameraPrefab.transform.right;
+        Vector3 forward = playerCamera.transform.forward;
+        Vector3 right = playerCamera.transform.right;
         forward.y = 0;
         right.y = 0;
         forward = forward.normalized;
@@ -240,16 +238,6 @@ public class PlayerMovementNet : NetworkBehaviour
     public static void ResetStaticData()
     {
         OnAnyPlayerSpawned = null;
-    }
-    public void AssignCamera()
-    {
-        if (playerCameraPrefab != null && IsLocalPlayer)
-        {
-            playerCamera = Instantiate(playerCameraPrefab, transform.position, transform.rotation);
-            playerCamera.transform.SetParent(transform);
-            playerCamera.tag = "MainCamera";
-            playerCamera.enabled = true;
-        }
-    }
+    }    
 }
 
