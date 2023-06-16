@@ -26,7 +26,7 @@ public class PlayerDetection : MonoBehaviour
 
             if (playerGO != null)
             {
-                myShip.GetComponent<OnBoardBehaviourNet>().attachedPlayer = playerGO;
+                //myShip.GetComponent<OnBoardBehaviourNet>().attachedPlayer = playerGO;
                 myShip.GetComponent<OnBoardBehaviourNet>().AddToCrewList(playerGO);
                 //Debug.Log("Player attached via CollisionTrigger");
 

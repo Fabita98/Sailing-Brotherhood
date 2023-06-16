@@ -5337,14 +5337,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686341688}
-  m_LocalRotation: {x: 0.5534853, y: -0.21211465, z: 0.14830591, w: 0.7916229}
+  m_LocalRotation: {x: 0.9950278, y: 0.019789271, z: -0.042407405, w: 0.08791863}
   m_LocalPosition: {x: 391, y: -86, z: -678}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 69.921, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 10.174, y: -175.285, z: -181.859}
 --- !u!1 &1691274953
 GameObject:
   m_ObjectHideFlags: 0
@@ -5906,6 +5906,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4355747149118016588, guid: 68abdd72831e90b4bbb593de3c39d2ce, type: 3}
+      propertyPath: myShip
+      value: 
+      objectReference: {fileID: 1861057385}
     - target: {fileID: 7978907936378107122, guid: 68abdd72831e90b4bbb593de3c39d2ce, type: 3}
       propertyPath: SpeedBar
       value: 
@@ -5927,6 +5931,11 @@ PrefabInstance:
 --- !u!1 &1861057384 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2170452080662562641, guid: 68abdd72831e90b4bbb593de3c39d2ce, type: 3}
+  m_PrefabInstance: {fileID: 1861057383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1861057385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1308807960594388218, guid: 68abdd72831e90b4bbb593de3c39d2ce, type: 3}
   m_PrefabInstance: {fileID: 1861057383}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1891891323
@@ -6113,7 +6122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1916086133}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2628.3, y: 39.56, z: -15091}
+  m_LocalPosition: {x: -4192.81, y: 39.56, z: -15091}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

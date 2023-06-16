@@ -10,7 +10,7 @@ public class OnBoardBehaviourNet : NetworkBehaviour
     public static event EventHandler OnPlayerAttached;
     public static event EventHandler OnListAddition;
     //OnListAddition?.Invoke(this, EventArgs.Empty);
-
+    public NetworkVariable<Vector3> syncVel = new NetworkVariable<Vector3>();
     public static OnBoardBehaviourNet LocalInstance { get; private set; }
 
     // How can you start an in-scene placed NetworkObject as de-spawned when the scene is first loaded (that is, its first spawn)?:
@@ -40,7 +40,9 @@ public class OnBoardBehaviourNet : NetworkBehaviour
 
         //Init
         shipRb = GetComponent<Rigidbody>();
+        syncVel.Value = shipRb.velocity; 
         prevEulerAngles = new Vector3(0, 0, 0);
+
 
         if (CrewmatesList == null)
             CrewmatesList = new List<GameObject>();
@@ -53,7 +55,7 @@ public class OnBoardBehaviourNet : NetworkBehaviour
     {
         //Using euler angles
         deltaEulerAngles = (prevEulerAngles - transform.localEulerAngles);
-
+        
         //Adjust crewmates rotation
         try
         {
@@ -73,15 +75,17 @@ public class OnBoardBehaviourNet : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        if (IsServer) syncVel.Value = shipRb.velocity;
         try
         {
             if (CrewmatesList.Count != 0)
             {
                 CrewmatesList.ForEach(delegate (GameObject p)
                 {
-                    Debug.Log("p è: " + p.name + "p.Rigidbody è: " + p.transform.GetComponent<Rigidbody>());
+                    Debug.Log("p è: " + p.name + "p.Rigidbody è: " + p.transform.GetComponent<Rigidbody>()+"e velocity vale"+ syncVel.Value.ToString());
                     //Adjust crewmates velocity
-                    p.transform.GetComponent<Rigidbody>().AddForce(shipRb.velocity.x, shipRb.velocity.y, shipRb.velocity.z, ForceMode.VelocityChange);
+                    p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z, ForceMode.VelocityChange);
+
                 });
             }                       
         }
