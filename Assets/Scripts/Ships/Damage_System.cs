@@ -5,7 +5,7 @@ using UnityEngine;
 public class Damage_System : MonoBehaviour
 {
     public GameObject my_ship;
-    Health_and_Speed_ManagerNet hs;
+    Health_and_Speed_Manager hs;
     float cooldown;
     bool canbedamaged;
     public AudioSource cannonhit, terrainSound;
@@ -58,6 +58,6 @@ public class Damage_System : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hs = my_ship.GetComponent<Health_and_Speed_ManagerNet>();
+        hs = my_ship.GetComponent<Health_and_Speed_Manager>();
     }
 }

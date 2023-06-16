@@ -17,6 +17,10 @@ public class PlayerMovementNet : NetworkBehaviour
     public float speed;
     //[SerializeField] private Camera playerCameraPrefab;
     private Camera playerCamera;
+    private GameObject gameObjectPlayerCamera;
+
+
+
     public Vector3 cameraRelativeMovement;
     private Rigidbody rb;
     private Animator player_an;
@@ -35,14 +39,21 @@ public class PlayerMovementNet : NetworkBehaviour
     [SerializeField] private List<Vector3> spawnPositionList;
     public override void OnNetworkSpawn()
     {
-        if (IsLocalPlayer)
-        {            
-            LocalInstance = this;            
-            
-            
-        }
-        else return; // Disabilita la camera per gli altri giocatori
+
         playerCamera = GetComponentInChildren<Camera>();
+        gameObjectPlayerCamera = playerCamera.gameObject;
+        if (IsLocalPlayer)
+        {
+            LocalInstance = this;
+
+            gameObjectPlayerCamera.SetActive(true);
+            //playerCamera.enabled = true;          
+        }
+        else
+        {
+            gameObjectPlayerCamera.SetActive(false); 
+            return; } // Disabilita la camera per gli altri giocatori
+        
         playerCamera.tag = "MainCamera";
 
         rb = GetComponent<Rigidbody>();
@@ -83,6 +94,12 @@ public class PlayerMovementNet : NetworkBehaviour
 
     private void Update()
     {   //messo qua per farlo muovere solo dal localplayer
+
+        /*if (Input.GetKeyDown(KeyCode.C))
+        {
+            playerCamera.enabled=!playerCamera.enabled;
+        }*/
+
         if (!IsLocalPlayer)
         {
             return;

@@ -11,7 +11,7 @@ public class PhysicalMapTrigger : MonoBehaviour
     private bool entered;
     private GameObject player;
 
-    private PlayerMovementNet playerMovement;
+    private PlayerMovement playerMovement;
 
     public Button button;
     public Text textButton;
@@ -69,7 +69,7 @@ public class PhysicalMapTrigger : MonoBehaviour
             entered = true;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni      
             player = other.gameObject;
-            playerMovement = other.GetComponent<PlayerMovementNet>();
+            playerMovement = other.GetComponent<PlayerMovement>();
 
             //attivo il bottone che dice "premi E per interagire"
             button.gameObject.SetActive(true);
