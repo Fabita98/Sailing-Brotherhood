@@ -10374,7 +10374,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   spawnPositionList:
-  - {x: -4193.02, y: 40.62, z: -15091.26}
+  - {x: -4179.21, y: 39.21, z: -15080.87}
   - {x: -4178.59, y: 40.62, z: -15091.26}
 --- !u!114 &2245604043019604103
 MonoBehaviour:
