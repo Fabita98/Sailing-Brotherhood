@@ -17,7 +17,7 @@ public class AnchorTrigger : MonoBehaviour
     private float movementSpeed = 0.1f;
     public GameObject ship;
     private bool entered;
-    private PlayerMovementNet playerMovement;
+    private PlayerMovement playerMovement;
     private bool lockMovement;
     public bool start;
     private bool interact;
@@ -41,7 +41,7 @@ public class AnchorTrigger : MonoBehaviour
             // Verifico se e entrato un GameObject di tipo player
             if (other.tag == "Player" )
             {
-                playerMovement = other.GetComponent<PlayerMovementNet>();
+                playerMovement = other.GetComponent<PlayerMovement>();
                 //attivo il bottone che dice "premi spazio per salire l'ancora"
                 textButton.text = "Press E to interact";
                 button.gameObject.SetActive(true);
@@ -105,7 +105,7 @@ public class AnchorTrigger : MonoBehaviour
                 //Se arriviamo a 120 la nave deve iniziare a muoversi e il bottone si disattiva
                 if (cont == necessaryPress && start==false)
                 {
-                    Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();
+                    Health_and_Speed_Manager manager = ship.GetComponent<Health_and_Speed_Manager>();
                     manager.addMaxSpeed(8f);
                     if (isplaying)
                     {

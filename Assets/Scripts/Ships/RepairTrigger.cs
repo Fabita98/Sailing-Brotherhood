@@ -16,7 +16,7 @@ public class RepairTrigger : MonoBehaviour
     public Text textButton;
 
     public GameObject ship;
-    private Health_and_Speed_ManagerNet health;
+    private Health_and_Speed_Manager health;
 
     public float holdTimeRequired = 8f;
     private float holdTime = 0f;
@@ -27,7 +27,7 @@ public class RepairTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        health = ship.GetComponent<Health_and_Speed_ManagerNet>();
+        health = ship.GetComponent<Health_and_Speed_Manager>();
         
     }
 

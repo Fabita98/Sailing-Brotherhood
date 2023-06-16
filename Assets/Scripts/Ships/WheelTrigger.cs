@@ -9,7 +9,7 @@ public class WheelTrigger : MonoBehaviour
 {
     private int cont;
     private bool lockMovement;
-    private PlayerMovementNet playerMovement;
+    private PlayerMovement playerMovement;
 
     private GameObject player;
     public GameObject wheel;
@@ -182,7 +182,7 @@ public class WheelTrigger : MonoBehaviour
             cont = 1;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
             player = other.gameObject;
-            playerMovement = other.GetComponent<PlayerMovementNet>();
+            playerMovement = other.GetComponent<PlayerMovement>();
             enableOutline();
         }
     }

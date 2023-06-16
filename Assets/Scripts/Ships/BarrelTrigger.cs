@@ -10,7 +10,7 @@ public class BarrelTrigger : MonoBehaviour
     public GameObject barrel;
     private bool entered;
     private bool lockMovement;
-    private PlayerMovementNet playerMovement;
+    private PlayerMovement playerMovement;
     private GameObject player;
     public Button button;
     public Text textButton;
@@ -62,7 +62,7 @@ public class BarrelTrigger : MonoBehaviour
         {   //la variabile booleana=true indica che il giocatore e dentro il cilindro
             entered = true;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
-            playerMovement = other.GetComponent<PlayerMovementNet>();
+            playerMovement = other.GetComponent<PlayerMovement>();
             player = other.gameObject;
             //attivo il bottone che dice "premi E per interagire"
             button.gameObject.SetActive(true);
