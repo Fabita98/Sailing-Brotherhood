@@ -1275,7 +1275,7 @@ GameObject:
   - component: {fileID: 491172860218179889}
   m_Layer: 0
   m_Name: PlayerCamera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10220,8 +10220,9 @@ GameObject:
   - component: {fileID: 491172860254919707}
   - component: {fileID: 6473872155480816220}
   - component: {fileID: -5780026763446072806}
-  - component: {fileID: -8359129686112484873}
-  - component: {fileID: 955743442642063109}
+  - component: {fileID: 2245604043019604103}
+  - component: {fileID: -7095470439805681370}
+  - component: {fileID: 7518243987317390596}
   m_Layer: 0
   m_Name: Player_Net
   m_TagString: Player
@@ -10307,7 +10308,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6473872155480816209}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.1
   m_Drag: 0.2
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -10363,21 +10364,19 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  KeepPlayerOnGroundForce: 0
-  speed: 0
-  camera: {fileID: 491172860218179888}
+  KeepPlayerOnGroundForce: 5
+  speed: 10
   cameraRelativeMovement: {x: 0, y: 0, z: 0}
-  maxSlopeAngle: 0
-  onSlopeForceMultiplier: 0
-  pushDownForceOnSlope: 0
+  maxSlopeAngle: 45
+  onSlopeForceMultiplier: 30
+  pushDownForceOnSlope: 5
   whatIsStairs:
     serializedVersion: 2
     m_Bits: 64
-  attachedObject: {fileID: 0}
   spawnPositionList:
   - {x: -4193.02, y: 40.62, z: -15091.26}
   - {x: -4178.59, y: 40.62, z: -15091.26}
---- !u!114 &-8359129686112484873
+--- !u!114 &2245604043019604103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10392,12 +10391,12 @@ MonoBehaviour:
   SyncPositionX: 1
   SyncPositionY: 1
   SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
@@ -10407,7 +10406,7 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &955743442642063109
+--- !u!114 &-7095470439805681370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10416,9 +10415,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 6473872155480816209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Script: {fileID: 11500000, guid: f6b75356ced3d85449e54367a574ea06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 6131292166168437138}
+--- !u!114 &7518243987317390596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6473872155480816209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1eff9e2d702aa44881c981b6563f148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpRate: 10
 --- !u!1 &6528502108174363990
 GameObject:
   m_ObjectHideFlags: 0

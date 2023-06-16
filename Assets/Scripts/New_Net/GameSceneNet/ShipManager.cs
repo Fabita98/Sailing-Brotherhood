@@ -5,8 +5,7 @@ using UnityEngine;
 public class ShipManager : MonoBehaviour
 {
     // Serialized fields for ships and players
-    [SerializeField]
-    private List<OnBoardBehaviourNet> onBoardBehavioursList;
+    public List<OnBoardBehaviourNet> onBoardBehavioursList;
     
     // Private static instance variable
     private static ShipManager instance;
@@ -49,7 +48,7 @@ public class ShipManager : MonoBehaviour
                 Debug.Log($"Player attached via ShipManager to ship {i}");
                 return;
             }
-        }
+        }        
         Debug.Log("No available ship to attach the player to.");
     }
     private void HandleSpawnedShip(object sender, EventArgs e)

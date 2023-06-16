@@ -7,14 +7,14 @@ public class OceanSound : MonoBehaviour
     public AudioSource slow_sound;
     public AudioSource fast_sound;
     public GameObject ship1;
-    private Health_and_Speed_Manager hs;
+    private Health_and_Speed_ManagerNet hs;
     bool isplayingfast = false;
     bool isplayingslow = true;
     // Start is called before the first frame update
     void Start()
     {
         slow_sound.Play();
-        hs = ship1.GetComponent<Health_and_Speed_Manager>();
+        hs = ship1.GetComponent<Health_and_Speed_ManagerNet>();
     }
 
     // Update is called once per frame

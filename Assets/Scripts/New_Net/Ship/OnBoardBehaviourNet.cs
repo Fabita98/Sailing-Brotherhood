@@ -90,8 +90,8 @@ public class OnBoardBehaviourNet : NetworkBehaviour
     public void AddToCrewList(GameObject playerToAdd)
     {
         OnListAddition?.Invoke(this, EventArgs.Empty);
-
-        if (CrewmatesList.Count < 2 && attachedPlayer != null)
+        Debug.Log("Il playerToAdd attaccato via trigger è: " + playerToAdd.name);
+        if (CrewmatesList.Count < 2)
         {
             CrewmatesList.Add(playerToAdd);
             Debug.Log("This ship has " + CrewmatesList.Count + " crewmates");

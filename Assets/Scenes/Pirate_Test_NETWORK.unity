@@ -3713,9 +3713,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ship_Net_B
       objectReference: {fileID: 0}
+    - target: {fileID: 1930663990863418088, guid: f3f0af4fdb6cbe346ad75d7dfe12351c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1936069191016579150, guid: f3f0af4fdb6cbe346ad75d7dfe12351c, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1936069191016579150, guid: f3f0af4fdb6cbe346ad75d7dfe12351c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3757,6 +3761,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3787652322192673374, guid: f3f0af4fdb6cbe346ad75d7dfe12351c, type: 3}
+      propertyPath: myShip
+      value: 
+      objectReference: {fileID: 781006285}
     - target: {fileID: 4343980551093849734, guid: f3f0af4fdb6cbe346ad75d7dfe12351c, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3374432516
@@ -4892,7 +4900,7 @@ GameObject:
   - component: {fileID: 1011614585}
   - component: {fileID: 1011614584}
   m_Layer: 0
-  m_Name: Ocean
+  m_Name: Ocean_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4948,7 +4956,7 @@ MonoBehaviour:
   _version: 0
   _globalWindSpeed: 150
   _viewpoint: {fileID: 0}
-  _camera: {fileID: 0}
+  _camera: {fileID: 1201669303}
   _teleportThreshold: 10
   _timeProvider: {fileID: 0}
   _primaryLight: {fileID: 1686341689}
@@ -5528,6 +5536,11 @@ MonoBehaviour:
   effectCannon: {fileID: 1197017074}
   cont: 1
   cannonSound: {fileID: 1197017076}
+--- !u!20 &1201669303 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6799268814286979106, guid: ca7fb67c721b81c4ba8409a2f070bb17, type: 3}
+  m_PrefabInstance: {fileID: 1856826062}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1233851592
 GameObject:
   m_ObjectHideFlags: 0
@@ -7060,6 +7073,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2994018439854131916, guid: c6f4e6c22c87f084da470012481e4764, type: 3}
   m_PrefabInstance: {fileID: 1769634386}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1807848694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1807848696}
+  - component: {fileID: 1807848695}
+  m_Layer: 0
+  m_Name: Ocean_camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &1807848695
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807848694}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 10000
+  field of view: 110.57499
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &1807848696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807848694}
+  m_LocalRotation: {x: 0.7071065, y: -0, z: -0, w: 0.7071071}
+  m_LocalPosition: {x: -3456.7078, y: 582, z: -11227}
+  m_LocalScale: {x: 1, y: 2.539, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1813359618
 GameObject:
   m_ObjectHideFlags: 0
@@ -7170,7 +7258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 376010218028098785, guid: ca7fb67c721b81c4ba8409a2f070bb17, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 376010218028098785, guid: ca7fb67c721b81c4ba8409a2f070bb17, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7215,6 +7303,14 @@ PrefabInstance:
     - target: {fileID: 2567470346278267433, guid: ca7fb67c721b81c4ba8409a2f070bb17, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 483492522
+      objectReference: {fileID: 0}
+    - target: {fileID: 3132788311217549041, guid: ca7fb67c721b81c4ba8409a2f070bb17, type: 3}
+      propertyPath: myShip
+      value: 
+      objectReference: {fileID: 1856826063}
+    - target: {fileID: 8615861460516275591, guid: ca7fb67c721b81c4ba8409a2f070bb17, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6098768952059647021, guid: ca7fb67c721b81c4ba8409a2f070bb17, type: 3}
@@ -7505,7 +7601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1916086134
 Transform:
   m_ObjectHideFlags: 0

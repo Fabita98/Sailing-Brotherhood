@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PlayerDetection : MonoBehaviour
 {
+    public GameObject myShip;
+    
     public void OnTriggerEnter(Collider other)
     {
-        if (OnBoardBehaviourNet.LocalInstance == null)
+        if (myShip == null)
         {
             Debug.LogError("OnBoardBehaviour.LocalInstance is null!");
             return;
         }
 
-        if (OnBoardBehaviourNet.LocalInstance.CrewmatesList.Count >= 2)
+        if (myShip.GetComponent<OnBoardBehaviourNet>().CrewmatesList.Count == 2)
         {
             Debug.Log("Crewmates list is full. Cannot add player.");
             return;
@@ -20,13 +22,19 @@ public class PlayerDetection : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            GameObject parentObject = other.gameObject/*FindParentObjectWithTag("Player")*/;
+            GameObject playerGO = other.gameObject/*FindParentObjectWithTag("Player")*/;
 
-            if (parentObject != null)
+            if (playerGO != null)
             {
-                OnBoardBehaviourNet.LocalInstance.attachedPlayer = parentObject;
-                ShipManager.Instance.AddToCrewList(parentObject);
-                Debug.Log("Player attached via CollisionTrigger");
+                myShip.GetComponent<OnBoardBehaviourNet>().attachedPlayer = playerGO;
+                myShip.GetComponent<OnBoardBehaviourNet>().AddToCrewList(playerGO);
+                //Debug.Log("Player attached via CollisionTrigger");
+
+                if (myShip.GetComponent<OnBoardBehaviourNet>().CrewmatesList.Count == 2)
+                {
+                    Debug.Log("Crewmates list is full. Cannot add player.");
+                    return;
+                }
             }
         }
     }

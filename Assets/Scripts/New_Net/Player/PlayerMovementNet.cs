@@ -15,8 +15,8 @@ public class PlayerMovementNet : NetworkBehaviour
     [Header("Movement")]
     private bool lockMovement = false;
     public float speed;
+    [SerializeField] private Camera playerCameraPrefab;
     private Camera playerCamera;
-    public Camera camera;
     public Vector3 cameraRelativeMovement;
     private Rigidbody rb;
     private Animator player_an;
@@ -29,25 +29,29 @@ public class PlayerMovementNet : NetworkBehaviour
     private RaycastHit slopeHit;
     private bool onStairs;
 
-    [Header("Attachment")]
-    public GameObject attachedObject;
-
     public static PlayerMovementNet LocalInstance { get; private set; }
     public static event EventHandler OnAnyPlayerSpawned;
 
     [SerializeField] private List<Vector3> spawnPositionList;
     public override void OnNetworkSpawn()
     {
-        if (IsOwner)
+        if (IsLocalPlayer)
         {            
-            LocalInstance = this;
-            playerCamera = Instantiate(camera, camera.transform.position, camera.transform.rotation);
-            playerCamera.transform.SetParent(transform);
-            camera.enabled = false;
+            LocalInstance = this;            
+            
+            //playerCamera = Instantiate(camera, camera.transform.position, camera.transform.rotation);
+            //playerCamera.transform.SetParent(transform);
+            //camera.enabled = false;
         }
         else return; // Disabilita la camera per gli altri giocatori
-        
-        Debug.Log("Camera: " +  this.camera);        
+        //playerCameraPrefab = GetComponentInChildren<Camera>();
+        //playerCameraPrefab.tag = "MainCamera";
+
+        rb = GetComponent<Rigidbody>();
+        player_an = GetComponent<Animator>();
+        playerHeight = GetComponent<CapsuleCollider>().height;
+
+        Debug.Log("Camera: " +  playerCameraPrefab);        
 
         OnAnyPlayerSpawned?.Invoke(this, EventArgs.Empty);
 
@@ -58,26 +62,30 @@ public class PlayerMovementNet : NetworkBehaviour
         
         transform.position = spawnPositionList[SailingBrotheroodLobby.Instance.GetPlayerDataIndexFromClientId(OwnerClientId)];
 
-        if (IsServer)
+        if (IsServer /*&& IsLocalPlayer*/)
         {
+            //Camera.main.enabled = true;
+            //rb = GetComponent<Rigidbody>();
+            //player_an = GetComponent<Animator>();
+            //playerHeight = GetComponent<CapsuleCollider>().height;
             NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
         }
     }
 
     // Start is called before the first frame update
     void Start()
-    {        
-        rb = GetComponent<Rigidbody>();
-        player_an = GetComponent<Animator>();
-        playerHeight = GetComponent<CapsuleCollider>().height;
-
+    {
+        if (!IsServer)
+        {
+            rb.isKinematic = false;
+        }
         Debug.Log("THIS Player LocalInstance ID: " + LocalInstance.GetInstanceID() + " exists" );
         PlayerData playerData = SailingBrotheroodLobby.Instance.GetPlayerDataFromClientId(OwnerClientId);
     }
 
     private void Update()
     {   //messo qua per farlo muovere solo dal localplayer
-        if (!IsOwner)
+        if (!IsLocalPlayer)
         {
             return;
         }
@@ -88,7 +96,7 @@ public class PlayerMovementNet : NetworkBehaviour
 
     void FixedUpdate()
     {   //messo qua per farlo muovere solo dal localplayer
-        if (!IsOwner)
+        if (!IsLocalPlayer)
         {
             return;
         }
@@ -109,8 +117,8 @@ public class PlayerMovementNet : NetworkBehaviour
 
         float playerHorizontalInput = Input.GetAxis("Horizontal");
         float playerVerticalInput = Input.GetAxis("Vertical");
-        Vector3 forward = camera.transform.forward;
-        Vector3 right = camera.transform.right;
+        Vector3 forward = playerCameraPrefab.transform.forward;
+        Vector3 right = playerCameraPrefab.transform.right;
         forward.y = 0;
         right.y = 0;
         forward = forward.normalized;
@@ -232,6 +240,16 @@ public class PlayerMovementNet : NetworkBehaviour
     public static void ResetStaticData()
     {
         OnAnyPlayerSpawned = null;
+    }
+    public void AssignCamera()
+    {
+        if (playerCameraPrefab != null && IsLocalPlayer)
+        {
+            playerCamera = Instantiate(playerCameraPrefab, transform.position, transform.rotation);
+            playerCamera.transform.SetParent(transform);
+            playerCamera.tag = "MainCamera";
+            playerCamera.enabled = true;
+        }
     }
 }
 
