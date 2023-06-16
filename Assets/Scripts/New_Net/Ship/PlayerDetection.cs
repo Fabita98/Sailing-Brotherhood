@@ -14,7 +14,7 @@ public class PlayerDetection : MonoBehaviour
             return;
         }
 
-        if (myShip.GetComponent<OnBoardBehaviourNet>().CrewmatesList.Count == 1)
+        if (myShip.GetComponent<OnBoardBehaviourNet>().CrewmatesList.Count == 2)
         {
             Debug.Log("Crewmates list is full. Cannot add player.");
             return;
@@ -30,7 +30,7 @@ public class PlayerDetection : MonoBehaviour
                 myShip.GetComponent<OnBoardBehaviourNet>().AddToCrewList(playerGO);
                 //Debug.Log("Player attached via CollisionTrigger");
 
-                if (myShip.GetComponent<OnBoardBehaviourNet>().CrewmatesList.Count == 1)
+                if (myShip.GetComponent<OnBoardBehaviourNet>().CrewmatesList.Count == 2)
                 {
                     Debug.Log("Crewmates list is full. Cannot add player.");
                     return;
