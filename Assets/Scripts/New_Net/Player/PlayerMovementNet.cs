@@ -22,8 +22,8 @@ public class PlayerMovementNet : NetworkBehaviour
 
 
     public Vector3 cameraRelativeMovement;
-    private Rigidbody rb;
-    private Animator player_an;
+    public Rigidbody rb;
+    public Animator player_an;
 
     [Header("Slope/Stairs Handling")]
     public float maxSlopeAngle;

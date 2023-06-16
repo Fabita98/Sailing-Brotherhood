@@ -10364,18 +10364,20 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  KeepPlayerOnGroundForce: 5
+  KeepPlayerOnGroundForce: 20
   speed: 10
   cameraRelativeMovement: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  player_an: {fileID: 0}
   maxSlopeAngle: 45
   onSlopeForceMultiplier: 30
-  pushDownForceOnSlope: 5
+  pushDownForceOnSlope: 20
   whatIsStairs:
     serializedVersion: 2
     m_Bits: 64
   spawnPositionList:
-  - {x: -4179.21, y: 39.21, z: -15080.87}
-  - {x: -4178.59, y: 40.62, z: -15091.26}
+  - {x: -2638.07, y: 37.15, z: -15073.87}
+  - {x: -2628.3, y: 39.56, z: -15091}
 --- !u!114 &2245604043019604103
 MonoBehaviour:
   m_ObjectHideFlags: 0

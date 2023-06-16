@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class StartRaceNet : NetworkBehaviour
+public class StartRace : MonoBehaviour
 {
     [SerializeField] private Vector3 _rotation;
     public int countdownTime;

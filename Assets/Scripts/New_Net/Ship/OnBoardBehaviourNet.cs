@@ -79,6 +79,7 @@ public class OnBoardBehaviourNet : NetworkBehaviour
             {
                 CrewmatesList.ForEach(delegate (GameObject p)
                 {
+                    Debug.Log("p è: " + p.name + "p.Rigidbody è: " + p.transform.GetComponent<Rigidbody>());
                     //Adjust crewmates velocity
                     p.transform.GetComponent<Rigidbody>().AddForce(shipRb.velocity.x, shipRb.velocity.y, shipRb.velocity.z, ForceMode.VelocityChange);
                 });
