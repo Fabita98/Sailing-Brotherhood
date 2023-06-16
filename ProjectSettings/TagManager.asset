@@ -9,6 +9,7 @@ TagManager:
   - CannonBall
   - Barrel
   - GoldenCannonBall
+  - PowerUp
   layers:
   - Default
   - TransparentFX
