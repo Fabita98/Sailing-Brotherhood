@@ -9,7 +9,7 @@ public class Sail_ManagerNet : NetworkBehaviour
     public GameObject sail;
     public GameObject belongingShip;
     Health_and_Speed_ManagerNet hs;
-    bool entered = false;
+    bool entered = false, change=false;
     int count = 0;
     public GameObject mast;
     public AudioSource ropesound;
@@ -27,15 +27,39 @@ public class Sail_ManagerNet : NetworkBehaviour
         {
             if (Input.GetKeyDown("e") && sail.activeSelf)
             {
-                sail.SetActive(!sail.activeSelf);
-                hs.maxspeed -= 6;
+                if (IsClient) UseSailServerRPC();
+                else
+                {
+                    UseSailClientRPC();
+                    hs.maxspeed -= 6;
+                    change = false;
+                }
                 ropesound.Play();
             }
             else if (Input.GetKeyDown("e") && sail.activeSelf == false)
             {
-                sail.SetActive(!sail.activeSelf);
-                hs.maxspeed += 6;
+                if (IsClient) UseSailServerRPC(); else 
+                {
+                    UseSailClientRPC();
+                    hs.maxspeed += 6;
+                    change = false;
+                }
                 ropesound.Play();
+            }
+        }
+        
+        
+        if (IsServer && change)
+        {
+            if (sail.activeSelf)
+            {
+                hs.maxspeed += 6;
+                change = false;
+            }
+            else if (!sail.activeSelf)
+            {
+                hs.maxspeed -= 6;
+                change = false;
             }
         }
     }
@@ -69,5 +93,18 @@ public class Sail_ManagerNet : NetworkBehaviour
     {
         Outline outline = mast.GetComponent<Outline>();
         outline.enabled = false;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void UseSailServerRPC()
+    {
+        UseSailClientRPC();
+    }
+    [ClientRpc]
+    private void UseSailClientRPC()
+    {
+        change = true;
+        sail.SetActive(!sail.activeSelf);
+        
+        
     }
 }

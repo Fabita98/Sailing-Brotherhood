@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
-
+using Unity.VisualScripting;
 
 public class CannonsTriggerNet : NetworkBehaviour
 {
@@ -26,6 +26,7 @@ public class CannonsTriggerNet : NetworkBehaviour
 
     public AudioSource cannonsound, reloadSound;
     bool isplaying = false;
+    bool cannonOccupied;
 
     private GameObject player;
     // Start is called before the first frame update
@@ -39,57 +40,75 @@ public class CannonsTriggerNet : NetworkBehaviour
     //la forza orizzontale da applicare alla palla
     float forwardForceMultiplier = 1f;
     //Dove guarda il giocatore
-    //Vector3 upwardDirection = cameraPlayer.transform.up;
 
     public GameObject arrow1, arrow2, arrow3, arrow4, arrow5, arrow6;
 
+    Vector3 upwardDirection;
 
     void Start()
     {
         cont = 0;
         lockMovement = false;
         shooted = false;
+        cannonOccupied = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (entered==true) { 
+        if (entered == true)
+        {
+
+            if (lockMovement == true && shooted == true)
+            {
+                textButton.text = "Click R to reload";
+            }
+
+            if (lockMovement == true && shooted == false)
+            {
+                textButton.text = "Left click to shoot";
+            }
+
+            if (lockMovement == false && shooted == true)
+            {
+                textButton.text = "Click R to reload";
+            }
+
+            if (lockMovement == false && shooted == false)
+            {
+                textButton.text = "Press E to interact";
+            }
 
             if (lockMovement == true)
             {
                 Camera cameraPlayer = player.GetComponentInChildren<Camera>();
-                Vector3 upwardDirection = cameraPlayer.transform.forward;
+                //Vector3 upwardDirection = cameraPlayer.transform.forward;
 
                 trajectoryShooting(cameraPlayer.transform);
             }
 
-
-            if (Input.GetKeyDown(KeyCode.E) && lockMovement == false)
+            if (Input.GetKeyDown(KeyCode.E) && lockMovement == false && cannonOccupied == false)
             {
-                player.transform.rotation = cannon1.transform.rotation * Quaternion.Euler(0, 90, 0);
-                
-                player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = true;
+                cannonOccupied = true;
 
-                
+                if (IsClient) CannonOccupiedServerRPC();
+                else { CannonOccupiedClientRPC(); }
+
+                player.transform.rotation = cannon1.transform.rotation * Quaternion.Euler(0, 90, 0);
+
+                player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = true;
 
                 //Qui si ferma la visuale
                 if (playerMovement != null)
                 {
-                    //player.GetComponent<Rigidbody>().constraints= RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ; ;                  
-                    //playerMovement.speed = 0;
-                    //PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
-
                     // Blocca il movimento del giocatore chiamando il metodo LockMovement
                     playerMovement.LockMovement();
-                    //playerMovement.lockMovement = true;
-
                 }
                 lockMovement = true;
 
                 if (shooted == true)
                 {
-                    textButton.text = "Click R to reload";
+                    textButton.text = "Press R to reload";
                 }
                 else
                 {
@@ -99,6 +118,10 @@ public class CannonsTriggerNet : NetworkBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
             {
+                cannonOccupied = false;
+                if (IsClient) CannonNotOccupiedServerRPC();
+                else { CannonNotOccupiedClientRPC(); }
+
                 player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = false;
                 //Qui si sblocca la visuale e puo muoversi nuovamente
                 if (playerMovement != null)
@@ -110,62 +133,72 @@ public class CannonsTriggerNet : NetworkBehaviour
 
                 if (shooted == true)
                 {
-                    textButton.text = "Click R to reload";
+                    textButton.text = "Press R to reload";
                 }
-                else { 
-                //Il bottone mostrerà il testo Click E to interact per sparare
-                textButton.text = "Click E to interact";
+                else
+                {
+                    //Il bottone mostrerà il testo Click E to interact per sparare
+                    textButton.text = "Press E to interact";
                 }
             }
 
-            if (Input.GetMouseButtonDown(0) && lockMovement == true&& shooted==false)
+            if (Input.GetMouseButtonDown(0) && lockMovement == true && shooted == false)
             {
-               
                 //la forza orizzontale da applicare alla palla
                 Camera cameraPlayer = player.GetComponentInChildren<Camera>();
-                Vector3 upwardDirection = cameraPlayer.transform.forward;
+                upwardDirection = cameraPlayer.transform.forward;
 
-                shooting(cannon1, upwardDirection);
+                /*shooting(cannon1, upwardDirection);
                 shooting(cannon2, upwardDirection);
                 shooting(cannon3, upwardDirection);
                 shooting(cannon4, upwardDirection);
                 shooting(cannon5, upwardDirection);
-                shooting(cannon6, upwardDirection);
+                shooting(cannon6, upwardDirection);*/
 
-                cannonsound.Play();
+                if (IsClient) CannonBallServerRPC();
+                else { CannonBallClientRPC(); }
+
+                /*cannonsound.Play();
 
                 effectCannon1.SetActive(true);
                 effectCannon2.SetActive(true);
                 effectCannon3.SetActive(true);
                 effectCannon4.SetActive(true);
                 effectCannon5.SetActive(true);
-                effectCannon6.SetActive(true);
+                effectCannon6.SetActive(true);*/
 
                 shooted = true;
+                if (IsClient) ShootedServerRPC();
+                else { ShootedClientRPC(); }
 
                 //Il bottone mostrerà il testo Click R to reload
-                textButton.text = "Click R to reload";
+                textButton.text = "Press R to reload";
 
                 Invoke("disableEffects", 3);
             }
 
             if (Input.GetKey(KeyCode.R) && shooted == true)
             {
-                if (!isplaying) { 
-                    reloadSound.Play(); 
-                    isplaying = true; 
+                if (!isplaying)
+                {
+                    reloadSound.Play();
+                    isplaying = true;
                 }
                 holdTime += Time.deltaTime;
                 Debug.Log("Holdtime: " + holdTime);
                 float waitingTime = holdTimeRequired - holdTime;
                 string formattedValue = waitingTime.ToString("F2");
-                textButton.text = ""+formattedValue;
+                textButton.text = "" + formattedValue;
                 if (holdTime >= holdTimeRequired)
                 {
                     isplaying = false;
                     reloadSound.Stop();
                     shooted = false;
-                    if(lockMovement == true)
+
+                    if (IsClient) NotShootedServerRPC();
+                    else { NotShootedClientRPC(); }
+
+                    if (lockMovement == true)
                     {
                         //Il bottone mostrerà il testo Left click to shoot per sparare
                         textButton.text = "Left click to shoot";
@@ -173,9 +206,9 @@ public class CannonsTriggerNet : NetworkBehaviour
                     else
                     {
                         //Il bottone mostrerà il testo Left click to shoot per sparare
-                        textButton.text = "Click E to interact";
+                        textButton.text = "Press E to interact";
                     }
-                }           
+                }
             }
             else
             {
@@ -183,7 +216,8 @@ public class CannonsTriggerNet : NetworkBehaviour
                 isplaying = false;
                 reloadSound.Stop();
                 //Il bottone mostrerà il testo Click R to reload
-                if (shooted == true) {
+                if (shooted == true)
+                {
                     textButton.text = "Click R to reload";
                 }
             }
@@ -212,9 +246,19 @@ public class CannonsTriggerNet : NetworkBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
-        {   cont = 0;
+        {
+            cont = 0;
             playerMovement = null;
             player = null;
+            cannonOccupied = false;
+            if (IsClient) CannonNotOccupiedServerRPC();
+            else { CannonNotOccupiedClientRPC(); }
+
+            if (playerMovement != null)
+            {
+                //playerMovement.enabled = true; // Disabilita lo script PlayerMovement
+                playerMovement.UnlockMovement();
+            }
             //Se esce disattivo il bottone e la variabile entered e falsa
             button.gameObject.SetActive(false);
             entered = false;
@@ -246,15 +290,12 @@ public class CannonsTriggerNet : NetworkBehaviour
         //Aggiungo una forza verticale
         //SE VUOI MODIFICARE QUANTO DISTANTI VANNO LE PALLE DI CANNONE MOLTIPICA PER UN VALORE esempio: upwardDirection*upwardForce*5
         rbCannonBall1.AddForce(upwardDirection * upwardForce, ForceMode.VelocityChange);
+
+        Destroy(cannonBall1, 10);
     }
 
-    private void trajectoryShooting( Transform camera)
+    private void trajectoryShooting(Transform camera)
     {
-        //posizione in cui spawnare la palla
-        //Vector3 spawnPosition = cannon.transform.position + cannon.transform.right * spawnDistance + Vector3.up * spawnHeight;
-        //Instanziamento della palla
-        //GameObject arrow1 = Instantiate(arrow, spawnPosition, camera.rotation);
-
         arrow1.SetActive(true);
         arrow2.SetActive(true);
         arrow3.SetActive(true);
@@ -280,7 +321,6 @@ public class CannonsTriggerNet : NetworkBehaviour
         arrow6.SetActive(false);
     }
 
-
     public void enableOutline(GameObject cannon)
     {
         Outline outline = cannon.GetComponent<Outline>();
@@ -302,4 +342,81 @@ public class CannonsTriggerNet : NetworkBehaviour
         effectCannon5.SetActive(false);
         effectCannon6.SetActive(false);
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void ShootedServerRPC()
+    {
+        ShootedClientRPC();
+    }
+
+    [ClientRpc]
+    private void ShootedClientRPC()
+    {
+        shooted = true;
+        textButton.text = "Click R to reload";
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void NotShootedServerRPC()
+    {
+        NotShootedClientRPC();
+    }
+
+    [ClientRpc]
+    private void NotShootedClientRPC()
+    {
+        shooted = false;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void CannonBallServerRPC()
+    {
+        CannonBallClientRPC();
+    }
+
+    [ClientRpc]
+    private void CannonBallClientRPC()
+    {
+        shooted = true;
+        shooting(cannon1, upwardDirection);
+        shooting(cannon2, upwardDirection);
+        shooting(cannon3, upwardDirection);
+        shooting(cannon4, upwardDirection);
+        shooting(cannon5, upwardDirection);
+        shooting(cannon6, upwardDirection);
+        cannonsound.Play();
+        effectCannon1.SetActive(true);
+        effectCannon2.SetActive(true);
+        effectCannon3.SetActive(true);
+        effectCannon4.SetActive(true);
+        effectCannon5.SetActive(true);
+        effectCannon6.SetActive(true);
+
+        Invoke("disableEffects", 3);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void CannonOccupiedServerRPC()
+    {
+        CannonOccupiedClientRPC();
+    }
+
+    [ClientRpc]
+    private void CannonOccupiedClientRPC()
+    {
+        cannonOccupied = true;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void CannonNotOccupiedServerRPC()
+    {
+        CannonNotOccupiedClientRPC();
+    }
+
+    [ClientRpc]
+    private void CannonNotOccupiedClientRPC()
+    {
+        cannonOccupied = false;
+    }
+
 }
