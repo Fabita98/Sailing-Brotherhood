@@ -17,7 +17,7 @@ public static class Loader {
 
     public static void Load(Scene targetScene) {
         Loader.targetScene = targetScene;
-        SceneManager.LoadScene(Scene.MainTitle.ToString());
+        SceneManager.LoadScene(Scene.Lobby.ToString());
     }
 
     public static void LoadNetwork(Scene targetScene) {

@@ -10,12 +10,12 @@ public class ParrotAI : MonoBehaviour
     float cooldown = 15;
     public AudioSource AudioFight, AudioPowUp, AudioTreasure, AudioDirection, AudioDamage, AudioEnemy;
     public GameObject my_ship, enemy_ship;
-    private Health_and_Speed_Manager hs;
+    private Health_and_Speed_ManagerNet hs;
     private float Cosalpha, distance;
     // need to be liked to 
     void Start()
     {
-        hs = my_ship.GetComponent<Health_and_Speed_Manager>();
+        hs = my_ship.GetComponent<Health_and_Speed_ManagerNet>();
     }
 
     // Update is called once per frame

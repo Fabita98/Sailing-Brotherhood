@@ -102,7 +102,7 @@ public class SailingBrotherhoodManager : NetworkBehaviour {
         return countdownToStartTimer.Value;
     }
 
-    public bool IsGameOver() {
+    public bool IsGameOver() { 
         return state.Value == State.GameOver;
     }
 

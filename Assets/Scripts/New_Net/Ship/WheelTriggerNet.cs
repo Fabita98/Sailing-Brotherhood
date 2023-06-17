@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 
-
 public class WheelTriggerNet : NetworkBehaviour
 {
     private int cont;
@@ -15,7 +14,10 @@ public class WheelTriggerNet : NetworkBehaviour
 
     private GameObject player;
     public GameObject wheel;
+    public Transform wheelPos;
 
+
+    private bool anyinput, inputleft, inputright, externaldriver;
     private bool rotateRight;
     private bool rotateLeft;
 
@@ -38,13 +40,16 @@ public class WheelTriggerNet : NetworkBehaviour
     public Rigidbody _rb;
     public GameObject navigationSpot;
 
+    public float sideways;
+    public Vector3 rotVec;
+
     private void Start()
     {
         // Ottieni il riferimento a boatProbes partendo da wheel e prendendo i padri
         GameObject wheelArea = wheel.transform.parent.gameObject;
         GameObject shipComponent = wheelArea.transform.parent.gameObject;
         ship = shipComponent.transform.parent.gameObject;
-        boatProbes= ship.GetComponent<BoatProbes>();
+        boatProbes = ship.GetComponent<BoatProbes>();
         wheelOccupied = false;
         contPlayers = 0;
     }
@@ -53,14 +58,20 @@ public class WheelTriggerNet : NetworkBehaviour
     {
         if (cont == 1)
         {
-            if (Input.GetKeyDown(KeyCode.E) && lockMovement == false&&wheelOccupied==false)
+            if(wheelOccupied == true) { player.transform.position = wheelPos.transform.position; }
+            if (wheelOccupied == false && Input.GetKeyDown(KeyCode.E) && lockMovement == false)
             {
                 wheelOccupied = true;
-                player.transform.rotation = wheel.transform.rotation * Quaternion.Euler(0, 0, 0);
+                if (IsClient) WheelOccupiedServerRPC();
+                else { WheelOccupiedClientRPC(); }
+
+                player.transform.rotation = wheelPos.transform.rotation * Quaternion.Euler(0, 0, 0);
+                
 
                 textButton.text = "Press A or D\nto rotate the wheel";
                 float distance = 2;
-                player.transform.position = wheel.transform.position - wheel.transform.forward * distance;
+                player.transform.position = wheelPos.transform.position;     /*wheel.transform.position - wheel.transform.forward * distance;*/
+                
                 navigationSpot.SetActive(true);
                 //Qui si ferma la visuale
                 if (playerMovement != null)
@@ -71,10 +82,18 @@ public class WheelTriggerNet : NetworkBehaviour
                     // Disabilita lo script PlayerMovement
                 }
                 lockMovement = true;
+                if (!IsHost)
+                {
+                    externaldriver = true;
+                    externalServerRPC();
+                }
             }
             else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
             {
                 wheelOccupied = false;
+                if (IsClient) WheelNotOccupiedServerRPC();
+                else { WheelNotOccupiedClientRPC(); }
+
                 navigationSpot.SetActive(false);
                 //Qui si sblocca la visuale e puo muoversi nuovamente
                 textButton.text = "Press E to interact";
@@ -85,43 +104,87 @@ public class WheelTriggerNet : NetworkBehaviour
 
                 }
                 lockMovement = false;
+                if (!IsHost) {externaldriver = false; NOexternalServerRPC();
             }
-
+            }
+            /*
             if (lockMovement == true)
             {
                 if (Input.GetKey(KeyCode.A))
                 {
                     rotateLeft = true;
+                    if (IsClient) RotateLeftServerRPC();
+                    else { RotateLeftClientRPC(); }
                     rotateRight = false;
-                }             
+                    if (IsClient) NotRotateRightServerRPC();
+                    else { NotRotateRightClientRPC(); }
+                }
 
                 else if (Input.GetKey(KeyCode.D))
                 {
                     rotateLeft = false;
+                    if (IsClient) NotRotateLeftServerRPC();
+                    else { NotRotateLeftClientRPC(); }
                     rotateRight = true;
+                    if (IsClient) RotateRightServerRPC();
+                    else { RotateRightClientRPC(); }
                 }
-                else 
+                else
                 {
                     rotateLeft = false;
+                    if (IsClient) NotRotateLeftServerRPC();
+                    else { NotRotateLeftClientRPC(); }
                     rotateRight = false;
+                    if (IsClient) NotRotateRightServerRPC();
+                    else { NotRotateRightClientRPC(); }
                 }
-            }
+            }*/
         }
-
     }
 
-    
-     private void FixedUpdate()
-        {
+    private void FixedUpdate()
+    {
 
-        var sideways = boatProbes.getTurnBias();
-            /*if (rotateLeft||rotateRight) sideways +=
+        sideways = boatProbes.getTurnBias();
 
-                (Input.GetKey(KeyCode.A) ? -1f : 0f) +
-                (Input.GetKey(KeyCode.D) ? 1f : 0f);
-            */
-        if (rotateLeft || rotateRight)
+        if (!IsHost)
         {
+            Debug.Log("i'm a driving client");
+            if (Input.GetKey(KeyCode.A))
+            {
+                LeftServerRPC();
+                wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
+            }
+            else if (Input.GetKey(KeyCode.D)) { 
+                rightServerRPC();
+                wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
+            }
+
+        else nullServerRPC();
+
+            
+        }
+        else if (anyinput && externaldriver == true)
+        {
+            Debug.Log("external driver");
+            if (inputleft)
+            {
+                wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
+                sideways += -0.3f;
+            }
+
+            if (inputright)
+            {
+                wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
+                sideways += 0.3f;
+            }
+            rotVec = transform.up + _turningHeel * transform.forward;
+            Debug.Log("Sideways e:" + sideways);
+            _rb.AddTorque(rotVec * _turnPower * sideways, ForceMode.Acceleration);
+        }
+        else if (lockMovement == true)
+        {
+            Debug.Log("i'm a host driver");
             if (Input.GetKey(KeyCode.A))
             {
                 wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
@@ -133,14 +196,15 @@ public class WheelTriggerNet : NetworkBehaviour
                 wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
                 sideways += 0.3f;
             }
+            rotVec = transform.up + _turningHeel * transform.forward;
+            Debug.Log("Sideways e:" + sideways);
+            _rb.AddTorque(rotVec * _turnPower * sideways, ForceMode.Acceleration);
+
         }
 
-        //boatProbes.setTurnBias(sideways);
-        
-        var rotVec = transform.up + _turningHeel * transform.forward;
-            _rb.AddTorque(rotVec * _turnPower * sideways, ForceMode.Acceleration);
-        }
-     
+
+    }
+
 
     /*private void FixedUpdate()
     {
@@ -197,6 +261,8 @@ public class WheelTriggerNet : NetworkBehaviour
             if (contPlayers == 0)
             {
                 wheelOccupied = false;
+                if (IsClient) WheelNotOccupiedServerRPC();
+                else { WheelNotOccupiedClientRPC(); }
                 navigationSpot.SetActive(false);
             }
             textButton.text = "Press E to interact";
@@ -227,5 +293,169 @@ public class WheelTriggerNet : NetworkBehaviour
         Outline outline = wheel.GetComponent<Outline>();
         outline.enabled = false;
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RemoveSidewaysServerRPC()
+    {
+        RemoveSidewaysClientRPC();
+    }
+
+    [ClientRpc]
+    private void RemoveSidewaysClientRPC()
+    {
+        sideways += -0.3f;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void AddSidewaysServerRPC()
+    {
+        AddSidewaysClientRPC();
+    }
+
+    [ClientRpc]
+    private void AddSidewaysClientRPC()
+    {
+        sideways += 0.3f;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void WheelOccupiedServerRPC()
+    {
+        WheelOccupiedClientRPC();
+    }
+
+    [ClientRpc]
+    private void WheelOccupiedClientRPC()
+    {
+        wheelOccupied = true;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void WheelNotOccupiedServerRPC()
+    {
+        WheelNotOccupiedClientRPC();
+    }
+
+    [ClientRpc]
+    private void WheelNotOccupiedClientRPC()
+    {
+        wheelOccupied = false;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RotateLeftServerRPC()
+    {
+        RotateLeftClientRPC();
+    }
+
+    [ClientRpc]
+    private void RotateLeftClientRPC()
+    {
+        rotateLeft = true; ;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void NotRotateLeftServerRPC()
+    {
+        NotRotateLeftClientRPC();
+    }
+
+    [ClientRpc]
+    private void NotRotateLeftClientRPC()
+    {
+        rotateLeft = false;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RotateRightServerRPC()
+    {
+        RotateRightClientRPC();
+    }
+
+    [ClientRpc]
+    private void RotateRightClientRPC()
+    {
+        rotateRight = true;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void NotRotateRightServerRPC()
+    {
+        NotRotateRightClientRPC();
+    }
+
+    [ClientRpc]
+    private void NotRotateRightClientRPC()
+    {
+        rotateRight = false;
+    }
+
+    //max____________________________________________________________________________
+
+    [ServerRpc(RequireOwnership = false)]
+    private void LeftServerRPC()
+    {
+        LeftClientRPC();
+    }
+
+    [ClientRpc]
+    private void LeftClientRPC()
+    {
+        anyinput = true; inputleft = true; inputright = false;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void rightServerRPC()
+    {
+        rightClientRPC();
+    }
+
+    [ClientRpc]
+    private void rightClientRPC()
+    {
+        anyinput = true; inputleft = false; inputright = true;
+    }
+
+    
+
+    [ServerRpc(RequireOwnership = false)]
+    private void nullServerRPC()
+    {
+        nullClientRPC();
+    }
+
+    [ClientRpc]
+    private void nullClientRPC()
+    {
+        anyinput = false; inputleft = false; inputright = false;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void externalServerRPC()
+    {
+        externalClientRPC();
+    }
+
+    [ClientRpc]
+    private void externalClientRPC()
+    {
+        externaldriver = true;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void NOexternalServerRPC()
+    {
+        NOexternalClientRPC();
+    }
+
+    [ClientRpc]
+    private void NOexternalClientRPC()
+    {
+        externaldriver = false;
+    }
+
+
+
+    
+
 
 }

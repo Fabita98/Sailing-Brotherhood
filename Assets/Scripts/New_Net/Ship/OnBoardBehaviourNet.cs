@@ -82,10 +82,12 @@ public class OnBoardBehaviourNet : NetworkBehaviour
             {
                 CrewmatesList.ForEach(delegate (GameObject p)
                 {
-                    //Debug.Log("p è: " + p.name + "p.Rigidbody è: " + p.transform.GetComponent<Rigidbody>()+"e velocity vale"+ syncVel.Value.ToString());
-                    //Adjust crewmates velocity
-                    p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z, ForceMode.VelocityChange);
-
+                    if (!IsHost)
+                    {
+                        p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z * 1.05f, ForceMode.VelocityChange);
+                    }
+                    else
+                        p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z, ForceMode.VelocityChange);
                 });
             }                       
         }
