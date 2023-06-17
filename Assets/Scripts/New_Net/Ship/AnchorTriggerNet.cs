@@ -21,7 +21,10 @@ public class AnchorTriggerNet : NetworkBehaviour
     private bool entered;
     private PlayerMovementNet playerMovement;
     private bool lockMovement;
+
+    public NetworkVariable<bool> syncStart = new NetworkVariable<bool>();
     public bool start;
+    
     private bool interact;
     public GameObject anchorUp;
     public AudioSource chainSound;
@@ -32,8 +35,16 @@ public class AnchorTriggerNet : NetworkBehaviour
         entered = false;
         lockMovement = false;
         start = false;
+        syncStart.Value = start;
         interact = false;
     }
+
+    /*public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        OnSpawnedShip?.Invoke(this, EventArgs.Empty);
+    }*/
+
     private void OnTriggerEnter(Collider other)
     {
         
@@ -105,7 +116,7 @@ public class AnchorTriggerNet : NetworkBehaviour
                     child--;
                 }
                 //Se arriviamo a 120 la nave deve iniziare a muoversi e il bottone si disattiva
-                if (cont == necessaryPress && start==false)
+                if (cont == necessaryPress && syncStart.Value==false)
                 {
                     Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();
                     manager.addMaxSpeed(8f);
@@ -119,7 +130,8 @@ public class AnchorTriggerNet : NetworkBehaviour
                     anchorUp.SetActive(true);
                     button.gameObject.SetActive(false);
                     entered = false;
-                    start = true;                  
+                    start = true;
+                    syncStart.Value = start;
                 }
             }
         }

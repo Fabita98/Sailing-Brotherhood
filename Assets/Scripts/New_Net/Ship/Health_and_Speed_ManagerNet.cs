@@ -7,6 +7,11 @@ using Unity.Netcode;
 public class Health_and_Speed_ManagerNet : NetworkBehaviour
 {
     public float health, maxspeed, actual_speed;
+
+    public NetworkVariable<float> syncMaxSpeed = new NetworkVariable<float>();
+    public NetworkVariable<float> syncActualSpeed = new NetworkVariable<float>();
+    public NetworkVariable<float> syncHealth = new NetworkVariable<float>();
+
     public GameObject my_ship;
     Crest.BoatProbes boatProbes;
     public Image HealthBar, SpeedBar;
@@ -18,10 +23,13 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
     {
         boatProbes = my_ship.GetComponent<Crest.BoatProbes>();
         health = 100;
+        syncHealth.Value = health;
         maxspeed = 0;
+        syncMaxSpeed.Value = maxspeed;
         actual_speed = 0;
         if (maxspeed > 50) maxspeed = 50;
         actual_speed = maxspeed - maxspeed * (1 - health / 100);
+        syncActualSpeed.Value = actual_speed;
         boatProbes._enginePower = actual_speed;
         HealthBar.fillAmount = health / 100;
         SpeedBar.fillAmount = actual_speed / 20;
@@ -32,19 +40,36 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
     void Update()
     {
         anchor = anchorTrigger.GetComponent<AnchorTriggerNet>();
-        if (anchor.start == true)
+        if (anchor.syncStart.Value == true)
         {
             boatProbes = my_ship.GetComponent<Crest.BoatProbes>();
-            if (health > 100) health = 100;
-            if (health < 0) health = 0;
-            if (maxspeed < 0) maxspeed = 0;
-            if (maxspeed > 50) maxspeed = 50;
-            actual_speed = maxspeed - maxspeed * (1 - health / 100);
-            boatProbes._enginePower = actual_speed;
-            HealthBar.fillAmount = health / 100;
-            SpeedBar.fillAmount = actual_speed / 20;
+            if (health > 100)
+            {
+                health = 100;
+                syncHealth.Value = health;
+            }
 
-            SpeedValue.text = actual_speed.ToString();
+            if (health < 0) {
+                health = 0;
+                syncHealth.Value = health;
+            }
+            if (maxspeed < 0)
+            {
+                maxspeed = 0;
+                syncMaxSpeed.Value = maxspeed;
+            }
+            if (maxspeed > 50)
+            {
+                maxspeed = 50;
+                syncMaxSpeed.Value = maxspeed;
+            }
+            actual_speed = maxspeed - maxspeed * (1 - health / 100);
+            syncActualSpeed.Value = actual_speed;
+            boatProbes._enginePower = syncActualSpeed.Value;
+            HealthBar.fillAmount = syncHealth.Value / 100;
+            SpeedBar.fillAmount = syncActualSpeed.Value / 20;
+
+            SpeedValue.text = syncActualSpeed.Value.ToString();
         }
     }
 
@@ -56,9 +81,11 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
     public void addMaxSpeed(float f)
     {
         maxspeed += f;
+        syncMaxSpeed.Value = maxspeed;
     }
     public void decreaseMaxSpeed(float f)
     {
         maxspeed -= f;
+        syncMaxSpeed.Value = maxspeed;
     }
 }
