@@ -13,8 +13,8 @@ public class AnchorTriggerNet : NetworkBehaviour
     public GameObject anchor;
     public Button button;
     public Text textButton;
-    public int cont = 0;
-    public int necessaryPress;
+    public int cont = 0, value=0;
+    public int necessaryPress = 10;
     private int child = 41;
     private float movementSpeed = 0.1f;
     public GameObject ship;
@@ -22,7 +22,7 @@ public class AnchorTriggerNet : NetworkBehaviour
     private PlayerMovementNet playerMovement;
     private bool lockMovement;
 
-    public NetworkVariable<bool> syncStart = new NetworkVariable<bool>();
+
     public bool start;
     
     private bool interact;
@@ -35,7 +35,6 @@ public class AnchorTriggerNet : NetworkBehaviour
         entered = false;
         lockMovement = false;
         start = false;
-        syncStart.Value = start;
         interact = false;
     }
 
@@ -95,46 +94,60 @@ public class AnchorTriggerNet : NetworkBehaviour
                 isplaying = false;
                 textButton.text = "Press space to pull anchor";
             }
-
-            if (Input.GetKeyDown("space"))
+            textButton.text = "Space key pressed " + cont + " times";
+            print("Space key pressed " + cont + " times");
+            if (start == false)
             {
-                if (!isplaying) {
-                    chainSound.Play();
-                    isplaying = true;
-                }
-                interact = true;
-                //cont tiene conto del numero di volte che e stato premuto spazio
-                cont++;
-                textButton.text = "Space key pressed " + cont + " times";
-                print("Space key pressed " + cont + " times");
-                anchor.transform.position = anchor.transform.position + new Vector3(0, movementSpeed, 0);
-                if (cont % 3 == 0)
+                if (Input.GetKeyDown("space"))
                 {
-                    //anchor.transform.GetChild(child).gameObject.GetComponent<Outline>().enabled = false;
-                    //Destroy(anchor.transform.GetChild(child).gameObject);
-                    anchor.transform.GetChild(child).gameObject.SetActive(false);
-                    child--;
-                }
-                //Se arriviamo a 120 la nave deve iniziare a muoversi e il bottone si disattiva
-                if (cont == necessaryPress && syncStart.Value==false)
-                {
-                    Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();
-                    manager.addMaxSpeed(8f);
-                    if (isplaying)
+                    if (!isplaying)
                     {
-                        chainSound.Pause();
-                        isplaying = false;
+                        chainSound.Play();
+                        isplaying = true;
                     }
-                    //Destroy(anchor);
-                    anchor.SetActive(false);
-                    anchorUp.SetActive(true);
-                    button.gameObject.SetActive(false);
-                    entered = false;
-                    start = true;
-                    syncStart.Value = start;
+                    interact = true;
+                    //cont tiene conto del numero di volte che e stato premuto spazio
+                    cont++;
+                    //value = cont;
+                    //if (IsClient) LiftSingleServerRPC();
+                    //else { LiftSingleClientRPC(); }
+                    
+                    anchor.transform.position = anchor.transform.position + new Vector3(0, movementSpeed, 0);
+                    if (cont % 3 == 0)
+                    {
+                        //anchor.transform.GetChild(child).gameObject.GetComponent<Outline>().enabled = false;
+                        //Destroy(anchor.transform.GetChild(child).gameObject);
+                        anchor.transform.GetChild(child).gameObject.SetActive(false);
+                        child--;
+                    }
+                    //Se arriviamo a 10 la nave deve iniziare a muoversi e il bottone si disattiva
+                    if (cont == necessaryPress)
+                    {
+                        if (isplaying)
+                        {
+                            chainSound.Pause();
+                            isplaying = false;
+                        }
+                        //Destroy(anchor);
+                                               
+                        if (start == false)
+                        {
+                            start = true;
+                            if (IsClient) LiftAnchorServerRPC();
+                            else { LiftAnchorClientRPC(); }
+                        }
+                    }
                 }
             }
-        }
+            else
+            {
+                cont = 10;
+                anchor.SetActive(false);
+                anchorUp.SetActive(true);
+                button.gameObject.SetActive(false);
+                entered = false;
+            }
+        }    
     }
 
     public void enableOutline()
@@ -147,4 +160,28 @@ public class AnchorTriggerNet : NetworkBehaviour
             Outline outline = anchor.GetComponent<Outline>();
             outline.enabled = false;        
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void LiftAnchorServerRPC()
+    {
+        LiftAnchorClientRPC();
+    }
+    [ClientRpc]
+    private void LiftAnchorClientRPC()
+    {
+        start = true;
+        cont = 10;
+        Debug.Log("ho sollevato l'ancora");
+    }
+    //[ServerRpc(RequireOwnership = false)]
+    //private void LiftSingleServerRPC()
+    //{
+    //    LiftSingleClientRPC();
+    //}
+    //[ClientRpc]
+    //private void LiftSingleClientRPC()
+    //{
+    //    cont = value;
+    //}
+
 }

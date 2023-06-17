@@ -84,10 +84,7 @@ public class PlayerMovementNet : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!IsServer)
-        {
-            rb.isKinematic = false;
-        }
+       
         Debug.Log("THIS Player LocalInstance ID: " + LocalInstance.GetInstanceID() + " exists" );
         PlayerData playerData = SailingBrotheroodLobby.Instance.GetPlayerDataFromClientId(OwnerClientId);
     }
