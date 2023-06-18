@@ -43,7 +43,9 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
+        if (!IsHost) health = syncHealth.Value;
+
         HealthBar.fillAmount = syncHealth.Value / 100;
         SpeedBar.fillAmount = syncActualSpeed.Value / 20;
         SpeedValue.text = syncActualSpeed.Value.ToString();
