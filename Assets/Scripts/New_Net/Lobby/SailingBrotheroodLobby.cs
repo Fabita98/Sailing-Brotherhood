@@ -146,7 +146,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
         }
     }
 
-    [Command]
     //public async void CreateLobby()
     //{
     //    OnCreateLobbyStarted?.Invoke(this, EventArgs.Empty);
@@ -185,7 +184,7 @@ public class SailingBrotheroodLobby : NetworkBehaviour
     //        OnCreateLobbyFailed?.Invoke(this, EventArgs.Empty);
     //    }
     //}
-    [Command]
+    
     public async void CreateLobby(string lobbyName, bool isPrivate)
     {
         OnCreateLobbyStarted?.Invoke(this, EventArgs.Empty);
@@ -218,7 +217,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
             OnCreateLobbyFailed?.Invoke(this, EventArgs.Empty);
         }
     }
-    [Command]
     public void StartHost()
     {
         NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
@@ -227,7 +225,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
         NetworkManager.Singleton.StartHost();
     }
 
-    [Command]
     //public async void QuickJoinLobby()
     //{
     //    OnJoinStarted?.Invoke(this, EventArgs.Empty);
@@ -253,7 +250,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
     //        OnQuickJoinFailed?.Invoke(this, EventArgs.Empty);
     //    }
     //}
-    [Command]
     public async void QuickJoin()
     {
         OnJoinStarted?.Invoke(this, EventArgs.Empty);
@@ -275,13 +271,11 @@ public class SailingBrotheroodLobby : NetworkBehaviour
             OnQuickJoinFailed?.Invoke(this, EventArgs.Empty);
         }
     }
-    [Command]
     public bool IsLobbyHost()
     {
         return hostLobby != null && hostLobby.HostId == AuthenticationService.Instance.PlayerId;
     }
 
-    [Command]
     private async void ListLobbies()
     {
         try
@@ -303,7 +297,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
             Debug.Log(e);
         }
     }
-    [Command]
     private async Task<Allocation> AllocateRelay()
     {
         try
@@ -319,7 +312,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
             return default;
         }
     }
-    [Command]
     private async Task<string> GetRelayJoinCode(Allocation allocation)
     {
         try
@@ -334,7 +326,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
             return default;
         }
     }
-    [Command]
     private async Task<JoinAllocation> JoinRelay(string joinCode)
     {
         try
@@ -348,7 +339,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
             return default;
         }
     }
-    [Command]
     public void StartClient()
     {
         OnTryingToJoinGame?.Invoke(this, EventArgs.Empty);
@@ -357,7 +347,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
         NetworkManager.Singleton.StartClient();
     }
-    [Command]
     public async void JoinWithCode(string lobbyCode)
     {
         OnJoinStarted?.Invoke(this, EventArgs.Empty);
@@ -380,7 +369,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
         }
     }
 
-    [Command]
     public async void RefreshLobbyList()
     {
         try
@@ -394,7 +382,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
             Debug.Log(e);
         }
     }
-    [Command]
     public async void LeaveLobby()
     {
         if (joinedLobby != null)
@@ -412,7 +399,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
         }
     }
 
-    [Command]
     private bool ArePlayersInLobby()
     {
         if (joinedLobby != null && joinedLobby.Players != null)
@@ -434,7 +420,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
 
     }
 
-    [Command]
     //public async void DeleteLobby()
     //{
     //    if (/*ArePlayersInLobby() &&*/ IsLobbyHost())
@@ -460,7 +445,7 @@ public class SailingBrotheroodLobby : NetworkBehaviour
             }
         }
     }
-
+    
     private Player GetPlayer()
     {
         return new Player
@@ -472,17 +457,17 @@ public class SailingBrotheroodLobby : NetworkBehaviour
                     }
         };
     }
+    
     public string GetPlayerName()
     {
         return playerName;
     }
 
-    [Command]
     private void PrintPlayers()
     {
         PrintPlayers(joinedLobby);
     }
-
+    
     private void PrintPlayers(Lobby lobby)
     {
         // In case of many lobbies
@@ -533,7 +518,6 @@ public class SailingBrotheroodLobby : NetworkBehaviour
         OnReadyChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    [Command]
     public bool IsPlayerReady(ulong clientId)
     {
         return playerReadyDictionary.ContainsKey(clientId) && playerReadyDictionary[clientId];

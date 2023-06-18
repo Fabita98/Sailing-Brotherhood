@@ -78,7 +78,6 @@ public class LobbyTest : NetworkBehaviour
         HandleLobbyPollForUpdate();
     }
 
-    [Command]
     public async void CreateLobby()
     {
         try
@@ -105,13 +104,11 @@ public class LobbyTest : NetworkBehaviour
         }
         catch (LobbyServiceException e) { Debug.Log(e); }
     }
-    [Command]
     public bool IsLobbyHost()
     {
         return hostLobby != null && hostLobby.HostId == AuthenticationService.Instance.PlayerId;
     }
 
-    [Command]
     private async void ListLobbies()
     {
         try
@@ -163,7 +160,6 @@ public class LobbyTest : NetworkBehaviour
             Debug.Log(e);
         }
     }
-    [Command]
     public async void QuickJoinLobby()
     {
         try
@@ -210,7 +206,6 @@ public class LobbyTest : NetworkBehaviour
         }
         catch (LobbyServiceException e) { Debug.Log(e); }
     }
-    [Command]
     private async void UpdatePlayerName(string newPlayerName)
     {
         try
@@ -226,7 +221,6 @@ public class LobbyTest : NetworkBehaviour
         }
         catch (LobbyServiceException e) { Debug.Log(e); }
     }
-    [Command]
     private async void LeaveLobby()
     {
         try
@@ -256,7 +250,6 @@ public class LobbyTest : NetworkBehaviour
         }
         catch (LobbyServiceException e) { Debug.Log(e); }
     }
-    [Command]
     public async void DeleteLobby()
     {
         try 

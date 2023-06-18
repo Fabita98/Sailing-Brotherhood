@@ -8,14 +8,10 @@ using TMPro;
 public class TestingLobbyUI : NetworkBehaviour {
     public static TestingLobbyUI Instance { get; private set; }
 
-    [SerializeField] private Button createGameButton;
-    //[SerializeField] private Button lobbyNameButton;
-    //[SerializeField] private TextMeshProUGUI lobbyNameText;
+    [SerializeField] private Button createGameButton;    
     [SerializeField] private Button joinGameButton;
     [SerializeField] private Button readyButton;
     [SerializeField] private Button quitGame;
-
-    private string lobbyName;
 
     private void Awake()
     {
@@ -24,22 +20,7 @@ public class TestingLobbyUI : NetworkBehaviour {
         createGameButton.onClick.AddListener(() =>
         {
             SailingBrotheroodLobby.Instance.CreateLobby("Prima lobby", false);
-        });
-
-        //Creare da comando finchè non si è finito il bottone input LobbyName
-        //lobbyNameButton.onClick.AddListener(() =>
-        //{
-        //    UI_InputWindow.Show_Static("Lobby Name", lobbyName, "abcdefghijklmnopqrstuvxywzABCDEFGHIJKLMNOPQRSTUVXYWZ .,-", 20,
-        //    () =>
-        //    {
-        //        // Cancel
-        //    },
-        //    (string lobbyName) =>
-        //    {
-        //        this.lobbyName = lobbyName;
-        //        UpdateText();
-        //    });
-        //});        
+        });                
 
         joinGameButton.onClick.AddListener(() =>
         {
@@ -58,8 +39,11 @@ public class TestingLobbyUI : NetworkBehaviour {
             Application.Quit();
         });
     }
-    //private void UpdateText()
-    //{
-    //    lobbyNameText.text = lobbyName;
-    //}    
+
+    private void Update()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
 }

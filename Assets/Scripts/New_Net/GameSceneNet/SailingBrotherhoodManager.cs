@@ -10,6 +10,8 @@ public class SailingBrotherhoodManager : NetworkBehaviour {
 
     public event EventHandler OnStateChanged;    
     public event EventHandler OnLocalPlayerReadyChanged;
+    public event EventHandler OnLocalGamePaused;
+    public event EventHandler OnLocalGameUnpaused;
 
     private enum State {
         WaitingToStart,
