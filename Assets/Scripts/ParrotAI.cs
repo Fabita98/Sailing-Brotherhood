@@ -5,10 +5,10 @@ using UnityEngine;
 public class ParrotAI : MonoBehaviour
 {
     bool can_speak = true;
-    public bool fighting, wrong_direction, powerup_ahead, damage, cannon_hit, enemy_approaching, close_to_treasure = false;
+    public bool anchor, wrong_direction, powerup_ahead, damage, cannon_hit, enemy_approaching, close_to_treasure = false;
     int count = 0;
     float cooldown = 15;
-    public AudioSource AudioFight, AudioPowUp, AudioTreasure, AudioDirection, AudioDamage, AudioEnemy;
+    public AudioSource AudioAnchor, AudioPowUp, AudioTreasure, AudioDirection, AudioDamage, AudioEnemy;
     public GameObject my_ship, enemy_ship;
     private Health_and_Speed_ManagerNet hs;
     private float Cosalpha, distance;
@@ -35,11 +35,11 @@ public class ParrotAI : MonoBehaviour
 
         if (can_speak)
         {
-            if (fighting)
+            if (anchor)
             {
+                CooldownStart();
                 can_speak = false;
-                AudioFight.Play();
-                cooldown = 5;
+                AudioAnchor.Play();
                 CooldownStart();
                 cooldown = 15;
                 return;

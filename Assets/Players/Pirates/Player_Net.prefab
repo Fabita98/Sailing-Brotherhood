@@ -10370,7 +10370,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   player_an: {fileID: 0}
   maxSlopeAngle: 45
-  onSlopeForceMultiplier: 30
+  onSlopeForceMultiplier: 20
   pushDownForceOnSlope: 20
   whatIsStairs:
     serializedVersion: 2
