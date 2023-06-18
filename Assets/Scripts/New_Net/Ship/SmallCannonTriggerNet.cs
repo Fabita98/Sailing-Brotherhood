@@ -18,9 +18,14 @@ public class SmallCannonTriggerNet : NetworkBehaviour
     public int cont;
     private GameObject ball;
     public AudioSource cannonSound;
+
+    public GameObject enemyShip;
+
+    private Health_and_Speed_ManagerNet health;
     // Start is called before the first frame update
     void Start()
     {
+        health = enemyShip.GetComponent<Health_and_Speed_ManagerNet>();
     }
 
     // Update is called once per frame
@@ -40,6 +45,7 @@ public class SmallCannonTriggerNet : NetworkBehaviour
                 //la distanza da cui deve spawnare la palla dal centro del cannone
                 if (IsClient) GoldenCannonBallServerRPC();
                 else { GoldenCannonBallClientRPC(); }
+
                 //GoldenShoot();
                 //Qua bisogna prendere il riferimento alla Healt dell'altra barca e togliere il danno.
             }
@@ -70,8 +76,13 @@ public class SmallCannonTriggerNet : NetworkBehaviour
         rbCannonBall1.AddForce(cannonBallScript1.direction * cannonBallSpeed, ForceMode.VelocityChange);
         effectCannon.SetActive(true);
         ball = cannonBall1;
+
         Invoke("disableEffects", 3);
+        if (IsClient) RemoveHealthServerRPC();
+        else { removeHealth(); }
     }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -122,6 +133,24 @@ public class SmallCannonTriggerNet : NetworkBehaviour
         effectCannon.SetActive(false);
     }
 
+    public void removeHealth()
+    {
+        health.health -= 30f;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RemoveHealthServerRPC()
+    {
+        RemoveHealthClientRPC();
+    }
+
+    [ClientRpc]
+    private void RemoveHealthClientRPC()
+    {
+        removeHealth();
+    }
+
+
     [ServerRpc(RequireOwnership = false)]
     public void AddCannonBallsGoldServerRPC()
     {
@@ -145,4 +174,6 @@ public class SmallCannonTriggerNet : NetworkBehaviour
     {
         GoldenShoot();
     }
+
+
 }

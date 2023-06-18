@@ -11,7 +11,7 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
 
     public NetworkVariable<float> syncMaxSpeed = new NetworkVariable<float>(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> syncActualSpeed = new NetworkVariable<float>(writePerm: NetworkVariableWritePermission.Owner);
-    public NetworkVariable<float> syncHealth = new NetworkVariable<float>(); 
+    //public NetworkVariable<float> syncHealth = new NetworkVariable<float>(100); 
     
     public GameObject my_ship;
     Crest.BoatProbes boatProbes;
@@ -26,9 +26,9 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
     {
         health = 100;
         boatProbes = my_ship.GetComponent<Crest.BoatProbes>();
-        if (IsServer)
-        {            
-            syncHealth.Value = health;
+        if (IsHost)
+        {
+            //syncHealth.Value = 100;
             syncMaxSpeed.Value = maxspeed;
             syncActualSpeed.Value = actual_speed;
         }
@@ -39,14 +39,17 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
         HealthBar.fillAmount = 1;
         SpeedBar.fillAmount = syncActualSpeed.Value/ 20;
         SpeedValue.text = syncActualSpeed.Value.ToString();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!IsHost) health = syncHealth.Value;
+        //if (!IsHost) { health = syncHealth.Value;
+        //    Debug.Log("metto a 100 health prendendola da sync, health:"+health+" sync: "+syncHealth.Value);
+        //}
 
-        HealthBar.fillAmount = syncHealth.Value / 100;
+        HealthBar.fillAmount = health / 100;
         SpeedBar.fillAmount = syncActualSpeed.Value / 20;
         SpeedValue.text = syncActualSpeed.Value.ToString();
         anchor = anchorTrigger.GetComponent<AnchorTriggerNet>();
@@ -82,16 +85,17 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
             }
             actual_speed = maxspeed - maxspeed * (1 - health / 100);
             boatProbes._enginePower = syncActualSpeed.Value;
-            syncHealth.Value = health;
+   //         syncHealth.Value = health;
             syncMaxSpeed.Value = maxspeed;
             syncActualSpeed.Value = actual_speed;
-            HealthBar.fillAmount = syncHealth.Value / 100;
-            SpeedBar.fillAmount = syncActualSpeed.Value / 20;
+            
 
 
         }
-        Debug.Log("Health: "+health);
-        Debug.Log("SyncHealth: " + syncHealth.Value);
+        //HealthBar.fillAmount = syncHealth.Value / 100;
+        //SpeedBar.fillAmount = syncActualSpeed.Value / 20;
+        //Debug.Log("Health: "+health);
+        //Debug.Log("SyncHealth: " + syncHealth.Value);
         
     }
 

@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ParrotAI : MonoBehaviour
 {
-    bool can_speak = true;
-    public bool anchor=true, wrong_direction, powerup_ahead, damage, cannon_hit, enemy_approaching, close_to_treasure = false;
+    bool can_speak = false;
+    public bool wrong_direction, powerup_ahead, damage, cannon_hit, enemy_approaching, close_to_treasure = false;
+
+    public bool anchor = true;
     int count = 0;
     float cooldown = 15;
     public AudioSource AudioAnchor, AudioPowUp, AudioTreasure, AudioDirection, AudioDamage, AudioEnemy;
@@ -35,13 +37,7 @@ public class ParrotAI : MonoBehaviour
 
         if (anchor)
         {
-            CooldownStart();
-            can_speak = false;
-            AudioAnchor.Play();
-            anchor = false;
-            CooldownStart();
-            cooldown = 15;
-            return;
+            Invoke("WeighAnchor", 7);
         }
         if (can_speak)
         {
@@ -94,5 +90,12 @@ public class ParrotAI : MonoBehaviour
         
         yield return new WaitForSeconds(cooldown);
         can_speak = true;
+    }
+
+    public void WeighAnchor()
+    {
+        AudioAnchor.Play();
+        anchor = false;
+        CooldownStart();
     }
 }

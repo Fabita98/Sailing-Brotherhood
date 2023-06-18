@@ -113,7 +113,7 @@ public class OnBoardBehaviourNet : NetworkBehaviour
         {
             CrewmatesList.ForEach(delegate (GameObject p)
             {
-                if (p.transform.position.y < 25.79609) p.transform.position = OnBoardBehaviourNet.LocalInstance.transform.position;
+                if (p.transform.position.y < 25.79609) p.transform.position = fakeRespawn.transform.position;
             });
         }
     }

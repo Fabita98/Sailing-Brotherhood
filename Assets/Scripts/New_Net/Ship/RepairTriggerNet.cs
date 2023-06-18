@@ -28,7 +28,7 @@ public class RepairTriggerNet : NetworkBehaviour
     void Start()
     {
         health = ship.GetComponent<Health_and_Speed_ManagerNet>();
-        
+
     }
 
     // Update is called once per frame
@@ -36,15 +36,15 @@ public class RepairTriggerNet : NetworkBehaviour
     {
         if (entered == true)
         {
-            if (health.health == 100) { 
-            textButton.text = "Health: " + health.health;
-                
+            if (health.health == 100)
+            {
+                textButton.text = "Health: " + health.health;
             }
             else
             {
-                textButton.text = "Health: " + health.health +"\n"+"Press R to repair";
+                textButton.text = "Health: " + health.health + "\n" + "Press R to repair";
             }
-            if (health.health<100&&Input.GetKey(KeyCode.R))
+            if (health.health < 100 && Input.GetKey(KeyCode.R))
             {
                 holdTime += Time.deltaTime;
                 Debug.Log("Holdtime: " + holdTime);
@@ -58,7 +58,9 @@ public class RepairTriggerNet : NetworkBehaviour
                 }
                 if (holdTime >= holdTimeRequired)
                 {
-                    health.health += 10f;
+                    //health.health += 10f;
+                    if (IsClient) AddRepairServerRPC();
+                    else { addRepair(); }
                     holdTime = 0;
                     if (health.health == 100)
                     {
@@ -67,11 +69,14 @@ public class RepairTriggerNet : NetworkBehaviour
                     else
                     {
                         textButton.text = "Health: " + health.health + "\n" + "Press R to repair";
-                    }                                                          
+                    }
                 }
-            } else { repairsound.Pause();
+            }
+            else
+            {
+                repairsound.Pause();
                 isplaying = false;
-            }          
+            }
         }
     }
 
@@ -110,5 +115,22 @@ public class RepairTriggerNet : NetworkBehaviour
     {
         Outline outline = repair.GetComponent<Outline>();
         outline.enabled = false;
+    }
+
+    public void addRepair()
+    {
+        health.health += 10f;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void AddRepairServerRPC()
+    {
+        AddRepairClientRPC();
+    }
+
+    [ClientRpc]
+    private void AddRepairClientRPC()
+    {
+        addRepair();
     }
 }

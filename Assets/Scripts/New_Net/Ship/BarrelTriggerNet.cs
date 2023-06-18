@@ -29,29 +29,16 @@ public class BarrelTriggerNet : NetworkBehaviour
     {
         if (entered == true)
         {
-            if (Input.GetKeyDown(KeyCode.E) && cont==0)
-            {   
-                    textButton.text = "Number of barrels: " + cont;                
+            if (Input.GetKeyDown(KeyCode.E) && cont == 0)
+            {
+                textButton.text = "Number of barrels: " + cont;
             }
-            
-            else if(Input.GetKeyDown(KeyCode.E)&&cont>0)
+
+            else if (Input.GetKeyDown(KeyCode.E) && cont > 0)
             {
                 //qua rilascia il barile
-                cont--;
-                textButton.text = "Number of barrels: "+cont+"\n"+"Press E to release one barrel";
-                //la distanza da cui deve spawnare il barile dietro la nave
-                float spawnDistance = 20f;
-                //l'altezza da cui deve partire(altrimenti parte sotto la barca)
-                float spawnHeight = 0f;       
-
-                //posizione in cui spawnare la palla
-                Vector3 spawnPosition = transform.position + -barrel.transform.forward * spawnDistance + Vector3.up * spawnHeight;
-                //Instanziamento della palla
-                GameObject barrel1 = Instantiate(barrel, spawnPosition, transform.rotation);
-                barrel1.AddComponent<Rigidbody>();
-                barrel1.AddComponent<BoatAlignNormal>();
-                barrel1.tag = "Barrel";
-                barrelSplash.PlayDelayed(1);
+                if (IsClient) ReleaseBarrelServerRPC();
+                else { ReleaseBarrelClientRPC(); }
             }
         }
     }
@@ -99,4 +86,36 @@ public class BarrelTriggerNet : NetworkBehaviour
         cont += number;
         textButton.text = "Number of barrels: " + cont;
     }
+
+    public void releaseBarrel()
+    {
+        cont--;
+        textButton.text = "Number of barrels: " + cont + "\n" + "Press E to release one barrel";
+        //la distanza da cui deve spawnare il barile dietro la nave
+        float spawnDistance = 20f;
+        //l'altezza da cui deve partire(altrimenti parte sotto la barca)
+        float spawnHeight = 0f;
+
+        //posizione in cui spawnare la palla
+        Vector3 spawnPosition = transform.position + -barrel.transform.forward * spawnDistance + Vector3.up * spawnHeight;
+        //Instanziamento della palla
+        GameObject barrel1 = Instantiate(barrel, spawnPosition, transform.rotation);
+        barrel1.AddComponent<Rigidbody>();
+        barrel1.AddComponent<BoatAlignNormal>();
+        barrel1.tag = "Barrel";
+        barrelSplash.PlayDelayed(1);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void ReleaseBarrelServerRPC()
+    {
+        ReleaseBarrelClientRPC();
+    }
+
+    [ClientRpc]
+    public void ReleaseBarrelClientRPC()
+    {
+        releaseBarrel();
+    }
+
 }
