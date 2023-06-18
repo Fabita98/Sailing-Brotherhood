@@ -37,7 +37,7 @@ public class CannonsTriggerNet : NetworkBehaviour
     //l'altezza da cui deve partire(altrimenti parte sotto le ruote del cannone)
     float spawnHeight = 1f;
     //la forza verso l'alto per dare un moto parabolico
-    float upwardForce = 24f;
+    float upwardForce = 30f;
     //la forza orizzontale da applicare alla palla
     float forwardForceMultiplier = 1f;
     //Dove guarda il giocatore
@@ -238,14 +238,17 @@ public class CannonsTriggerNet : NetworkBehaviour
             }
             if (player == null) { player = other.gameObject; }
             //attivo il bottone che dice "premi E per interagire"
-            button.gameObject.SetActive(true);
-
-            enableOutline(cannon1);
-            enableOutline(cannon2);
-            enableOutline(cannon3);
-            enableOutline(cannon4);
-            enableOutline(cannon5);
-            enableOutline(cannon6);
+            
+            if (playerMovement.IsLocalPlayer)
+            {
+                button.gameObject.SetActive(true);
+                enableOutline(cannon1);
+                enableOutline(cannon2);
+                enableOutline(cannon3);
+                enableOutline(cannon4);
+                enableOutline(cannon5);
+                enableOutline(cannon6);
+            }
         }
     }
 
@@ -257,6 +260,17 @@ public class CannonsTriggerNet : NetworkBehaviour
             //playerMovement = other.GetComponent<PlayerMovementNet>();
             if (player != null)
             {
+                if (playerMovement.IsLocalPlayer)
+                {
+                    button.gameObject.SetActive(false);
+                    disableOutline(cannon1);
+                    disableOutline(cannon2);
+                    disableOutline(cannon3);
+                    disableOutline(cannon4);
+                    disableOutline(cannon5);
+                    disableOutline(cannon6);
+                }
+
                 if (player.GetComponentInChildren<FirstPersonCamera>() != null)
                     player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = false;
                 //Qui si sblocca la visuale e puo muoversi nuovamente
@@ -276,15 +290,9 @@ public class CannonsTriggerNet : NetworkBehaviour
             else { CannonNotOccupiedClientRPC(); }
 
             //Se esce disattivo il bottone e la variabile entered e falsa
-            button.gameObject.SetActive(false);
+            
             entered = false;
-
-            disableOutline(cannon1);
-            disableOutline(cannon2);
-            disableOutline(cannon3);
-            disableOutline(cannon4);
-            disableOutline(cannon5);
-            disableOutline(cannon6);
+            
         }
     }
     private void shooting(GameObject cannon, Vector3 upwardDirection)

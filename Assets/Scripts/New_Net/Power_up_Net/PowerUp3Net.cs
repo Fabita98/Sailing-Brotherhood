@@ -8,12 +8,13 @@ public class PowerUp3Net : NetworkBehaviour
 {
     private GameObject ship;
     CannonsTriggerNet cannons1, cannons2;
+    AudioSource sound;
 
     [SerializeField] private Vector3 _rotation;
     // Start is called before the first frame update
     void Start()
     {
-
+        sound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -31,7 +32,7 @@ public class PowerUp3Net : NetworkBehaviour
             GameObject shipCompleted = shipComponent.transform.parent.gameObject;
 
             ship = shipCompleted.gameObject;
-
+            sound.Play();
             GameObject cannons = ship.transform.Find("Cannons").gameObject;
             GameObject rightCannons = cannons.transform.Find("On-deck_cannons_set_right").gameObject;
             GameObject leftCannons = cannons.transform.Find("On-deck_cannons_set_left").gameObject;

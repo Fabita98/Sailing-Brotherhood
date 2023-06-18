@@ -56,10 +56,13 @@ public class AnchorTriggerNet : NetworkBehaviour
                 playerMovement = other.GetComponent<PlayerMovementNet>();
                 //attivo il bottone che dice "premi spazio per salire l'ancora"
                 textButton.text = "Press E to interact";
-                button.gameObject.SetActive(true);
+                if (playerMovement.IsLocalPlayer)
+                {
+                    button.gameObject.SetActive(true);
+                    enableOutline();
+                }
                 //la variabile booleana=true indica che il giocatore e dentro il cilindro
                 entered = true;
-                enableOutline();
             }
             //Se non � vicino all'ancora allora non lo vede
         }
@@ -70,16 +73,20 @@ public class AnchorTriggerNet : NetworkBehaviour
         //Se esce disattivo il bottone e la variabile entered e falsa
         if (other.tag == "Player")
         {     
-            button.gameObject.SetActive(false);
             entered = false;
-            playerMovement = null;
             chainSound.Pause();
             isplaying = false;
 
             if (anchor != null)
             {
-                disableOutline();
+                if (playerMovement.IsLocalPlayer)
+                {
+                    button.gameObject.SetActive(false);
+                    disableOutline();
+                }
             }
+
+            playerMovement = null;
         }
         
     }

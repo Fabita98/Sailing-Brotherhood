@@ -52,21 +52,27 @@ public class BarrelTriggerNet : NetworkBehaviour
             playerMovement = other.GetComponent<PlayerMovementNet>();
             player = other.gameObject;
             //attivo il bottone che dice "premi E per interagire"
-            button.gameObject.SetActive(true);
-            enableOutline();
+            if (playerMovement.IsLocalPlayer)
+            {
+                button.gameObject.SetActive(true);
+                enableOutline();
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
-        {
-            playerMovement = null;
+        {         
             player = null;
             //Se esce disattivo il bottone e la variabile entered e falsa
-            button.gameObject.SetActive(false);
+            if (playerMovement.IsLocalPlayer)
+            {
+                button.gameObject.SetActive(false);
+                disableOutline();
+            }
             entered = false;
-            disableOutline();
+            playerMovement = null;
         }
     }
     public void enableOutline()

@@ -40,7 +40,7 @@ public class WinningConditionNet : NetworkBehaviour
         OBB1 = ship1.GetComponent<OnBoardBehaviourNet>();
         OBB2 = ship2.GetComponent<OnBoardBehaviourNet>();
 
-        if (raceStarted==false && OBB1.CrewmatesList.Count==1&& OBB2.CrewmatesList.Count==0) //da mettere a 2 - 2 
+        if (raceStarted==false && OBB1.CrewmatesList.Count==2&& OBB2.CrewmatesList.Count==2) //da mettere a 2 - 2 
         {
             raceStarted = true;
             startTime = Time.time;
@@ -82,11 +82,10 @@ public class WinningConditionNet : NetworkBehaviour
         if (other.gameObject.CompareTag("Ship"))
         {
             isRacing = false;
-            Debug.Log("You won!");
             finalTime = lapTime_s;
             //CurrentLaps += 1;
             CanDoLaps = false;
-            victory.text = "YOU WON!";
+            victory.text = other.gameObject.name+ " WON!";
             Invoke("LoadEndGame", 2.0f);
 
         } 

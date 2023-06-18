@@ -4390,7 +4390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6746549272530467834
 Transform:
   m_ObjectHideFlags: 0
@@ -10371,7 +10371,7 @@ MonoBehaviour:
   player_an: {fileID: 0}
   maxSlopeAngle: 45
   onSlopeForceMultiplier: 20
-  pushDownForceOnSlope: 20
+  pushDownForceOnSlope: 60
   whatIsStairs:
     serializedVersion: 2
     m_Bits: 64

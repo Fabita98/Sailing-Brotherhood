@@ -83,6 +83,14 @@ public class PhysicalMapTriggerNet : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            arrow.gameObject.SetActive(false);
+            player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = false;
+            player.GetComponentInChildren<FirstPersonCamera>().lockVerticalRotation = false;
+            playerMovementnet.UnlockMovement();
+            lockMovement = false;
+            Canvas canvasPlayer = player.transform.Find("Canvas").GetComponent<Canvas>();
+            Button mapButton = canvasPlayer.transform.Find("MapButton").GetComponent<Button>();
+            mapButton.gameObject.SetActive(false);
             player = null;
             playerMovementnet = null;
             //Se esce disattivo il bottone e la variabile entered e falsa

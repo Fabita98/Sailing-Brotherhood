@@ -42,6 +42,7 @@ public class WheelTriggerNet : NetworkBehaviour
 
     public float sideways;
     public Vector3 rotVec;
+    public AudioSource footsteps;
 
     private void Start()
     {
@@ -52,13 +53,14 @@ public class WheelTriggerNet : NetworkBehaviour
         boatProbes = ship.GetComponent<BoatProbes>();
         wheelOccupied = false;
         contPlayers = 0;
+
     }
 
     private void Update()
     {
         if (cont == 1)
         {
-            if(wheelOccupied == true) { player.transform.position = wheelPos.transform.position; }
+            if(wheelOccupied == true) { player.transform.position = wheelPos.transform.position;  }
             if (wheelOccupied == false && Input.GetKeyDown(KeyCode.E) && lockMovement == false)
             {
                 wheelOccupied = true;
@@ -149,15 +151,15 @@ public class WheelTriggerNet : NetworkBehaviour
 
         if (!IsHost)
         {
-            Debug.Log("i'm a driving client");
+            
             if (Input.GetKey(KeyCode.A))
             {
                 LeftServerRPC();
-                wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
+                if (wheelOccupied) wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
             }
             else if (Input.GetKey(KeyCode.D)) { 
                 rightServerRPC();
-                wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
+                if (wheelOccupied) wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
             }
 
         else nullServerRPC();
@@ -166,7 +168,7 @@ public class WheelTriggerNet : NetworkBehaviour
         }
         else if (anyinput && externaldriver == true)
         {
-            Debug.Log("external driver");
+            
             if (inputleft)
             {
                 wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
@@ -179,12 +181,12 @@ public class WheelTriggerNet : NetworkBehaviour
                 sideways += 0.3f;
             }
             rotVec = transform.up + _turningHeel * transform.forward;
-            Debug.Log("Sideways e:" + sideways);
+            
             _rb.AddTorque(rotVec * _turnPower * sideways, ForceMode.Acceleration);
         }
         else if (lockMovement == true)
         {
-            Debug.Log("i'm a host driver");
+           
             if (Input.GetKey(KeyCode.A))
             {
                 wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
@@ -197,7 +199,7 @@ public class WheelTriggerNet : NetworkBehaviour
                 sideways += 0.3f;
             }
             rotVec = transform.up + _turningHeel * transform.forward;
-            Debug.Log("Sideways e:" + sideways);
+            
             _rb.AddTorque(rotVec * _turnPower * sideways, ForceMode.Acceleration);
 
         }
@@ -244,12 +246,17 @@ public class WheelTriggerNet : NetworkBehaviour
         if (other.tag == "Player")
         {
             contPlayers += 1;
-            button.gameObject.SetActive(true);
             cont = 1;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
             player = other.gameObject;
             playerMovement = other.GetComponent<PlayerMovementNet>();
-            enableOutline();
+            if (playerMovement.IsLocalPlayer)
+            {
+                enableOutline();
+                button.gameObject.SetActive(true);
+            }
+            footsteps = player.GetComponentInChildren<AudioSource>();
+            footsteps.gameObject.SetActive(false);
         }
     }
 
@@ -272,13 +279,17 @@ public class WheelTriggerNet : NetworkBehaviour
                 playerMovement.UnlockMovement();
 
             }
-            button.gameObject.SetActive(false);
             lockMovement = false;
             player = null;
             cont = 0;
+            if (playerMovement.IsLocalPlayer) { 
+                disableOutline();
+                button.gameObject.SetActive(false);
+            }
             playerMovement = null;
-
-            disableOutline();
+            footsteps.gameObject.SetActive(true);
+            footsteps = null;
+            
         }
     }
 

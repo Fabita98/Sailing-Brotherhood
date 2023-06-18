@@ -11,6 +11,7 @@ public class RepairTriggerNet : NetworkBehaviour
     private bool entered;
 
     private GameObject player;
+    private PlayerMovementNet playerMovement;
 
     public Button button;
     public Text textButton;
@@ -87,10 +88,13 @@ public class RepairTriggerNet : NetworkBehaviour
             entered = true;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni      
             player = other.gameObject;
-
+            playerMovement = other.GetComponent<PlayerMovementNet>();
             //attivo il bottone che dice "premi E per interagire"
-            button.gameObject.SetActive(true);
-            enableOutline();
+            if (playerMovement.IsLocalPlayer)
+            {
+                button.gameObject.SetActive(true);
+                enableOutline();
+            }
         }
     }
 
@@ -100,9 +104,14 @@ public class RepairTriggerNet : NetworkBehaviour
         {
             player = null;
             //Se esce disattivo il bottone e la variabile entered e falsa
-            button.gameObject.SetActive(false);
+            if (playerMovement.IsLocalPlayer)
+            {
+                button.gameObject.SetActive(false);
+                disableOutline();
+            }
+
             entered = false;
-            disableOutline();
+            playerMovement = null;
         }
     }
     public void enableOutline()

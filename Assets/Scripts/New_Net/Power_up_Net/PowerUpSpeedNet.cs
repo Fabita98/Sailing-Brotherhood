@@ -8,10 +8,11 @@ public class PowerUpSpeedNet : NetworkBehaviour
 {
     private GameObject ship;
     [SerializeField] private Vector3 _rotation;
+    AudioSource sound;
     // Start is called before the first frame update
     void Start()
     {
-        
+        sound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -21,6 +22,7 @@ public class PowerUpSpeedNet : NetworkBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
+
     {
         if (other.tag == "Ship")
         {
@@ -30,7 +32,7 @@ public class PowerUpSpeedNet : NetworkBehaviour
             GameObject shipBody = other.transform.parent.gameObject;
             GameObject shipComponent = shipBody.transform.parent.gameObject;
             GameObject shipCompleted = shipComponent.transform.parent.gameObject;
-
+            sound.Play();
             ship = shipCompleted.gameObject;
             Debug.Log("other" + other.name);
             Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();

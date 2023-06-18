@@ -3488,7 +3488,7 @@ MonoBehaviour:
   LoseTrack: {fileID: 122444754}
   Canva1: {fileID: 1090953405}
   Canva2: {fileID: 2015864333}
-  won: 0
+  won: 1
   spot: {fileID: 1390955752}
 --- !u!1 &1200777035
 GameObject:

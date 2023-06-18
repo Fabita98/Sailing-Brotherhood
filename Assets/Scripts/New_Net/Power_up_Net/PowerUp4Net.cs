@@ -7,10 +7,11 @@ public class PowerUp4Net : NetworkBehaviour
 {
     [SerializeField] private Vector3 _rotation;
     private GameObject ship;
+    AudioSource sound;
     // Start is called before the first frame update
     void Start()
     {
-
+        sound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,6 +28,7 @@ public class PowerUp4Net : NetworkBehaviour
             GameObject shipComponent = shipBody.transform.parent.gameObject;
             GameObject shipCompleted = shipComponent.transform.parent.gameObject;
             ship = shipCompleted.gameObject;
+            sound.Play();
             GameObject smallCannon = shipCompleted.transform.Find("SmallCannonDetection").gameObject;
             SmallCannonTriggerNet smallCannonTrigger = smallCannon.GetComponent<SmallCannonTriggerNet>();
             smallCannonTrigger.addCannonBalls(1);

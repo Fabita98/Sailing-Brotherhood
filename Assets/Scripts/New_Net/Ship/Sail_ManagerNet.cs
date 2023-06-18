@@ -13,6 +13,9 @@ public class Sail_ManagerNet : NetworkBehaviour
     int count = 0;
     public GameObject mast;
     public AudioSource ropesound;
+
+    private GameObject player;
+    private PlayerMovementNet playerMovement;
     // need to be liked to 
     void Start()
     {
@@ -67,7 +70,13 @@ public class Sail_ManagerNet : NetworkBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player") { count++; entered = true;
-            enableOutline();
+            player = other.gameObject;
+            playerMovement = other.GetComponent<PlayerMovementNet>();
+            //attivo il bottone che dice "premi E per interagire"
+            if (playerMovement.IsLocalPlayer)
+            {
+                enableOutline();
+            }
         }
    
     }
@@ -78,7 +87,12 @@ public class Sail_ManagerNet : NetworkBehaviour
         if (other.tag == "Player") { count--; if (count == 0)
             {
                 entered = false;
-                disableOutline();
+                if (playerMovement.IsLocalPlayer)
+                {
+                    disableOutline();
+                }
+                player = null;
+                playerMovement = null;
             }
         }
         

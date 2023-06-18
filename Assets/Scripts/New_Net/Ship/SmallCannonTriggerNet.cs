@@ -12,6 +12,7 @@ public class SmallCannonTriggerNet : NetworkBehaviour
     public int cannonBallSpeed = 10;
     private bool entered;
     private GameObject player;
+    private PlayerMovementNet playerMovement;
     public Button button;
     public Text textButton;
     public GameObject effectCannon;
@@ -21,11 +22,11 @@ public class SmallCannonTriggerNet : NetworkBehaviour
 
     public GameObject enemyShip;
 
-    private Health_and_Speed_ManagerNet health;
+    private Health_and_Speed_ManagerNet hs;
     // Start is called before the first frame update
     void Start()
     {
-        health = enemyShip.GetComponent<Health_and_Speed_ManagerNet>();
+        hs = enemyShip.GetComponent<Health_and_Speed_ManagerNet>();
     }
 
     // Update is called once per frame
@@ -78,8 +79,8 @@ public class SmallCannonTriggerNet : NetworkBehaviour
         ball = cannonBall1;
 
         Invoke("disableEffects", 3);
-        if (IsClient) RemoveHealthServerRPC();
-        else { removeHealth(); }
+        if (!IsHost) RemoveHealthServerRPC();
+        else { RemoveHealthServerRPC(); }
     }
 
 
@@ -91,9 +92,14 @@ public class SmallCannonTriggerNet : NetworkBehaviour
             entered = true;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni      
             player = other.gameObject;
+
+            playerMovement = other.GetComponent<PlayerMovementNet>();
             //attivo il bottone che dice "premi E per interagire"
-            button.gameObject.SetActive(true);
-            enableOutline();
+            if (playerMovement.IsLocalPlayer)
+            {
+                button.gameObject.SetActive(true);
+                enableOutline();
+            }
         }
     }
 
@@ -103,9 +109,14 @@ public class SmallCannonTriggerNet : NetworkBehaviour
         {
             player = null;
             //Se esce disattivo il bottone e la variabile entered e falsa
-            button.gameObject.SetActive(false);
             entered = false;
-            disableOutline();
+            if (playerMovement.IsLocalPlayer)
+            {
+                disableOutline();
+
+                button.gameObject.SetActive(false);
+            }
+            playerMovement = null;
         }
     }
     public void enableOutline()
@@ -135,7 +146,7 @@ public class SmallCannonTriggerNet : NetworkBehaviour
 
     public void removeHealth()
     {
-        health.health -= 30f;
+        hs.health -= 30f;
     }
 
     [ServerRpc(RequireOwnership = false)]

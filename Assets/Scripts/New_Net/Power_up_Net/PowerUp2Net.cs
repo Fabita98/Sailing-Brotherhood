@@ -9,10 +9,11 @@ public class PowerUp2Net : NetworkBehaviour
 {
     [SerializeField] private Vector3 _rotation;
     private GameObject ship;
+    AudioSource sound;
     // Start is called before the first frame update
     void Start()
     {
-
+        sound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,6 +30,7 @@ public class PowerUp2Net : NetworkBehaviour
             GameObject shipComponent = shipBody.transform.parent.gameObject;
             GameObject shipCompleted = shipComponent.transform.parent.gameObject;
             ship = shipCompleted.gameObject;
+            sound.Play();
             GameObject barrelTrigger = shipCompleted.transform.Find("Power-upBarrelDetection").gameObject;
             BarrelTriggerNet barrel = barrelTrigger.GetComponent<BarrelTriggerNet>();
             barrel.addBarrel(3);
