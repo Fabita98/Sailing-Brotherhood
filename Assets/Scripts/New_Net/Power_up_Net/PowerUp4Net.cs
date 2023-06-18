@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-
 public class PowerUp4Net : NetworkBehaviour
 {
     [SerializeField] private Vector3 _rotation;
@@ -29,7 +28,7 @@ public class PowerUp4Net : NetworkBehaviour
             GameObject shipCompleted = shipComponent.transform.parent.gameObject;
             ship = shipCompleted.gameObject;
             GameObject smallCannon = shipCompleted.transform.Find("SmallCannonDetection").gameObject;
-            SmallCannonTrigger smallCannonTrigger = smallCannon.GetComponent<SmallCannonTrigger>();
+            SmallCannonTriggerNet smallCannonTrigger = smallCannon.GetComponent<SmallCannonTriggerNet>();
             smallCannonTrigger.addCannonBalls(1);
         }
     }

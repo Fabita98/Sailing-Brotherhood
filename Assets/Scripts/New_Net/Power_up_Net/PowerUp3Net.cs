@@ -7,13 +7,13 @@ using Unity.Netcode;
 public class PowerUp3Net : NetworkBehaviour
 {
     private GameObject ship;
-    CannonsTrigger cannons1, cannons2;
+    CannonsTriggerNet cannons1, cannons2;
 
     [SerializeField] private Vector3 _rotation;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -39,11 +39,17 @@ public class PowerUp3Net : NetworkBehaviour
             GameObject rightCannonsDetection = rightCannons.transform.Find("CannonDetection_right").gameObject;
             GameObject leftCannonsDetection = leftCannons.transform.Find("CannonDetection_left").gameObject;
 
-            cannons1=rightCannonsDetection.GetComponent<CannonsTrigger>();
-            cannons2 = leftCannonsDetection.GetComponent<CannonsTrigger>();
+            cannons1 = rightCannonsDetection.GetComponent<CannonsTriggerNet>();
+            cannons2 = leftCannonsDetection.GetComponent<CannonsTriggerNet>();
 
-            cannons1.holdTimeRequired = 3f;
-            cannons2.holdTimeRequired = 3f;
+            //cannons1.holdTimeRequired = 3f;
+            //cannons2.holdTimeRequired = 3f;
+
+            if (IsClient) cannons1.ReduceReloadTimeServerRPC();
+            else { cannons1.ReduceReloadTimeClientRPC(); }
+
+            if (IsClient) cannons2.ReduceReloadTimeServerRPC();
+            else { cannons2.ReduceReloadTimeClientRPC(); }
 
             Invoke("oldHoldTimeRequired", 30);
         }
@@ -51,8 +57,13 @@ public class PowerUp3Net : NetworkBehaviour
 
     private void oldHoldTimeRequired()
     {
-        cannons1.holdTimeRequired = 8f;
-        cannons2.holdTimeRequired = 8f;
+        //cannons1.holdTimeRequired = 8f;
+        //cannons2.holdTimeRequired = 8f;
+        if (IsClient) cannons1.AddReloadTimeServerRPC();
+        else { cannons1.AddReloadTimeClientRPC(); }
+
+        if (IsClient) cannons2.AddReloadTimeServerRPC();
+        else { cannons2.AddReloadTimeClientRPC(); }
         cannons1 = null;
         cannons2 = null;
 

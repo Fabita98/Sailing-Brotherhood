@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
 public class CannonsTriggerNet : NetworkBehaviour
 {
@@ -86,10 +87,12 @@ public class CannonsTriggerNet : NetworkBehaviour
 
                 trajectoryShooting(cameraPlayer.transform);
             }
+            Debug.Log("Il cannone occupato:" + cannonOccupied);
 
-            if (Input.GetKeyDown(KeyCode.E) && lockMovement == false && cannonOccupied == false)
+            if (cannonOccupied == false && lockMovement == false && Input.GetKeyDown(KeyCode.E))
             {
                 cannonOccupied = true;
+                Debug.Log("Hai schiacciato E e cannonOccupied:" + cannonOccupied);
 
                 if (IsClient) CannonOccupiedServerRPC();
                 else { CannonOccupiedClientRPC(); }
@@ -116,7 +119,7 @@ public class CannonsTriggerNet : NetworkBehaviour
                     textButton.text = "Left click to shoot";
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
+            else if (lockMovement == true && Input.GetKeyDown(KeyCode.E))
             {
                 cannonOccupied = false;
                 if (IsClient) CannonNotOccupiedServerRPC();
@@ -142,7 +145,7 @@ public class CannonsTriggerNet : NetworkBehaviour
                 }
             }
 
-            if (Input.GetMouseButtonDown(0) && lockMovement == true && shooted == false)
+            if (lockMovement == true && shooted == false && Input.GetMouseButtonDown(0))
             {
                 //la forza orizzontale da applicare alla palla
                 Camera cameraPlayer = player.GetComponentInChildren<Camera>();
@@ -229,8 +232,11 @@ public class CannonsTriggerNet : NetworkBehaviour
         {   //la variabile booleana=true indica che il giocatore e dentro il cilindro
             entered = true;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
-            playerMovement = other.GetComponent<PlayerMovementNet>();
-            player = other.gameObject;
+            if (playerMovement == null)
+            {
+                playerMovement = other.GetComponent<PlayerMovementNet>();
+            }
+            if (player == null) { player = other.gameObject; }
             //attivo il bottone che dice "premi E per interagire"
             button.gameObject.SetActive(true);
 
@@ -247,18 +253,28 @@ public class CannonsTriggerNet : NetworkBehaviour
     {
         if (other.tag == "Player")
         {
-            cont = 0;
-            playerMovement = null;
-            player = null;
-            cannonOccupied = false;
+            //player = other.gameObject;
+            //playerMovement = other.GetComponent<PlayerMovementNet>();
+            if (player != null)
+            {
+                if (player.GetComponentInChildren<FirstPersonCamera>() != null)
+                    player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = false;
+                //Qui si sblocca la visuale e puo muoversi nuovamente
+                if (playerMovement != null)
+                {
+                    playerMovement.UnlockMovement();
+                }
+                lockMovement = false;
+                disableTrajectoryShooting();
+
+                cont = 0;
+                playerMovement = null;
+                player = null;
+                cannonOccupied = false;
+            }
             if (IsClient) CannonNotOccupiedServerRPC();
             else { CannonNotOccupiedClientRPC(); }
 
-            if (playerMovement != null)
-            {
-                //playerMovement.enabled = true; // Disabilita lo script PlayerMovement
-                playerMovement.UnlockMovement();
-            }
             //Se esce disattivo il bottone e la variabile entered e falsa
             button.gameObject.SetActive(false);
             entered = false;
@@ -271,7 +287,6 @@ public class CannonsTriggerNet : NetworkBehaviour
             disableOutline(cannon6);
         }
     }
-
     private void shooting(GameObject cannon, Vector3 upwardDirection)
     {
         //posizione in cui spawnare la palla
@@ -417,6 +432,30 @@ public class CannonsTriggerNet : NetworkBehaviour
     private void CannonNotOccupiedClientRPC()
     {
         cannonOccupied = false;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void ReduceReloadTimeServerRPC()
+    {
+        ReduceReloadTimeClientRPC();
+    }
+
+    [ClientRpc]
+    public void ReduceReloadTimeClientRPC()
+    {
+        holdTimeRequired = 3;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void AddReloadTimeServerRPC()
+    {
+        AddReloadTimeClientRPC();
+    }
+
+    [ClientRpc]
+    public void AddReloadTimeClientRPC()
+    {
+        holdTimeRequired = 8;
     }
 
 }

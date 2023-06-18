@@ -43,7 +43,7 @@ public class PowerUpSpeedNet : NetworkBehaviour
     {
         if (other.tag == "Ship")
         {
-            Invoke("SlowDown", 5);
+            Invoke("SlowDown", 10);
         }
     }
 
