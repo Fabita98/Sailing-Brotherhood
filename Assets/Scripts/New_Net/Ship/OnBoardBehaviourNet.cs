@@ -20,6 +20,7 @@ public class OnBoardBehaviourNet : NetworkBehaviour
     [Header("Attached PlayerMovementInstance")]
     public List<GameObject> CrewmatesList;
     public GameObject attachedPlayer;
+    public GameObject fakeRespawn;
 
     //Rotation calculations
     Vector3 prevEulerAngles;
@@ -59,6 +60,7 @@ public class OnBoardBehaviourNet : NetworkBehaviour
         //Adjust crewmates rotation
         try
         {
+            BringCrewmateOnBoard();
             if (CrewmatesList.Count != 0)
             {
                 CrewmatesList.ForEach(delegate (GameObject p)
@@ -104,8 +106,17 @@ public class OnBoardBehaviourNet : NetworkBehaviour
             Debug.Log("This ship has " + CrewmatesList.Count + " crewmates");
         }
         else return;
-    }   
-
+    }
+    private void BringCrewmateOnBoard()
+    {
+        if (CrewmatesList.Count != 0)
+        {
+            CrewmatesList.ForEach(delegate (GameObject p)
+            {
+                if (p.transform.position.y < 25.79609) p.transform.position = OnBoardBehaviourNet.LocalInstance.transform.position;
+            });
+        }
+    }
     public static void ResetStaticData()
     {
         OnSpawnedShip = null;

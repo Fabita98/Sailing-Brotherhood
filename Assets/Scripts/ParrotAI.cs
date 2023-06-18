@@ -5,7 +5,7 @@ using UnityEngine;
 public class ParrotAI : MonoBehaviour
 {
     bool can_speak = true;
-    public bool anchor, wrong_direction, powerup_ahead, damage, cannon_hit, enemy_approaching, close_to_treasure = false;
+    public bool anchor=true, wrong_direction, powerup_ahead, damage, cannon_hit, enemy_approaching, close_to_treasure = false;
     int count = 0;
     float cooldown = 15;
     public AudioSource AudioAnchor, AudioPowUp, AudioTreasure, AudioDirection, AudioDamage, AudioEnemy;
@@ -33,17 +33,19 @@ public class ParrotAI : MonoBehaviour
         // check if there is an enemy ship around
         if ((my_ship.transform.position - enemy_ship.transform.position).magnitude < 200) enemy_approaching = true; else enemy_approaching = false;  
 
+        if (anchor)
+        {
+            CooldownStart();
+            can_speak = false;
+            AudioAnchor.Play();
+            anchor = false;
+            CooldownStart();
+            cooldown = 15;
+            return;
+        }
         if (can_speak)
         {
-            if (anchor)
-            {
-                CooldownStart();
-                can_speak = false;
-                AudioAnchor.Play();
-                CooldownStart();
-                cooldown = 15;
-                return;
-            }           
+                       
             if (close_to_treasure)
             {
                 can_speak = false;
