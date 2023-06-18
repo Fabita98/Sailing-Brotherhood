@@ -84,7 +84,7 @@ public class OnBoardBehaviourNet : NetworkBehaviour
                 {
                     if (!IsHost)
                     {
-                        p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z * 1.05f, ForceMode.VelocityChange);
+                        p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z, ForceMode.VelocityChange);
                     }
                     else
                         p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z, ForceMode.VelocityChange);
