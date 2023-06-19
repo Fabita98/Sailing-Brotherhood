@@ -81,10 +81,10 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
                 {
                     maxspeed = 50;
                 }
-                
+              actual_speed = maxspeed - maxspeed * (1 - health / 100);
+            boatProbes._enginePower = syncActualSpeed.Value;  
             }
-            actual_speed = maxspeed - maxspeed * (1 - health / 100);
-            boatProbes._enginePower = syncActualSpeed.Value;
+            
    //         syncHealth.Value = health;
             syncMaxSpeed.Value = maxspeed;
             syncActualSpeed.Value = actual_speed;

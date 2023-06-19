@@ -23,7 +23,7 @@ public class Damage_SystemNet : NetworkBehaviour
         {
             if (other.tag == "Terrain")
             {
-                hs.health -= 10;
+                hs.health -= 20;
                 CooldownStart();
                 terrainSound.Play();
 
@@ -37,7 +37,7 @@ public class Damage_SystemNet : NetworkBehaviour
             }
             if (other.tag == "Barrel")
             {
-                hs.maxspeed -= 10;
+                hs.maxspeed -= 15;
                 CooldownStart();
 
             }

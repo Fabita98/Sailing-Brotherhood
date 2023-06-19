@@ -44,7 +44,7 @@ public class SmallCannonTriggerNet : NetworkBehaviour
                 //qua lancia palla di cannone               
                 Debug.Log("Sei entrato");
                 //la distanza da cui deve spawnare la palla dal centro del cannone
-                if (IsClient) GoldenCannonBallServerRPC();
+                if (!IsHost) GoldenCannonBallServerRPC();
                 else { GoldenCannonBallClientRPC(); }
 
                 //GoldenShoot();
@@ -79,8 +79,7 @@ public class SmallCannonTriggerNet : NetworkBehaviour
         ball = cannonBall1;
 
         Invoke("disableEffects", 3);
-        if (!IsHost) RemoveHealthServerRPC();
-        else { RemoveHealthServerRPC(); }
+        removeHealth();
     }
 
 

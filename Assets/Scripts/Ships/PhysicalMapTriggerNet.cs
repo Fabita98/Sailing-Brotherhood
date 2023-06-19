@@ -91,7 +91,6 @@ public class PhysicalMapTriggerNet : MonoBehaviour
             Canvas canvasPlayer = player.transform.Find("Canvas").GetComponent<Canvas>();
             Button mapButton = canvasPlayer.transform.Find("MapButton").GetComponent<Button>();
             mapButton.gameObject.SetActive(false);
-            player = null;
             playerMovementnet = null;
             //Se esce disattivo il bottone e la variabile entered e falsa
             button.gameObject.SetActive(false);
