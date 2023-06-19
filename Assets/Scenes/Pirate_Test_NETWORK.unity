@@ -1773,6 +1773,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 350131266727258064, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131266727258064, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267282479580, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267282479580, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2919666289506197984, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: my_ship
       value: 
