@@ -9,6 +9,7 @@ public class RepairTriggerNet : NetworkBehaviour
 {
     public GameObject repair;
     private bool entered;
+    private bool enteredPlayer;
 
     private GameObject player;
     private PlayerMovementNet playerMovement;
@@ -45,7 +46,7 @@ public class RepairTriggerNet : NetworkBehaviour
             {
                 textButton.text = "Health: " + health.health + "\n" + "Press R to repair";
             }
-            if (health.health < 100 && Input.GetKey(KeyCode.R))
+            if (health.health < 100 && Input.GetKey(KeyCode.R) && enteredPlayer==true)
             {
                 holdTime += Time.deltaTime;
                 Debug.Log("Holdtime: " + holdTime);
@@ -94,6 +95,7 @@ public class RepairTriggerNet : NetworkBehaviour
             {
                 button.gameObject.SetActive(true);
                 enableOutline();
+                enteredPlayer = true;
             }
         }
     }
@@ -108,6 +110,7 @@ public class RepairTriggerNet : NetworkBehaviour
             {
                 button.gameObject.SetActive(false);
                 disableOutline();
+                enteredPlayer = false;
             }
 
             entered = false;

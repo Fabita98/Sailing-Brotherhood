@@ -9,7 +9,7 @@ public class Sail_ManagerNet : NetworkBehaviour
     public GameObject sail;
     public GameObject belongingShip;
     Health_and_Speed_ManagerNet hs;
-    bool entered = false, change=false;
+    bool entered = false, enteredPlayer, change=false;
     int count = 0;
     public GameObject mast;
     public AudioSource ropesound;
@@ -28,7 +28,7 @@ public class Sail_ManagerNet : NetworkBehaviour
         hs = belongingShip.GetComponent<Health_and_Speed_ManagerNet>();
         if (entered)
         {
-            if (Input.GetKeyDown("e") && sail.activeSelf)
+            if (Input.GetKeyDown("e") && sail.activeSelf && enteredPlayer==true)
             {
                 if (IsClient) UseSailServerRPC();
                 else
@@ -39,7 +39,7 @@ public class Sail_ManagerNet : NetworkBehaviour
                 }
                 ropesound.Play();
             }
-            else if (Input.GetKeyDown("e") && sail.activeSelf == false)
+            else if (Input.GetKeyDown("e") && sail.activeSelf == false && enteredPlayer==true)
             {
                 if (IsClient) UseSailServerRPC(); else 
                 {
@@ -75,6 +75,7 @@ public class Sail_ManagerNet : NetworkBehaviour
             //attivo il bottone che dice "premi E per interagire"
             if (playerMovement.IsLocalPlayer)
             {
+                enteredPlayer = true;
                 enableOutline();
             }
         }
@@ -89,6 +90,7 @@ public class Sail_ManagerNet : NetworkBehaviour
                 entered = false;
                 if (playerMovement.IsLocalPlayer)
                 {
+                    enteredPlayer = false;
                     disableOutline();
                 }
                 player = null;

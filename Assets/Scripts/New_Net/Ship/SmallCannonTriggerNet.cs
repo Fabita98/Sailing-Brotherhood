@@ -11,6 +11,7 @@ public class SmallCannonTriggerNet : NetworkBehaviour
     public GameObject cannonBall;
     public int cannonBallSpeed = 10;
     private bool entered;
+    private bool enteredPlayer;
     private GameObject player;
     private PlayerMovementNet playerMovement;
     public Button button;
@@ -39,7 +40,7 @@ public class SmallCannonTriggerNet : NetworkBehaviour
                 textButton.text = "Number of cannonBalls: " + cont + "\n" + "Press E to shoot";
             }
 
-            else if (Input.GetKeyDown(KeyCode.E) && cont > 0)
+            else if (Input.GetKeyDown(KeyCode.E) && cont > 0&& enteredPlayer==true)
             {
                 //qua lancia palla di cannone               
                 Debug.Log("Sei entrato");
@@ -96,6 +97,7 @@ public class SmallCannonTriggerNet : NetworkBehaviour
             //attivo il bottone che dice "premi E per interagire"
             if (playerMovement.IsLocalPlayer)
             {
+                enteredPlayer = true;
                 button.gameObject.SetActive(true);
                 enableOutline();
             }
@@ -111,8 +113,8 @@ public class SmallCannonTriggerNet : NetworkBehaviour
             entered = false;
             if (playerMovement.IsLocalPlayer)
             {
+                enteredPlayer = false;
                 disableOutline();
-
                 button.gameObject.SetActive(false);
             }
             playerMovement = null;
@@ -184,6 +186,4 @@ public class SmallCannonTriggerNet : NetworkBehaviour
     {
         GoldenShoot();
     }
-
-
 }

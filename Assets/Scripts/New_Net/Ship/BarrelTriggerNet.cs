@@ -9,6 +9,7 @@ public class BarrelTriggerNet : NetworkBehaviour
     public GameObject originalBarrel;
     public GameObject barrel;
     private bool entered;
+    private bool enteredPlayer;
     private bool lockMovement;
     private PlayerMovementNet playerMovement;
     private GameObject player;
@@ -34,7 +35,7 @@ public class BarrelTriggerNet : NetworkBehaviour
                 textButton.text = "Number of barrels: " + cont;
             }
 
-            else if (Input.GetKeyDown(KeyCode.E) && cont > 0)
+            else if (Input.GetKeyDown(KeyCode.E) && cont > 0 && enteredPlayer == true)
             {
                 //qua rilascia il barile
                 if (IsClient) ReleaseBarrelServerRPC();
@@ -54,6 +55,7 @@ public class BarrelTriggerNet : NetworkBehaviour
             //attivo il bottone che dice "premi E per interagire"
             if (playerMovement.IsLocalPlayer)
             {
+                enteredPlayer = true;
                 button.gameObject.SetActive(true);
                 enableOutline();
             }
@@ -68,6 +70,7 @@ public class BarrelTriggerNet : NetworkBehaviour
             //Se esce disattivo il bottone e la variabile entered e falsa
             if (playerMovement.IsLocalPlayer)
             {
+                enteredPlayer = false;
                 button.gameObject.SetActive(false);
                 disableOutline();
             }

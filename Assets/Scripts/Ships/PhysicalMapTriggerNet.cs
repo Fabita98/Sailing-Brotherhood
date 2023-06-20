@@ -9,9 +9,10 @@ public class PhysicalMapTriggerNet : MonoBehaviour
     public GameObject map;
 
     private bool entered;
+    private bool enteredPlayer;
     private GameObject player;
 
-    private PlayerMovementNet playerMovementnet;
+    private PlayerMovementNet playerMovement;
 
     public Button button;
     public Text textButton;
@@ -33,27 +34,27 @@ public class PhysicalMapTriggerNet : MonoBehaviour
     {
         if (entered == true)
         {
-            if (Input.GetKeyDown(KeyCode.E)&&lockMovement==false)
+            if (Input.GetKeyDown(KeyCode.E)&&lockMovement==false && enteredPlayer==true)
             {
                 mapSound.Play();
                 arrow.gameObject.SetActive(true);
                 x_Win.gameObject.SetActive(true);
                 player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = true;
                 player.GetComponentInChildren<FirstPersonCamera>().lockVerticalRotation = true;
-                playerMovementnet.LockMovement();
+                playerMovement.LockMovement();
                 //player.GetComponentInChildren<FirstPersonCamera>(). = true;
                 lockMovement = true;
                 Canvas canvasPlayer = player.transform.Find("Canvas").GetComponent<Canvas>();
                 Button mapButton = canvasPlayer.transform.Find("MapButton").GetComponent<Button>();
                 mapButton.gameObject.SetActive(true);
             }
-            else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
+            else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true && enteredPlayer == true)
             {
 
                 arrow.gameObject.SetActive(false);
                 player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = false;
                 player.GetComponentInChildren<FirstPersonCamera>().lockVerticalRotation = false;
-                playerMovementnet.UnlockMovement();
+                playerMovement.UnlockMovement();
                 lockMovement = false;
                 Canvas canvasPlayer = player.transform.Find("Canvas").GetComponent<Canvas>();
                 Button mapButton = canvasPlayer.transform.Find("MapButton").GetComponent<Button>();
@@ -71,11 +72,15 @@ public class PhysicalMapTriggerNet : MonoBehaviour
             entered = true;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni      
             player = other.gameObject;
-            playerMovementnet = other.GetComponent<PlayerMovementNet>();
+            playerMovement = other.GetComponent<PlayerMovementNet>();
 
-            //attivo il bottone che dice "premi E per interagire"
-            button.gameObject.SetActive(true);
-            enableOutline();
+            if (playerMovement.IsLocalPlayer)
+            {
+                enteredPlayer = true;
+                enableOutline();
+                //attivo il bottone che dice "premi E per interagire"
+                button.gameObject.SetActive(true);
+            }         
         }
     }
 
@@ -83,19 +88,27 @@ public class PhysicalMapTriggerNet : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            if (playerMovement.IsLocalPlayer)
+            {
+                enteredPlayer = false;
+                disableOutline();
+                //attivo il bottone che dice "premi E per interagire"
+                button.gameObject.SetActive(false);
+            }
             arrow.gameObject.SetActive(false);
+            if (player != null){ 
             player.GetComponentInChildren<FirstPersonCamera>().lockHorizontalRotation = false;
             player.GetComponentInChildren<FirstPersonCamera>().lockVerticalRotation = false;
-            playerMovementnet.UnlockMovement();
+            }
+            playerMovement.UnlockMovement();
             lockMovement = false;
             Canvas canvasPlayer = player.transform.Find("Canvas").GetComponent<Canvas>();
             Button mapButton = canvasPlayer.transform.Find("MapButton").GetComponent<Button>();
             mapButton.gameObject.SetActive(false);
-            playerMovementnet = null;
+            player = null;
+            playerMovement = null;
             //Se esce disattivo il bottone e la variabile entered e falsa
-            button.gameObject.SetActive(false);
-            entered = false;
-            disableOutline();
+            entered = false;            
         }
     }
     public void enableOutline()
