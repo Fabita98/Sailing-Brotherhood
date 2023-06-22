@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-
+using UnityEngine.UI;
 
 public class Sail_ManagerNet : NetworkBehaviour
 {
@@ -16,6 +16,8 @@ public class Sail_ManagerNet : NetworkBehaviour
 
     private GameObject player;
     private PlayerMovementNet playerMovement;
+    public Button button;
+    public Text textButton;
     // need to be liked to 
     void Start()
     {
@@ -76,6 +78,7 @@ public class Sail_ManagerNet : NetworkBehaviour
             if (playerMovement.IsLocalPlayer)
             {
                 enteredPlayer = true;
+                button.gameObject.SetActive(true);
                 enableOutline();
             }
         }
@@ -91,6 +94,7 @@ public class Sail_ManagerNet : NetworkBehaviour
                 if (playerMovement.IsLocalPlayer)
                 {
                     enteredPlayer = false;
+                    button.gameObject.SetActive(false);
                     disableOutline();
                 }
                 player = null;
