@@ -10364,14 +10364,20 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  KeepPlayerOnGroundForce: 20
+  KeepPlayerOnGroundForce: 45
   speed: 10
+  clientDeltas:
+  - 0
+  - 2.5
+  - 1
+  - 1.5
+  delta: 0
   cameraRelativeMovement: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
   player_an: {fileID: 0}
   maxSlopeAngle: 45
   onSlopeForceMultiplier: 20
-  pushDownForceOnSlope: 60
+  pushDownForceOnSlope: 40
   whatIsStairs:
     serializedVersion: 2
     m_Bits: 64

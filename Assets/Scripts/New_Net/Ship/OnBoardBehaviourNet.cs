@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -10,7 +9,8 @@ public class OnBoardBehaviourNet : NetworkBehaviour
     public static event EventHandler OnPlayerAttached;
     public static event EventHandler OnListAddition;
     //OnListAddition?.Invoke(this, EventArgs.Empty);
-    public NetworkVariable<Vector3> syncVel = new NetworkVariable<Vector3>();
+    public NetworkVariable<Vector3> syncVel = new();
+    
     public static OnBoardBehaviourNet LocalInstance { get; private set; }
 
     // How can you start an in-scene placed NetworkObject as de-spawned when the scene is first loaded (that is, its first spawn)?:
@@ -19,7 +19,6 @@ public class OnBoardBehaviourNet : NetworkBehaviour
     //Attached PlayerObject components
     [Header("Attached PlayerMovementInstance")]
     public List<GameObject> CrewmatesList;
-    public GameObject attachedPlayer;
     public GameObject fakeRespawn;
 
     //Rotation calculations
@@ -44,12 +43,7 @@ public class OnBoardBehaviourNet : NetworkBehaviour
         syncVel.Value = shipRb.velocity; 
         prevEulerAngles = new Vector3(0, 0, 0);
 
-
-        if (CrewmatesList == null)
-            CrewmatesList = new List<GameObject>();
-
-        if (LocalInstance != null) { Debug.Log("A Ship instance EXIST! and has NetId: " + LocalInstance.NetworkObjectId); }
-        else { Debug.Log(" A Ship instance DO NOT exist! "); }
+        if (CrewmatesList == null) CrewmatesList = new List<GameObject>();        
     }
 
     void Update()
@@ -84,12 +78,13 @@ public class OnBoardBehaviourNet : NetworkBehaviour
             {
                 CrewmatesList.ForEach(delegate (GameObject p)
                 {
-                    if (!IsHost)
+                    if (IsHost)
                     {
                         p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z, ForceMode.VelocityChange);
+                    } 
+                    else if (!IsHost) {
+                        p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, 0f, syncVel.Value.z + p.GetComponent<PlayerMovementNet>().delta, ForceMode.VelocityChange);
                     }
-                    else
-                        p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z, ForceMode.VelocityChange);
                 });
             }                       
         }

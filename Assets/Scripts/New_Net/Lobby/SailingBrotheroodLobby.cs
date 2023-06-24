@@ -104,7 +104,7 @@ public class SailingBrotheroodLobby : NetworkBehaviour
 
             AuthenticationService.Instance.SignedIn += () =>
             {
-                Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId + "as: " + playerName);
+                Debug.Log("Signed in with ID: " + AuthenticationService.Instance.PlayerId + " as: " + playerName);
 
             };
             await AuthenticationService.Instance.SignInAnonymouslyAsync();

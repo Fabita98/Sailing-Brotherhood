@@ -18,8 +18,8 @@ public class PlayerMovementNet : NetworkBehaviour
     //[SerializeField] private Camera playerCameraPrefab;
     private Camera playerCamera;
     private GameObject gameObjectPlayerCamera;
-
-
+    [SerializeField] private List<float> clientDeltas;
+    public float delta;
 
     public Vector3 cameraRelativeMovement;
     public Rigidbody rb;
@@ -37,6 +37,7 @@ public class PlayerMovementNet : NetworkBehaviour
     public static event EventHandler OnAnyPlayerSpawned;
 
     [SerializeField] private List<Vector3> spawnPositionList;
+
     public override void OnNetworkSpawn()
     {
 
@@ -70,6 +71,7 @@ public class PlayerMovementNet : NetworkBehaviour
         }
         
         transform.position = spawnPositionList[SailingBrotheroodLobby.Instance.GetPlayerDataIndexFromClientId(OwnerClientId)];
+        delta = clientDeltas[SailingBrotheroodLobby.Instance.GetPlayerDataIndexFromClientId(OwnerClientId)];
 
         if (IsServer /*&& IsLocalPlayer*/)
         {
