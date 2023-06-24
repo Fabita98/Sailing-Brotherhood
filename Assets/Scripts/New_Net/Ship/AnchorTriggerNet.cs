@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 
-
 public class AnchorTriggerNet : NetworkBehaviour
 {
     public GameObject anchor;
@@ -21,7 +20,6 @@ public class AnchorTriggerNet : NetworkBehaviour
     private bool entered;
     private PlayerMovementNet playerMovement;
     private bool lockMovement;
-
 
     public bool start;
     
@@ -45,24 +43,26 @@ public class AnchorTriggerNet : NetworkBehaviour
     }*/
 
     private void OnTriggerEnter(Collider other)
-    {
-        
+    {   
         //Verifico se ha schiacciato spazio 10 volte per vedere se l'ancora e sollevata
         if (cont < necessaryPress)
         {
             // Verifico se e entrato un GameObject di tipo player
             if (other.tag == "Player" )
             {
-                playerMovement = other.GetComponent<PlayerMovementNet>();
-                //attivo il bottone che dice "premi spazio per salire l'ancora"
-                textButton.text = "Press E to interact";
-                if (playerMovement.IsLocalPlayer)
-                {
-                    button.gameObject.SetActive(true);
-                    enableOutline();
+                if (playerMovement == null) { 
+                    playerMovement = other.GetComponent<PlayerMovementNet>();
+                    //attivo il bottone che dice "premi spazio per salire l'ancora"
+                    //textButton.text = "Press E to interact";
+                    if (playerMovement.IsLocalPlayer)
+                    {
+                        button.gameObject.SetActive(true);
+                        enableOutline();
+                        entered = true;
+                    }
+                    //la variabile booleana=true indica che il giocatore e dentro il cilindro
+                   
                 }
-                //la variabile booleana=true indica che il giocatore e dentro il cilindro
-                entered = true;
             }
             //Se non � vicino all'ancora allora non lo vede
         }
@@ -73,28 +73,26 @@ public class AnchorTriggerNet : NetworkBehaviour
         //Se esce disattivo il bottone e la variabile entered e falsa
         if (other.tag == "Player")
         {     
-            entered = false;
-            chainSound.Pause();
-            isplaying = false;
+           
 
             if (anchor != null)
             {
-                if (playerMovement.IsLocalPlayer)
+                if (playerMovement== other.GetComponent<PlayerMovementNet>())
                 {
                     button.gameObject.SetActive(false);
                     disableOutline();
+                    playerMovement = null;
+                    entered = false;
+                    chainSound.Pause();
+                    isplaying = false;
                 }
             }
-
-            playerMovement = null;
-        }
-        
+        }     
     }
 
     private void Update()
     {
         if (entered == true) {
-
             if (interact == false)
             {
                 chainSound.Pause();
@@ -117,8 +115,7 @@ public class AnchorTriggerNet : NetworkBehaviour
                     cont++;
                     //value = cont;
                     //if (IsClient) LiftSingleServerRPC();
-                    //else { LiftSingleClientRPC(); }
-                    
+                    //else { LiftSingleClientRPC(); }                   
                     anchor.transform.position = anchor.transform.position + new Vector3(0, movementSpeed, 0);
                     if (cont % 3 == 0)
                     {
@@ -135,8 +132,7 @@ public class AnchorTriggerNet : NetworkBehaviour
                             chainSound.Pause();
                             isplaying = false;
                         }
-                        //Destroy(anchor);
-                                               
+                        //Destroy(anchor);                                              
                         if (start == false)
                         {
                             start = true;
@@ -190,5 +186,4 @@ public class AnchorTriggerNet : NetworkBehaviour
     //{
     //    cont = value;
     //}
-
 }

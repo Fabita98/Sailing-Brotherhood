@@ -44,7 +44,7 @@ public class RepairTriggerNet : NetworkBehaviour
             }
             else
             {
-                textButton.text = "Health: " + health.health + "\n" + "Press R to repair";
+                textButton.text = "Health: " + health.health + "\n" + "Hold R to repair";
             }
             if (health.health < 100 && Input.GetKey(KeyCode.R) && enteredPlayer==true)
             {
@@ -70,7 +70,7 @@ public class RepairTriggerNet : NetworkBehaviour
                     }
                     else
                     {
-                        textButton.text = "Health: " + health.health + "\n" + "Press R to repair";
+                        textButton.text = "Health: " + health.health + "\n" + "Hold R to repair";
                     }
                 }
             }
