@@ -10238,7 +10238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6473872155480816209}
   m_LocalRotation: {x: -0, y: -0.03822828, z: -0, w: 0.99926907}
-  m_LocalPosition: {x: -2639.15, y: 33.957, z: -15005.99}
+  m_LocalPosition: {x: -3788, y: 39.33, z: -15027.18}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -10376,8 +10376,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   spawnPositionList:
-  - {x: -4187.06, y: 37.6, z: -15044.77}
-  - {x: -4187.06, y: 43.9, z: -15079.91}
+  - {x: -3788, y: 39.68, z: -15100.22}
+  - {x: -3788, y: 35.71, z: -15064.31}
   - {x: -2887.19, y: 50, z: -15091.45}
   - {x: -2889.46, y: 39.23, z: -15056.15}
 --- !u!114 &2245604043019604103

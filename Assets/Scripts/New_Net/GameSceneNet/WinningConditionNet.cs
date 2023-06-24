@@ -85,7 +85,7 @@ public class WinningConditionNet : NetworkBehaviour
             finalTime = lapTime_s;
             //CurrentLaps += 1;
             CanDoLaps = false;
-            victory.text = other.gameObject.name+ " WON!";
+            victory.text = other.transform.parent.parent.parent.name + " WON!";
             Invoke("LoadEndGame", 2.0f);
 
         } 
