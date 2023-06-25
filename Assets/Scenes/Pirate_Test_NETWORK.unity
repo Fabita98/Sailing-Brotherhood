@@ -448,7 +448,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -483,7 +483,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -780,7 +780,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -815,7 +815,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1379,7 +1379,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1414,7 +1414,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1758,7 +1758,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1793,7 +1793,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1939,6 +1939,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 304795128195636753, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Text
+      value: Spam space to weigh the anchor
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131266590247476, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: MaxDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131266590247476, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131266590247476, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 350131266727258064, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: Loop
       value: 1
@@ -1947,6 +1963,22 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 350131266727258064, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: MaxDistance
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131266727258064, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131266798036200, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Size.x
+      value: 0.52958286
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131266798036200, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0045305523
+      objectReference: {fileID: 0}
     - target: {fileID: 350131267282479580, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: Loop
       value: 1
@@ -1954,6 +1986,54 @@ PrefabInstance:
     - target: {fileID: 350131267282479580, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: m_Volume
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267282479580, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: MaxDistance
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267282479580, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267282479580, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267602259741, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: MaxDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267602259741, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267602259741, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267727640304, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: MaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267727640304, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267727640304, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267818119468, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: MaxDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267818119468, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131267818119468, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2919666289506197984, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: my_ship
@@ -2021,35 +2101,67 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3956993008532723854, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3956993008532723854, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3956993008651958341, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3956993008651958341, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3956993008675452002, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3956993008675452002, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3956993009014247294, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3956993009014247294, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3956993009320768290, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3956993009320768290, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3956993009332031208, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3956993009332031208, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3956993009819422424, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3956993009819422424, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3956993010112434957, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3956993010112434957, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4963052179425933833, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -3310,7 +3422,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -3345,7 +3457,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -3640,7 +3752,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -3675,7 +3787,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4137,7 +4249,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -4172,7 +4284,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4368,7 +4480,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -4403,7 +4515,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -4809,7 +4921,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -4844,7 +4956,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -5214,7 +5326,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -5249,7 +5361,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -7439,35 +7551,67 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7939207672579274781, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939207672579274781, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7939207672823129544, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939207672823129544, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7939207673400301618, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939207673400301618, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7939207673409480184, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939207673409480184, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7939207673628566638, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939207673628566638, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7939207674073666389, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939207674073666389, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7939207674097164146, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939207674097164146, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7939207674222883742, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
       propertyPath: MaxDistance
-      value: 30
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939207674222883742, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8089334062636010224, guid: d65f4677dbb478949a0709cde4aae689, type: 3}
       propertyPath: my_ship
@@ -7695,6 +7839,78 @@ PrefabInstance:
     - target: {fileID: 241766509991786537, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
       propertyPath: m_Center.z
       value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321438124765268786, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: m_Text
+      value: Spam space to weigh the anchor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734211935487, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: MaxDistance
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734211935487, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734211935487, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734529608254, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: MaxDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734529608254, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734529608254, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734724203475, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: MaxDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734724203475, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734724203475, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734747051023, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: MaxDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734747051023, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691734747051023, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691735731674903, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: MaxDistance
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691735731674903, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691735731674903, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691735804195571, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: MaxDistance
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691735804195571, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3227496058630546289, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
       propertyPath: fakeRespawn
@@ -8207,7 +8423,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -8242,7 +8458,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -8705,7 +8921,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -8740,7 +8956,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -9077,7 +9293,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -9112,7 +9328,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -9443,7 +9659,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -9478,7 +9694,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -10002,7 +10218,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -10037,7 +10253,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -10232,7 +10448,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Press space to pull anchor
+  m_Text: Spam space to weigh the anchor
 --- !u!222 &1795779313
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10591,7 +10807,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -10626,7 +10842,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -11433,7 +11649,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -11468,7 +11684,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -11664,7 +11880,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -11699,7 +11915,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -12293,7 +12509,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -12328,7 +12544,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -12701,7 +12917,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -12736,7 +12952,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -12932,7 +13148,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -12967,7 +13183,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -13600,7 +13816,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -13635,7 +13851,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -14091,7 +14307,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -14126,7 +14342,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -14416,7 +14632,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 300
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -14451,7 +14667,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -28,16 +28,16 @@ public class Damage_SystemNet : NetworkBehaviour
                 terrainSound.Play();
 
             }
-            if (other.tag == "Cannonball")
+            if (other.tag == "CannonBall")
             {
-                hs.maxspeed -= 20;
+                hs.health -= 20;
                 CooldownStart();
                 cannonhit.Play();
 
             }
             if (other.tag == "Barrel")
             {
-                hs.maxspeed -= 15;
+                hs.health -= 15;
                 CooldownStart();
 
             }
