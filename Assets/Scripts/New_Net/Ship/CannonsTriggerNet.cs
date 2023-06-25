@@ -62,7 +62,7 @@ public class CannonsTriggerNet : NetworkBehaviour
 
             if (lockMovement == true && shooted == true)
             {
-                textButton.text = "Click R to reload";
+                textButton.text = "Hold R to reload";
             }
 
             if (lockMovement == true && shooted == false)
@@ -72,12 +72,12 @@ public class CannonsTriggerNet : NetworkBehaviour
 
             if (lockMovement == false && shooted == true)
             {
-                textButton.text = "Click R to reload";
+                textButton.text = "Hold R to reload";
             }
 
             if (lockMovement == false && shooted == false)
             {
-                textButton.text = "Press E to interact";
+                textButton.text = "Press E to use the cannons";
             }
 
             if (lockMovement == true)
@@ -87,12 +87,12 @@ public class CannonsTriggerNet : NetworkBehaviour
 
                 trajectoryShooting(cameraPlayer.transform);
             }
-            Debug.Log("Il cannone occupato:" + cannonOccupied);
+            //Debug.Log("Il cannone occupato:" + cannonOccupied);
 
             if (cannonOccupied == false && lockMovement == false && Input.GetKeyDown(KeyCode.E))
             {
                 cannonOccupied = true;
-                Debug.Log("Hai schiacciato E e cannonOccupied:" + cannonOccupied);
+                //Debug.Log("Hai schiacciato E e cannonOccupied:" + cannonOccupied);
 
                 if (IsClient) CannonOccupiedServerRPC();
                 else { CannonOccupiedClientRPC(); }
@@ -111,7 +111,7 @@ public class CannonsTriggerNet : NetworkBehaviour
 
                 if (shooted == true)
                 {
-                    textButton.text = "Press R to reload";
+                    textButton.text = "Hold R to reload";
                 }
                 else
                 {
@@ -136,12 +136,12 @@ public class CannonsTriggerNet : NetworkBehaviour
 
                 if (shooted == true)
                 {
-                    textButton.text = "Press R to reload";
+                    textButton.text = "Hold R to reload";
                 }
                 else
                 {
                     //Il bottone mostrerà il testo Click E to interact per sparare
-                    textButton.text = "Press E to interact";
+                    textButton.text = "Press E to use the cannons";
                 }
             }
 
@@ -209,7 +209,7 @@ public class CannonsTriggerNet : NetworkBehaviour
                     else
                     {
                         //Il bottone mostrerà il testo Left click to shoot per sparare
-                        textButton.text = "Press E to interact";
+                        textButton.text = "Press E to use the cannons";
                     }
                 }
             }

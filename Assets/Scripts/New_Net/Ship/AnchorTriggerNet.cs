@@ -99,8 +99,8 @@ public class AnchorTriggerNet : NetworkBehaviour
                 isplaying = false;
                 textButton.text = "Press space to pull anchor";
             }
-            textButton.text = "Space key pressed " + cont + " times";
-            print("Space key pressed " + cont + " times");
+            textButton.text = "Space key pressed " + cont + " /10 times";
+            //print("Space key pressed " + cont + " times");
             if (start == false)
             {
                 if (Input.GetKeyDown("space"))
@@ -174,7 +174,7 @@ public class AnchorTriggerNet : NetworkBehaviour
     {
         start = true;
         cont = 10;
-        Debug.Log("ho sollevato l'ancora");
+        //Debug.Log("ho sollevato l'ancora");
     }
     //[ServerRpc(RequireOwnership = false)]
     //private void LiftSingleServerRPC()

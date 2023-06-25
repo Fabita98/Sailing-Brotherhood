@@ -98,7 +98,7 @@ public class WheelTriggerNet : NetworkBehaviour
 
                 navigationSpot.SetActive(false);
                 //Qui si sblocca la visuale e puo muoversi nuovamente
-                textButton.text = "Press E to interact";
+                textButton.text = "Press E to use the wheel";
                 if (playerMovement != null)
                 {
                     //playerMovement.enabled = true; // Disabilita lo script PlayerMovement
@@ -155,11 +155,11 @@ public class WheelTriggerNet : NetworkBehaviour
             if (Input.GetKey(KeyCode.A))
             {
                 LeftServerRPC();
-                if (wheelOccupied) wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
+                if (externaldriver) wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
             }
             else if (Input.GetKey(KeyCode.D)) { 
                 rightServerRPC();
-                if (wheelOccupied) wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
+                if (externaldriver) wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
             }
 
         else nullServerRPC();
@@ -272,7 +272,7 @@ public class WheelTriggerNet : NetworkBehaviour
                 else { WheelNotOccupiedClientRPC(); }
                 navigationSpot.SetActive(false);
             }
-            textButton.text = "Press E to interact";
+            textButton.text = "Press E to use the wheel";
             if (playerMovement != null)
             {
                 //playerMovement.enabled = true; // Disabilita lo script PlayerMovement
