@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 125278640}
   m_Layer: 0
   m_Name: Power-up3 (2)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -660,7 +660,7 @@ GameObject:
   - component: {fileID: 144420488}
   m_Layer: 0
   m_Name: Power-up3 (7)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1259,7 +1259,7 @@ GameObject:
   - component: {fileID: 198100246}
   m_Layer: 0
   m_Name: Power-up3 (1)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1638,7 +1638,7 @@ GameObject:
   - component: {fileID: 274730490}
   m_Layer: 0
   m_Name: Power-up4 (1)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3302,7 +3302,7 @@ GameObject:
   - component: {fileID: 568909441}
   m_Layer: 0
   m_Name: Power-up2 (4)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3632,7 +3632,7 @@ GameObject:
   - component: {fileID: 637772570}
   m_Layer: 0
   m_Name: Power-up4 (2)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4129,7 +4129,7 @@ GameObject:
   - component: {fileID: 671010163}
   m_Layer: 0
   m_Name: Power-up2 (6)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4360,7 +4360,7 @@ GameObject:
   - component: {fileID: 679683625}
   m_Layer: 0
   m_Name: Power-up2 (1)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4801,7 +4801,7 @@ GameObject:
   - component: {fileID: 762985768}
   m_Layer: 0
   m_Name: Power-up3 (8)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5206,7 +5206,7 @@ GameObject:
   - component: {fileID: 852933468}
   m_Layer: 0
   m_Name: Power-up3 (6)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8303,7 +8303,7 @@ GameObject:
   - component: {fileID: 1480718878}
   m_Layer: 0
   m_Name: Power-up3 (3)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8801,7 +8801,7 @@ GameObject:
   - component: {fileID: 1532215608}
   m_Layer: 0
   m_Name: Power-up4 (4)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9173,7 +9173,7 @@ GameObject:
   - component: {fileID: 1580122626}
   m_Layer: 0
   m_Name: Power-up3 (5)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9539,7 +9539,7 @@ GameObject:
   - component: {fileID: 1602156436}
   m_Layer: 0
   m_Name: Power-up3 (4)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10098,7 +10098,7 @@ GameObject:
   - component: {fileID: 1760646631}
   m_Layer: 0
   m_Name: Power-up2 (3)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10687,7 +10687,7 @@ GameObject:
   - component: {fileID: 1914754000}
   m_Layer: 0
   m_Name: Power-up4 (3)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11529,7 +11529,7 @@ GameObject:
   - component: {fileID: 2108889774}
   m_Layer: 0
   m_Name: Power-up2 (5)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11760,7 +11760,7 @@ GameObject:
   - component: {fileID: 2115548989}
   m_Layer: 0
   m_Name: Power-up2 (2)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12451,7 +12451,7 @@ GameObject:
   - component: {fileID: 3679922879120097404}
   m_Layer: 0
   m_Name: Power-up1 (5)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12859,7 +12859,7 @@ GameObject:
   - component: {fileID: 3679922879523271264}
   m_Layer: 0
   m_Name: Power-up1 (3)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13009,7 +13009,7 @@ GameObject:
   - component: {fileID: 3679922879648908128}
   m_Layer: 0
   m_Name: Power-up1 (2)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13758,7 +13758,7 @@ GameObject:
   - component: {fileID: 3679922880347656013}
   m_Layer: 0
   m_Name: Power-up1 (1)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14168,7 +14168,7 @@ GameObject:
   - component: {fileID: 3679922880849123538}
   m_Layer: 0
   m_Name: Power-up1 (6)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14574,7 +14574,7 @@ GameObject:
   - component: {fileID: 3679922881004170476}
   m_Layer: 0
   m_Name: Power-up1 (4)
-  m_TagString: Untagged
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -11,7 +11,7 @@ public class PlayerMovementNet : NetworkBehaviour
     public float KeepPlayerOnGroundForce;
     private float playerHeight;
     private bool grounded;
-
+    
     [Header("Movement")]
     private bool lockMovement = false;
     public float speed;
@@ -37,6 +37,8 @@ public class PlayerMovementNet : NetworkBehaviour
     public static event EventHandler OnAnyPlayerSpawned;
 
     [SerializeField] private List<Vector3> spawnPositionList;
+
+    public bool driving;
 
     public override void OnNetworkSpawn()
     {
@@ -178,42 +180,47 @@ public class PlayerMovementNet : NetworkBehaviour
     private void HandleAnimation()
     {   // Animator relative code
         float playerHorizontalInput = Input.GetAxis("Horizontal");
-        float playerVerticalInput = Input.GetAxis("Vertical");
-        if (playerHorizontalInput == 0 && playerVerticalInput == 0)
+        float playerVerticalInput = Input.GetAxis("Vertical");  
+        if (IsLocalPlayer)
         {
-            player_an.SetBool("iswalking", false);
-            player_an.SetBool("iswalking_back", false);
-            player_an.SetBool("iswalking_right", false);
-            player_an.SetBool("iswalking_left", false);
-        }
-        else if (playerHorizontalInput > 0 && playerVerticalInput == 0)
-        {
-            player_an.SetBool("iswalking_right", true);
-            player_an.SetBool("iswalking", false);
-            player_an.SetBool("iswalking_back", false);
-            player_an.SetBool("iswalking_left", false);
-        }
-        else if (playerHorizontalInput < 0 && playerVerticalInput == 0)
-        {
-            player_an.SetBool("iswalking_right", false);
-            player_an.SetBool("iswalking", false);
-            player_an.SetBool("iswalking_back", false);
-            player_an.SetBool("iswalking_left", true);
-        }
-        else if (playerVerticalInput < 0)
-        {
-            player_an.SetBool("iswalking_back", true);
-            player_an.SetBool("iswalking", false);
-            player_an.SetBool("iswalking_right", false);
-            player_an.SetBool("iswalking_left", false);
-        }
-        else if (playerVerticalInput > 0)
-        {
-            player_an.SetBool("iswalking", true);
-            player_an.SetBool("iswalking_back", false);
-            player_an.SetBool("iswalking_right", false);
-            player_an.SetBool("iswalking_left", false);
-        }
+            if (LocalInstance.driving) {} 
+                else if (playerHorizontalInput == 0 && playerVerticalInput == 0)
+                {
+                    player_an.SetBool("iswalking", false);
+                    player_an.SetBool("iswalking_back", false);
+                    player_an.SetBool("iswalking_right", false);
+                    player_an.SetBool("iswalking_left", false);
+                }
+                else if (playerHorizontalInput > 0 && playerVerticalInput == 0)
+                {
+                    player_an.SetBool("iswalking_right", true);
+                    player_an.SetBool("iswalking", false);
+                    player_an.SetBool("iswalking_back", false);
+                    player_an.SetBool("iswalking_left", false);
+                }
+                else if (playerHorizontalInput < 0 && playerVerticalInput == 0)
+                {
+                    player_an.SetBool("iswalking_right", false);
+                    player_an.SetBool("iswalking", false);
+                    player_an.SetBool("iswalking_back", false);
+                    player_an.SetBool("iswalking_left", true);
+                }
+                else if (playerVerticalInput < 0)
+                {
+                    player_an.SetBool("iswalking_back", true);
+                    player_an.SetBool("iswalking", false);
+                    player_an.SetBool("iswalking_right", false);
+                    player_an.SetBool("iswalking_left", false);
+                }
+                else if (playerVerticalInput > 0)
+                {
+                    player_an.SetBool("iswalking", true);
+                    player_an.SetBool("iswalking_back", false);
+                    player_an.SetBool("iswalking_right", false);
+                    player_an.SetBool("iswalking_left", false);
+                }
+        } 
+        
     }
 
     private void KeepPlayerOnGround()

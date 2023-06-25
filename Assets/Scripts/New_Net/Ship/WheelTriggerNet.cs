@@ -60,11 +60,13 @@ public class WheelTriggerNet : NetworkBehaviour
     {
         if (cont == 1)
         {
-            if(wheelOccupied == true) { player.transform.position = wheelPos.transform.position;  }
+            if(wheelOccupied == true) { player.transform.position = wheelPos.transform.position;
+                Debug.Log("Aggiorno posizione guidatore");
+            }
             if (wheelOccupied == false && Input.GetKeyDown(KeyCode.E) && lockMovement == false)
             {
                 wheelOccupied = true;
-                if (IsClient) WheelOccupiedServerRPC();
+                if (!IsHost) WheelOccupiedServerRPC();
                 else { WheelOccupiedClientRPC(); }
 
                 player.transform.rotation = wheelPos.transform.rotation * Quaternion.Euler(0, 0, 0);
@@ -80,6 +82,7 @@ public class WheelTriggerNet : NetworkBehaviour
                 {
                     //playerMovement.enabled = false;
                     playerMovement.LockMovement();
+                    playerMovement.driving = true;
 
                     // Disabilita lo script PlayerMovement
                 }
@@ -93,7 +96,7 @@ public class WheelTriggerNet : NetworkBehaviour
             else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
             {
                 wheelOccupied = false;
-                if (IsClient) WheelNotOccupiedServerRPC();
+                if (!IsHost) WheelNotOccupiedServerRPC();
                 else { WheelNotOccupiedClientRPC(); }
 
                 navigationSpot.SetActive(false);
@@ -103,6 +106,7 @@ public class WheelTriggerNet : NetworkBehaviour
                 {
                     //playerMovement.enabled = true; // Disabilita lo script PlayerMovement
                     playerMovement.UnlockMovement();
+                    playerMovement.driving = false;
 
                 }
                 lockMovement = false;
@@ -257,6 +261,7 @@ public class WheelTriggerNet : NetworkBehaviour
             }
             footsteps = player.GetComponentInChildren<AudioSource>();
             footsteps.gameObject.SetActive(false);
+            
         }
     }
 
@@ -277,6 +282,7 @@ public class WheelTriggerNet : NetworkBehaviour
             {
                 //playerMovement.enabled = true; // Disabilita lo script PlayerMovement
                 playerMovement.UnlockMovement();
+                
 
             }
             lockMovement = false;
