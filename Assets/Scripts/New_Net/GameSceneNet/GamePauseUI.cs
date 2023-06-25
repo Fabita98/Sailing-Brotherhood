@@ -65,11 +65,19 @@ public class GamePauseUI : MonoBehaviour{
     {
         if (PlayerMovementNet.LocalInstance.IsHost)
         {
+            if (NetworkManager.Singleton != null)
+            {
+                Destroy(NetworkManager.Singleton.gameObject);
+            }
+            if (SailingBrotheroodLobby.Instance != null)
+            {
+                Destroy(SailingBrotheroodLobby.Instance.gameObject);
+            }
             NetworkManager.Singleton.Shutdown();
-            Loader.LoadNetwork(Loader.Scene.Lobby);
+            Loader.Load(Loader.Scene.Lobby);
         }
 
-        else if (PlayerMovementNet.LocalInstance.IsClient)
+        else if (!PlayerMovementNet.LocalInstance.IsHost)
         {
             if (NetworkManager.Singleton != null)
             {
