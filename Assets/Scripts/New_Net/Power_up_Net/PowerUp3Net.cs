@@ -9,12 +9,14 @@ public class PowerUp3Net : NetworkBehaviour
     private GameObject ship;
     CannonsTriggerNet cannons1, cannons2;
     AudioSource sound;
-
     [SerializeField] private Vector3 _rotation;
+    private PowerUpTaken powerUpTaken; // Reference to the PowerUpTaken script
+
     // Start is called before the first frame update
     void Start()
     {
         sound = GetComponent<AudioSource>();
+        powerUpTaken = FindObjectOfType<PowerUpTaken>(); // Find the PowerUpTaken script in the scene
     }
 
     // Update is called once per frame
@@ -55,7 +57,7 @@ public class PowerUp3Net : NetworkBehaviour
 
             Invoke("respawnPowerUp", 20);
             Invoke("oldHoldTimeRequired", 30);
-
+            powerUpTaken.ShowReloadPowerUpTaken(ship);
         }
     }
 

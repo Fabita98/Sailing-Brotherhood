@@ -542,6 +542,111 @@ MonoBehaviour:
   SceneMigrationSynchronization: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!1001 &139509415
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1910590758495263284, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_Name
+      value: PowerUpUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590758495263289, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910590759362854804, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: shipA
+      value: 
+      objectReference: {fileID: 351173900}
+    - target: {fileID: 1910590759362854804, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
+      propertyPath: shipB
+      value: 
+      objectReference: {fileID: 1463082322}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 12f05854724d9eb40b97d08dae2038cd, type: 3}
 --- !u!1 &141558885
 GameObject:
   m_ObjectHideFlags: 0
@@ -12487,6 +12592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b337fae12407a74eb6262831cb7da97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ship: {fileID: 0}
   _rotation: {x: 0, y: 0, z: 0}
 --- !u!82 &3679922879120097404
 AudioSource:
@@ -12876,6 +12982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b337fae12407a74eb6262831cb7da97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ship: {fileID: 0}
   _rotation: {x: 0, y: 0, z: 0}
 --- !u!114 &3679922879523271263
 MonoBehaviour:
@@ -13107,6 +13214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b337fae12407a74eb6262831cb7da97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ship: {fileID: 0}
   _rotation: {x: 0, y: 0, z: 0}
 --- !u!114 &3679922879648908127
 MonoBehaviour:
@@ -13775,6 +13883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b337fae12407a74eb6262831cb7da97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ship: {fileID: 0}
   _rotation: {x: 0, y: 0, z: 0}
 --- !u!114 &3679922880347656012
 MonoBehaviour:
@@ -14266,6 +14375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b337fae12407a74eb6262831cb7da97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ship: {fileID: 0}
   _rotation: {x: 0, y: 0, z: 0}
 --- !u!114 &3679922880849123537
 MonoBehaviour:
@@ -14591,6 +14701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b337fae12407a74eb6262831cb7da97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ship: {fileID: 0}
   _rotation: {x: 0, y: 0, z: 0}
 --- !u!114 &3679922881004170475
 MonoBehaviour:

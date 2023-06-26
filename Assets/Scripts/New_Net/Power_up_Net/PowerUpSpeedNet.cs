@@ -6,13 +6,17 @@ using UnityEngine;
 
 public class PowerUpSpeedNet : NetworkBehaviour
 {
-    private GameObject ship;
+    public GameObject ship;
     [SerializeField] private Vector3 _rotation;
     AudioSource sound;
+
+    private PowerUpTaken powerUpTaken; // Reference to the PowerUpTaken script
+
     // Start is called before the first frame update
     void Start()
     {
         sound = GetComponent<AudioSource>();
+        powerUpTaken = FindObjectOfType<PowerUpTaken>(); // Find the PowerUpTaken script in the scene
     }
 
     // Update is called once per frame
@@ -21,7 +25,7 @@ public class PowerUpSpeedNet : NetworkBehaviour
         transform.Rotate(_rotation * Time.deltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
 
     {
         if (other.tag == "Ship")
@@ -41,6 +45,8 @@ public class PowerUpSpeedNet : NetworkBehaviour
 
             Invoke("SlowDown", 10);
             Invoke("respawnPowerUp", 20);
+            // Show the power-up taken UI
+            powerUpTaken.ShowSpeedPowerUpTaken(ship);
         }
     }
 

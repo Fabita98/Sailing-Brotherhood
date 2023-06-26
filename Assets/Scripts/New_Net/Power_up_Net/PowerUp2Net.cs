@@ -10,10 +10,14 @@ public class PowerUp2Net : NetworkBehaviour
     [SerializeField] private Vector3 _rotation;
     private GameObject ship;
     AudioSource sound;
+
+    private PowerUpTaken powerUpTaken; // Reference to the PowerUpTaken script
+
     // Start is called before the first frame update
     void Start()
     {
         sound = GetComponent<AudioSource>();
+        powerUpTaken = FindObjectOfType<PowerUpTaken>(); // Find the PowerUpTaken script in the scene
     }
 
     // Update is called once per frame
@@ -37,6 +41,7 @@ public class PowerUp2Net : NetworkBehaviour
                 Debug.Log("Sto aggiungendo i barili");
                 barrel.addBarrel(3);
                 Invoke("respawnPowerUp",20);
+                powerUpTaken.ShowBarrelPowerUpTaken(ship);
             }   
     }
 
