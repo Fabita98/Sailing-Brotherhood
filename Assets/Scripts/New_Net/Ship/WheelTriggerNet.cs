@@ -252,6 +252,7 @@ public class WheelTriggerNet : NetworkBehaviour
             contPlayers += 1;
             cont = 1;
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
+            if (contPlayers == 1) { 
             player = other.gameObject;
             playerMovement = other.GetComponent<PlayerMovementNet>();
             if (playerMovement.IsLocalPlayer)
@@ -261,7 +262,7 @@ public class WheelTriggerNet : NetworkBehaviour
             }
             footsteps = player.GetComponentInChildren<AudioSource>();
             footsteps.gameObject.SetActive(false);
-            
+            }
         }
     }
 
@@ -276,7 +277,7 @@ public class WheelTriggerNet : NetworkBehaviour
                 if (IsClient) WheelNotOccupiedServerRPC();
                 else { WheelNotOccupiedClientRPC(); }
                 navigationSpot.SetActive(false);
-            }
+            
             textButton.text = "Press E to use the wheel";
             if (playerMovement != null)
             {
@@ -295,7 +296,7 @@ public class WheelTriggerNet : NetworkBehaviour
             playerMovement = null;
             footsteps.gameObject.SetActive(true);
             footsteps = null;
-            
+            }
         }
     }
 
@@ -469,10 +470,5 @@ public class WheelTriggerNet : NetworkBehaviour
     {
         externaldriver = false;
     }
-
-
-
-    
-
 
 }

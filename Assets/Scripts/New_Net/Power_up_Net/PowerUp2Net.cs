@@ -23,18 +23,26 @@ public class PowerUp2Net : NetworkBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
+    {     
+            if (other.tag == "Ship")
+            {
+                this.gameObject.SetActive(false);
+                GameObject shipBody = other.transform.parent.gameObject;
+                GameObject shipComponent = shipBody.transform.parent.gameObject;
+                GameObject shipCompleted = shipComponent.transform.parent.gameObject;
+                ship = shipCompleted.gameObject;
+                sound.Play();
+                GameObject barrelTrigger = shipCompleted.transform.Find("Power-upBarrelDetection").gameObject;
+                BarrelTriggerNet barrel = barrelTrigger.GetComponent<BarrelTriggerNet>();
+                Debug.Log("Sto aggiungendo i barili");
+                barrel.addBarrel(3);
+                Invoke("respawnPowerUp",20);
+            }   
+    }
+
+    private void respawnPowerUp()
     {
-        if (other.tag == "Ship")
-        {
-            GameObject shipBody = other.transform.parent.gameObject;
-            GameObject shipComponent = shipBody.transform.parent.gameObject;
-            GameObject shipCompleted = shipComponent.transform.parent.gameObject;
-            ship = shipCompleted.gameObject;
-            sound.Play();
-            GameObject barrelTrigger = shipCompleted.transform.Find("Power-upBarrelDetection").gameObject;
-            BarrelTriggerNet barrel = barrelTrigger.GetComponent<BarrelTriggerNet>();
-            barrel.addBarrel(3);
-        }
+        this.gameObject.SetActive(true);
     }
 
 }

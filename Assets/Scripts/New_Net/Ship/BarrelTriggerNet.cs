@@ -92,6 +92,7 @@ public class BarrelTriggerNet : NetworkBehaviour
 
     public void addBarrel(int number)
     {
+        Debug.Log("Hai aggiunto 3 barili");
         cont += number;
         textButton.text = "Number of barrels: " + cont;
     }

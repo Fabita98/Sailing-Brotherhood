@@ -27,6 +27,7 @@ public class PowerUp3Net : NetworkBehaviour
     {
         if (other.tag == "Ship")
         {
+            this.gameObject.SetActive(false);
             GameObject shipBody = other.transform.parent.gameObject;
             GameObject shipComponent = shipBody.transform.parent.gameObject;
             GameObject shipCompleted = shipComponent.transform.parent.gameObject;
@@ -52,7 +53,9 @@ public class PowerUp3Net : NetworkBehaviour
             if (IsClient) cannons2.ReduceReloadTimeServerRPC();
             else { cannons2.ReduceReloadTimeClientRPC(); }
 
+            Invoke("respawnPowerUp", 20);
             Invoke("oldHoldTimeRequired", 30);
+
         }
     }
 
@@ -67,6 +70,10 @@ public class PowerUp3Net : NetworkBehaviour
         else { cannons2.AddReloadTimeClientRPC(); }
         cannons1 = null;
         cannons2 = null;
+    }
 
+    private void respawnPowerUp()
+    {
+        this.gameObject.SetActive(true);
     }
 }

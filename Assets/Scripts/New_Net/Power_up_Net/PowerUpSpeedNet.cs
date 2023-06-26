@@ -26,6 +26,7 @@ public class PowerUpSpeedNet : NetworkBehaviour
     {
         if (other.tag == "Ship")
         {
+            this.gameObject.SetActive(false);
             //GameObject shipComponent = other.transform.Find("Ship_Components").gameObject;
             //GameObject shipBody = other.transform.Find("Ship_Body").gameObject;
             //GameObject shipCollider = other.transform.Find("Ship_collider").gameObject;
@@ -38,20 +39,27 @@ public class PowerUpSpeedNet : NetworkBehaviour
             Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();
             manager.addMaxSpeed(20f);
 
+            Invoke("SlowDown", 10);
+            Invoke("respawnPowerUp", 20);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Ship")
+        /*if (other.tag == "Ship")
         {
             Invoke("SlowDown", 10);
-        }
+        }*/
     }
 
     public void SlowDown()
     {
         Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();
         manager.decreaseMaxSpeed(20f);
+    }
+
+    private void respawnPowerUp()
+    {
+        this.gameObject.SetActive(true);
     }
 }

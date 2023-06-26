@@ -24,6 +24,8 @@ public class PowerUp4Net : NetworkBehaviour
     {
         if (other.tag == "Ship")
         {
+
+            this.gameObject.SetActive(false);
             GameObject shipBody = other.transform.parent.gameObject;
             GameObject shipComponent = shipBody.transform.parent.gameObject;
             GameObject shipCompleted = shipComponent.transform.parent.gameObject;
@@ -32,6 +34,13 @@ public class PowerUp4Net : NetworkBehaviour
             GameObject smallCannon = shipCompleted.transform.Find("SmallCannonDetection").gameObject;
             SmallCannonTriggerNet smallCannonTrigger = smallCannon.GetComponent<SmallCannonTriggerNet>();
             smallCannonTrigger.addCannonBalls(1);
+
+            Invoke("respawnPowerUp", 20);
         }
+    }
+
+    private void respawnPowerUp()
+    {
+        this.gameObject.SetActive(true);
     }
 }
