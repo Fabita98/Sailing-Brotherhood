@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
 
-
-public class Damage_SystemNet : NetworkBehaviour
+public class DamageCapsule : MonoBehaviour
 {
-    public GameObject my_ship;
+
+    /*public GameObject my_ship;
     Health_and_Speed_ManagerNet hs;
     float cooldown;
     bool canbedamaged;
@@ -17,21 +16,16 @@ public class Damage_SystemNet : NetworkBehaviour
         canbedamaged = true;
         cooldown = 5;
     }
-    void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
+        Debug.Log("ti sei schiantato");
         if (canbedamaged)
         {
-            if (other.tag == "Terrain")
+            if (other.gameObject.tag == "Terrain")
             {
                 hs.health -= 20;
                 CooldownStart();
                 terrainSound.Play();
-            }
-            if (other.tag == "CannonBall")
-            {
-                hs.health -= 20;
-                CooldownStart();
-                cannonhit.Play();
             }
             if (other.gameObject.tag == "Barrel")
             {
@@ -41,6 +35,7 @@ public class Damage_SystemNet : NetworkBehaviour
             }
         }
     }
+
     public void CooldownStart()
     {
         StartCoroutine(CooldownCoroutine());
@@ -56,5 +51,5 @@ public class Damage_SystemNet : NetworkBehaviour
     void Update()
     {
         hs = my_ship.GetComponent<Health_and_Speed_ManagerNet>();
-    }
+    }*/
 }

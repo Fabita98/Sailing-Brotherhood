@@ -231,6 +231,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2517905, y: 1.9314293, z: 1.3184361}
   m_Center: {x: -0.0025227468, y: 1.0176978, z: -0.3092832}
+--- !u!1 &74268483 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8548798382357922325, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+  m_PrefabInstance: {fileID: 1463082321}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &74268484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74268483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8584f5104bc974a81f7e9527a35938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &122777111
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,6 +1011,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Terrain
       objectReference: {fileID: 0}
+    - target: {fileID: 807119445184821525, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -146
+      objectReference: {fileID: 0}
     - target: {fileID: 807331444966923600, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
       value: Terrain
@@ -1034,6 +1055,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Terrain
       objectReference: {fileID: 0}
+    - target: {fileID: 2138812361326630067, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -145.4
+      objectReference: {fileID: 0}
     - target: {fileID: 2225326044461211222, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
       value: Terrain
@@ -1058,9 +1083,21 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Terrain
       objectReference: {fileID: 0}
+    - target: {fileID: 3738869029666981232, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -146
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946487939443045259, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 3972664537345216071, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
       value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 4003751063731093005, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -148
       objectReference: {fileID: 0}
     - target: {fileID: 4112702471851329106, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
@@ -1082,6 +1119,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Terrain
       objectReference: {fileID: 0}
+    - target: {fileID: 4804883094736962292, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -146.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4819785925575539840, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
       value: Terrain
@@ -1093,6 +1134,10 @@ PrefabInstance:
     - target: {fileID: 5268874922095788439, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
       value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5374396811695533483, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -148
       objectReference: {fileID: 0}
     - target: {fileID: 5672832587707325409, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
@@ -1145,6 +1190,14 @@ PrefabInstance:
     - target: {fileID: 6977795761760532709, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
       value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 7510618922993395941, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -152
+      objectReference: {fileID: 0}
+    - target: {fileID: 7585275942923192272, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -146
       objectReference: {fileID: 0}
     - target: {fileID: 7986381109467756814, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
@@ -1205,6 +1258,10 @@ PrefabInstance:
     - target: {fileID: 8341724546837976658, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
       value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627255230188587781, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 8814403552946032294, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
@@ -2081,8 +2138,20 @@ PrefabInstance:
       value: 0.52958286
       objectReference: {fileID: 0}
     - target: {fileID: 350131266798036200, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Size.y
+      value: 2.6379614
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131266798036200, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: m_Center.x
       value: 0.0045305523
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131266798036200, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Center.y
+      value: 0.43797287
+      objectReference: {fileID: 0}
+    - target: {fileID: 350131266798036200, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Center.z
+      value: -0.088542216
       objectReference: {fileID: 0}
     - target: {fileID: 350131267282479580, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: Loop
@@ -5525,6 +5594,23 @@ MonoBehaviour:
   SceneMigrationSynchronization: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!1 &859827193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7447369311953673068, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+  m_PrefabInstance: {fileID: 351173899}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &859827195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859827193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8584f5104bc974a81f7e9527a35938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &862456528
 GameObject:
   m_ObjectHideFlags: 0
@@ -8016,6 +8102,18 @@ PrefabInstance:
     - target: {fileID: 1348691735804195571, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691735874974155, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: m_Size.y
+      value: 2.6360583
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691735874974155, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: m_Center.y
+      value: 0.43702012
+      objectReference: {fileID: 0}
+    - target: {fileID: 1348691735874974155, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: m_Center.z
+      value: -0.088542216
       objectReference: {fileID: 0}
     - target: {fileID: 3227496058630546289, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
       propertyPath: fakeRespawn
