@@ -29,13 +29,14 @@ public class PowerUp3Net : NetworkBehaviour
     {
         if (other.tag == "Ship")
         {
-            this.gameObject.SetActive(false);
             GameObject shipBody = other.transform.parent.gameObject;
             GameObject shipComponent = shipBody.transform.parent.gameObject;
             GameObject shipCompleted = shipComponent.transform.parent.gameObject;
 
             ship = shipCompleted.gameObject;
             sound.Play();
+
+            this.gameObject.SetActive(false);
             GameObject cannons = ship.transform.Find("Cannons").gameObject;
             GameObject rightCannons = cannons.transform.Find("On-deck_cannons_set_right").gameObject;
             GameObject leftCannons = cannons.transform.Find("On-deck_cannons_set_left").gameObject;

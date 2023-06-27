@@ -30,7 +30,6 @@ public class PowerUpSpeedNet : NetworkBehaviour
     {
         if (other.tag == "Ship")
         {
-            this.gameObject.SetActive(false);
             //GameObject shipComponent = other.transform.Find("Ship_Components").gameObject;
             //GameObject shipBody = other.transform.Find("Ship_Body").gameObject;
             //GameObject shipCollider = other.transform.Find("Ship_collider").gameObject;
@@ -38,6 +37,7 @@ public class PowerUpSpeedNet : NetworkBehaviour
             GameObject shipComponent = shipBody.transform.parent.gameObject;
             GameObject shipCompleted = shipComponent.transform.parent.gameObject;
             sound.Play();
+            this.gameObject.SetActive(false);
             ship = shipCompleted.gameObject;
             Debug.Log("other" + other.name);
             Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();

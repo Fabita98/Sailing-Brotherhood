@@ -16,7 +16,6 @@ public class WheelTriggerNet : NetworkBehaviour
     public GameObject wheel;
     public Transform wheelPos;
 
-
     private bool anyinput, inputleft, inputright, externaldriver;
     private bool rotateRight;
     private bool rotateLeft;
@@ -44,6 +43,8 @@ public class WheelTriggerNet : NetworkBehaviour
     public Vector3 rotVec;
     public AudioSource footsteps;
 
+    private bool captain;
+
     private void Start()
     {
         // Ottieni il riferimento a boatProbes partendo da wheel e prendendo i padri
@@ -63,7 +64,7 @@ public class WheelTriggerNet : NetworkBehaviour
             if(wheelOccupied == true) { player.transform.position = wheelPos.transform.position;
                 Debug.Log("Aggiorno posizione guidatore");
             }
-            if (wheelOccupied == false && Input.GetKeyDown(KeyCode.E) && lockMovement == false)
+            if (wheelOccupied == false && Input.GetKeyDown(KeyCode.E) && lockMovement == false && captain==true)
             {
                 wheelOccupied = true;
                 if (!IsHost) WheelOccupiedServerRPC();
@@ -93,7 +94,7 @@ public class WheelTriggerNet : NetworkBehaviour
                     externalServerRPC();
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true)
+            else if (Input.GetKeyDown(KeyCode.E) && lockMovement == true && captain == true)
             {
                 wheelOccupied = false;
                 if (!IsHost) WheelNotOccupiedServerRPC();
@@ -155,25 +156,23 @@ public class WheelTriggerNet : NetworkBehaviour
 
         if (!IsHost)
         {
-            
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.A) && captain == true)
             {
                 LeftServerRPC();
                 if (externaldriver) wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
             }
-            else if (Input.GetKey(KeyCode.D)) { 
+            else if (Input.GetKey(KeyCode.D) && captain == true) { 
                 rightServerRPC();
                 if (externaldriver) wheel.transform.Rotate(Vector3.back, 90f * Time.fixedDeltaTime);
             }
 
         else nullServerRPC();
-
             
         }
         else if (anyinput && externaldriver == true)
         {
             
-            if (inputleft)
+            if (inputleft )
             {
                 wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
                 sideways += -0.3f;
@@ -188,9 +187,8 @@ public class WheelTriggerNet : NetworkBehaviour
             
             _rb.AddTorque(rotVec * _turnPower * sideways, ForceMode.Acceleration);
         }
-        else if (lockMovement == true)
-        {
-           
+        else if (lockMovement == true && captain == true)
+        {          
             if (Input.GetKey(KeyCode.A))
             {
                 wheel.transform.Rotate(Vector3.forward, 90f * Time.fixedDeltaTime);
@@ -205,10 +203,7 @@ public class WheelTriggerNet : NetworkBehaviour
             rotVec = transform.up + _turningHeel * transform.forward;
             
             _rb.AddTorque(rotVec * _turnPower * sideways, ForceMode.Acceleration);
-
         }
-
-
     }
 
 
@@ -251,13 +246,17 @@ public class WheelTriggerNet : NetworkBehaviour
         {
             contPlayers += 1;
             cont = 1;
+
             //Qui prendiamo lo script del movimento del pirata che ha triggerato i cannoni
             if (contPlayers == 1) { 
             player = other.gameObject;
             playerMovement = other.GetComponent<PlayerMovementNet>();
             if (playerMovement.IsLocalPlayer)
             {
-                enableOutline();
+                Debug.Log("Tu sei " + player.name);
+                captain = true;
+                    Debug.Log("Captain: " +  captain);
+                    enableOutline();
                 button.gameObject.SetActive(true);
             }
             footsteps = player.GetComponentInChildren<AudioSource>();
@@ -289,8 +288,9 @@ public class WheelTriggerNet : NetworkBehaviour
             lockMovement = false;
             player = null;
             cont = 0;
-            if (playerMovement.IsLocalPlayer) { 
-                disableOutline();
+            if (playerMovement.IsLocalPlayer) {
+                    captain = false;
+                    disableOutline();
                 button.gameObject.SetActive(false);
             }
             playerMovement = null;
