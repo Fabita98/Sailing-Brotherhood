@@ -10369,14 +10369,14 @@ MonoBehaviour:
   clientDeltas:
   - 0
   - 2.5
-  - 1
-  - 1.5
+  - 2.5
+  - 2.5
   delta: 0
   cameraRelativeMovement: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
   player_an: {fileID: 0}
   maxSlopeAngle: 45
-  onSlopeForceMultiplier: 20
+  onSlopeForceMultiplier: 30
   pushDownForceOnSlope: 40
   whatIsStairs:
     serializedVersion: 2
@@ -10386,6 +10386,7 @@ MonoBehaviour:
   - {x: -3788, y: 35.71, z: -15064.31}
   - {x: -2887.19, y: 50, z: -15091.45}
   - {x: -2889.46, y: 39.23, z: -15056.15}
+  driving: 0
 --- !u!114 &2245604043019604103
 MonoBehaviour:
   m_ObjectHideFlags: 0
