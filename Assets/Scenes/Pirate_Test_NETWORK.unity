@@ -1067,6 +1067,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Terrain
       objectReference: {fileID: 0}
+    - target: {fileID: 2566788250730046418, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -151.7432
+      objectReference: {fileID: 0}
     - target: {fileID: 2822394572452119965, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
       value: Terrain
@@ -1089,7 +1093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3946487939443045259, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 9.02
       objectReference: {fileID: 0}
     - target: {fileID: 3972664537345216071, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
@@ -1130,6 +1134,10 @@ PrefabInstance:
     - target: {fileID: 4836808545398318018, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
       value: Terrain
+      objectReference: {fileID: 0}
+    - target: {fileID: 4874463412570268024, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -151.7432
       objectReference: {fileID: 0}
     - target: {fileID: 5268874922095788439, guid: a7c5fc32a5093864c9bce6f7583c05cc, type: 3}
       propertyPath: m_TagString
@@ -2107,7 +2115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 350131266590247476, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: MaxDistance
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 350131266590247476, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: rolloffMode
@@ -2353,6 +2361,18 @@ PrefabInstance:
       propertyPath: textButton
       value: 
       objectReference: {fileID: 1264558530}
+    - target: {fileID: 5262319705292255796, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Size.y
+      value: 0.90000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 5262319705292255796, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Size.z
+      value: 6.10119
+      objectReference: {fileID: 0}
+    - target: {fileID: 5262319705292255796, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
+      propertyPath: m_Center.z
+      value: -1.2040043
+      objectReference: {fileID: 0}
     - target: {fileID: 5798600593715346562, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: button
       value: 

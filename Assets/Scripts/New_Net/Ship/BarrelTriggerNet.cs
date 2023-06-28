@@ -110,7 +110,7 @@ public class BarrelTriggerNet : NetworkBehaviour
         Vector3 spawnPosition = transform.position + -barrel.transform.forward * spawnDistance + Vector3.up * spawnHeight;
         //Instanziamento della palla
         GameObject barrel1 = Instantiate(barrel, spawnPosition, transform.rotation);
-        barrel1.AddComponent<Rigidbody>();
+        //barrel1.AddComponent<Rigidbody>();
         barrel1.AddComponent<BoatAlignNormal>();
         barrel1.tag = "Barrel";
         barrelSplash.PlayDelayed(1);
