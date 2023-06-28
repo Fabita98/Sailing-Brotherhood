@@ -2367,11 +2367,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5262319705292255796, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: m_Size.z
-      value: 6.10119
+      value: 8.800049
       objectReference: {fileID: 0}
     - target: {fileID: 5262319705292255796, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: m_Center.z
-      value: -1.2040043
+      value: -1.9379032
       objectReference: {fileID: 0}
     - target: {fileID: 5798600593715346562, guid: 01c9a488a1546c54ba988695b8d89969, type: 3}
       propertyPath: button
@@ -8303,6 +8303,18 @@ PrefabInstance:
       propertyPath: SpeedValue
       value: 
       objectReference: {fileID: 1966388690}
+    - target: {fileID: 6875847163972134679, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: m_Size.y
+      value: 0.90000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875847163972134679, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: m_Size.z
+      value: 7.3818526
+      objectReference: {fileID: 0}
+    - target: {fileID: 6875847163972134679, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
+      propertyPath: m_Center.z
+      value: -1.5422082
+      objectReference: {fileID: 0}
     - target: {fileID: 8034373261949650885, guid: 95bbe688a56a5714885c96a28c743c95, type: 3}
       propertyPath: x_Win
       value: 
