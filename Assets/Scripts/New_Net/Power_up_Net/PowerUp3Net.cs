@@ -11,6 +11,7 @@ public class PowerUp3Net : NetworkBehaviour
     AudioSource sound;
     [SerializeField] private Vector3 _rotation;
     private PowerUpTaken powerUpTaken; // Reference to the PowerUpTaken script
+    private bool canBeTaken = true;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,7 @@ public class PowerUp3Net : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Ship")
+        if (other.tag == "Ship" && canBeTaken)
         {
             GameObject shipBody = other.transform.parent.gameObject;
             GameObject shipComponent = shipBody.transform.parent.gameObject;
@@ -35,8 +36,9 @@ public class PowerUp3Net : NetworkBehaviour
 
             ship = shipCompleted.gameObject;
             sound.Play();
+            canBeTaken = false;
 
-            this.gameObject.SetActive(false);
+            
             GameObject cannons = ship.transform.Find("Cannons").gameObject;
             GameObject rightCannons = cannons.transform.Find("On-deck_cannons_set_right").gameObject;
             GameObject leftCannons = cannons.transform.Find("On-deck_cannons_set_left").gameObject;
@@ -55,7 +57,7 @@ public class PowerUp3Net : NetworkBehaviour
 
             if (IsClient) cannons2.ReduceReloadTimeServerRPC();
             else { cannons2.ReduceReloadTimeClientRPC(); }
-
+            Invoke("disable", 2);
             Invoke("respawnPowerUp", 20);
             Invoke("oldHoldTimeRequired", 30);
             powerUpTaken.ShowReloadPowerUpTaken(ship);
@@ -78,5 +80,11 @@ public class PowerUp3Net : NetworkBehaviour
     private void respawnPowerUp()
     {
         this.gameObject.SetActive(true);
+        canBeTaken = true;
     }
+    private void disable()
+    {
+        this.gameObject.SetActive(false);
+    }
+    
 }

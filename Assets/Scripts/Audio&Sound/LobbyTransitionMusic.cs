@@ -15,7 +15,7 @@ public class LobbyTransitionMusic : MonoBehaviour
     {
         audio1.Play();
         StartingTrans.SetActive(true);
-        target = 0.4f;
+        target = 0.25f;
         duration = 3f;
         StartCoroutine(FadeAudioSource.StartFade(audio1, duration, target));
     }
@@ -33,7 +33,7 @@ public class LobbyTransitionMusic : MonoBehaviour
         StartCoroutine(FadeAudioSource.StartFade(audio1, duration, target));
         audio2.PlayDelayed(2); 
         duration = 8;
-        target = 0.5f;
+        target = 0.3f;
         StartCoroutine(FadeAudioSource.StartFade(audio2, duration, target));
     }
    
