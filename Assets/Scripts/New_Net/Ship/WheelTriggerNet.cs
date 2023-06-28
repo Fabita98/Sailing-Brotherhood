@@ -45,6 +45,8 @@ public class WheelTriggerNet : NetworkBehaviour
 
     private bool captain;
 
+    bool retroActive;
+
     private void Start()
     {
         // Ottieni il riferimento a boatProbes partendo da wheel e prendendo i padri
@@ -54,7 +56,7 @@ public class WheelTriggerNet : NetworkBehaviour
         boatProbes = ship.GetComponent<BoatProbes>();
         wheelOccupied = false;
         contPlayers = 0;
-
+        retroActive = false;
     }
 
     private void Update()
@@ -64,6 +66,23 @@ public class WheelTriggerNet : NetworkBehaviour
             if(wheelOccupied == true) { player.transform.position = wheelPos.transform.position;
                 Debug.Log("Aggiorno posizione guidatore");
             }
+
+            if (Input.GetKeyDown(KeyCode.T) && lockMovement == true && captain == true && retroActive==false) 
+            {
+                Debug.Log("Hai schiacciato T");
+                if (IsClient) RetroServerRPC();
+                else { RetroClientRPC(); }
+
+            }
+
+            else if (Input.GetKeyDown(KeyCode.T) && lockMovement == true && captain == true && retroActive == true)
+            {
+
+                Debug.Log("Hai Rischiacciato T");
+                if (IsClient) RetroFalseServerRPC();
+                else { RetroFalseClientRPC(); }
+            }
+
             if (wheelOccupied == false && Input.GetKeyDown(KeyCode.E) && lockMovement == false && captain==true)
             {
                 wheelOccupied = true;
@@ -469,6 +488,34 @@ public class WheelTriggerNet : NetworkBehaviour
     private void NOexternalClientRPC()
     {
         externaldriver = false;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RetroServerRPC()
+    {
+        RetroClientRPC();
+    }
+
+    [ClientRpc]
+    private void RetroClientRPC()
+    {
+        Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();
+        manager.setRetroTrue();
+        retroActive = true;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RetroFalseServerRPC()
+    {
+        RetroFalseClientRPC();
+    }
+
+    [ClientRpc]
+    private void RetroFalseClientRPC()
+    {
+        Health_and_Speed_ManagerNet manager = ship.GetComponent<Health_and_Speed_ManagerNet>();
+        manager.setRetroFalse();
+        retroActive = false;
     }
 
 }

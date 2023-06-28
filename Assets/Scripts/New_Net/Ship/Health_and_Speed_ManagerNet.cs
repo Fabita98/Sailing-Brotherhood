@@ -21,9 +21,15 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
     private AnchorTriggerNet anchor;
     public bool lifted;    
 
+    public bool retro;
+    private float tempMaxSpeed;
+
+    private int firstTime=0;
+
     // Start is called before the first frame update
     void Start()
     {
+        retro = false;
         health = 100;
         boatProbes = my_ship.GetComponent<Crest.BoatProbes>();
         if (IsHost)
@@ -63,7 +69,6 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
                     maxspeed += 8; 
                 }
                 
-
                 if (health > 100)
                 {
                     health = 100;                    
@@ -73,10 +78,21 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
                 {
                     health = 0;
                 }
-                if (maxspeed < 0)
+
+                if (retro == true)
+                {
+                    if (firstTime == 0) { 
+                    tempMaxSpeed = maxspeed;
+                    firstTime++;
+                    }
+                    maxspeed = -10;
+                }
+
+                if (retro == false && maxspeed < 0)
                 {
                     maxspeed = 0;
                 }
+                
                 if (maxspeed > 50)
                 {
                     maxspeed = 50;
@@ -89,8 +105,6 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
             syncMaxSpeed.Value = maxspeed;
             syncActualSpeed.Value = actual_speed;
             
-
-
         }
         //HealthBar.fillAmount = syncHealth.Value / 100;
         //SpeedBar.fillAmount = syncActualSpeed.Value / 20;
@@ -114,5 +128,17 @@ public class Health_and_Speed_ManagerNet : NetworkBehaviour
     {
         maxspeed -= f;
         syncMaxSpeed.Value = maxspeed;
-    }      
+    }
+
+    public void setRetroTrue()
+    {
+        retro = true;
+    }
+
+    public void setRetroFalse()
+    {
+        retro = false;
+        maxspeed = tempMaxSpeed;
+        firstTime = 0;
+    }
 }
