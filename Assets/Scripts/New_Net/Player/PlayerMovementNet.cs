@@ -18,7 +18,8 @@ public class PlayerMovementNet : NetworkBehaviour
     //[SerializeField] private Camera playerCameraPrefab;
     private Camera playerCamera;
     private GameObject gameObjectPlayerCamera;
-    [SerializeField] private List<float> clientDeltas;
+    [SerializeField] 
+    private List<float> clientDeltas;
     public float delta;
 
     public Vector3 cameraRelativeMovement;

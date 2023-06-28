@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -83,7 +83,7 @@ public class OnBoardBehaviourNet : NetworkBehaviour
                         p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z, ForceMode.VelocityChange);
                     } 
                     else if (!IsHost) {
-                        p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, 0f, syncVel.Value.z + p.GetComponent<PlayerMovementNet>().delta, ForceMode.VelocityChange);
+                        p.transform.GetComponent<Rigidbody>().AddForce(syncVel.Value.x, syncVel.Value.y, syncVel.Value.z + p.GetComponent<PlayerMovementNet>().delta, ForceMode.VelocityChange);
                     }
                 });
             }                       

@@ -10368,15 +10368,15 @@ MonoBehaviour:
   speed: 10
   clientDeltas:
   - 0
-  - 2.5
-  - 2.5
-  - 2.5
-  delta: 0
+  - 0.1
+  - 2.6
+  - 2.7
+  delta: 2.5
   cameraRelativeMovement: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
   player_an: {fileID: 0}
   maxSlopeAngle: 45
-  onSlopeForceMultiplier: 30
+  onSlopeForceMultiplier: 10
   pushDownForceOnSlope: 40
   whatIsStairs:
     serializedVersion: 2
