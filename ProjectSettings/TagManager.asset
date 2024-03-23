@@ -5,14 +5,19 @@ TagManager:
   serializedVersion: 2
   tags:
   - Terrain
+  - Ship
+  - CannonBall
+  - Barrel
+  - GoldenCannonBall
+  - PowerUp
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
+  - Stairs
   - 
   - 
   - 
